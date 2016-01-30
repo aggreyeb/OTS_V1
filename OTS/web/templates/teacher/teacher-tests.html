@@ -1,0 +1,147 @@
+
+<div>
+    <div class="col-lg-12">
+          <div>
+             <h4><span class="label label-default">Your Courses</span></h4> 
+          </div> 
+        <select class="form-control" data-bind="options:courseList,optionsText:'Name', optionsValue:'Id', value:selectedCourse,optionsCaption: 'Choose...',event: {change: onCourseChanged}">
+           
+        </select>
+    </div>
+     <div class="col-lg-12 ">
+         <div style="padding-top:  10px">
+             <div class="panel panel-primary t">
+            <div class="panel-heading">Course Tests</div>
+        <div class="panel-body">
+            <a style=" margin-bottom: 5px" data-bind="event:{click:function(event){onNewTest(event)}},enable:toggleNewTest" class=" btn btn-info btn-sm pull-left" href="#" >New</a>
+           
+            
+            <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Questions</th>
+                <th>Marks</th>
+                <th>Start Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Activated</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach:mytestList">
+                <tr>
+                   <td style="width:150px" data-bind="text:Name"></td>
+                   <td style="width:10px" data-bind="text:NumberOfQuestion"></td>
+                   <td style="width:10px" data-bind="text:TotalMark"></td> 
+                   <td style="width:50px" data-bind="text:StartDate"></td> 
+                   <td style="width:50px" data-bind="text:StartTime"></td> 
+                   <td style="width:50px" data-bind="text:EndTime"></td>
+                   <td style="width:30px" data-bind="text:Activated"></td>
+                   <td>
+                       <div class=" btn-group">
+                         <button data-bind="event:{click:function(item,event){$parent.onEditTest(item,event)}}" class="btn btn-group-sm btn-primary" type="button">Edit</button>
+                         <button data-bind="event:{click:function(item,event){$parent.onDeleteTest(item,event)}}" class="btn btn-group-sm btn-danger" type="button">Delete</button>
+                         <!--<button data-bind="event:{click:function(item,event){$parent.onGenerateTest(item,event)}}" class="btn btn-group-sm btn-default" type="button">Generate</button>-->
+                             <button  class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+                                  Actions <span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li data-bind="style:{ 'background-color' :  ActivatedStyle }" role="presentation"><a data-bind="event:{click:function(item,event){$parent.onGenerateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Generate Test Items</a></li>
+                                <li role="presentation"><a data-bind="event:{click:function(item,event){$parent.onActivateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Activate Test</a></li>
+                                <li role="presentation"><a data-bind="event:{click:function(item,event){$parent.onDeActivateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">DeActivate Test</a></li>
+                                <li data-bind="style:{ 'background-color' :  MarkTestStyle }" role="presentation"><a  data-bind="event:{click:function(item,event){$parent.onMarkTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Mark Test</a></li>
+                              </ul>
+                       </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+         <div  class="alert alert-danger" data-bind="visible:form.responseMessageVisible,attr:{'class':form.responseBoxStyle}" >
+                <a id="lnk-hideMessageBox" data-bind="event:{click:function(event){form.closeMessageBox(event)}}" href="#" class="close" data-hide="alert">&times;</a>
+                   <strong data-bind="text:form.responseDialog">Error!</strong> <span data-bind="text:form.responseMessageText">A problem has been occurred while submitting your data.</span>
+         </div>
+            <div  style="background-color: lightyellow; display: none" id="div-validation">
+                
+            </div>   
+      </div>
+ <div class=" panel-footer">
+   
+   <form data-bind="visible:formVisible"  class="form-horizontal ">
+       
+           
+      <h4><span data-bind="text:form.heading" class="label label-default">Create New</span></h4>
+        <div class="form-group">
+          <label  class="control-label col-xs-2">Name</label>
+          <div class="col-xs-10">
+          <input id="txt-knowledgemapname" data-bind="value:form.name,valueUpdate: 'afterkeydown'" type="text" class="form-control"  placeholder="Required Field">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2">Questions</label>
+          <div class="col-xs-10">
+           <input data-bind="value:form.questions" type="text" class="form-control"  placeholder="Required Field">
+          </div>
+        </div>  
+      
+       <div class="form-group">
+          <label class="control-label col-xs-2">Marks</label>
+          <div class="col-xs-10">
+           <input data-bind="value:form.marks" type="text" class="form-control"  placeholder="Required Field">
+          </div>
+        </div>  
+      
+      
+        <div class="form-group">
+          <label class="control-label col-xs-2">Start Date</label>
+          <div class="col-xs-10">
+           <input   data-bind="value:form.startdate" type="text" class="form-control datepicker"  placeholder="Required Field - Format MM/dd/YYYY">
+          </div>
+        </div>
+      
+       <div class="form-group">
+          <label class="control-label col-xs-2 bootstrap-timepicker timepicker">Start Time</label>
+          <div class="col-xs-10">
+           <input id="txt-startTime" data-bind="value:form.startTime" type="text" class="form-control "  placeholder="Required Field -24 hour time">
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label class="control-label col-xs-2">End Time</label>
+          <div class="col-xs-10 bootstrap-timepicker timepicker">
+           <input id="txt-endTime" data-bind="value:form.endTime" type="text" class="form-control"  placeholder="Required Field - 24 hour time">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-10">
+          <button data-bind="event:{click:function(event){onSubmitNew(event)}},visible:form.canShowSubmitButton" type="buttton" class="btn btn-primary">Submit</button>
+           <button id="btn-update-test" data-bind="event:{click:function(event){onUpdateTest(event)}},visible:form.canShowUpdateButton" type="buttton" class="btn btn-primary">Submit</button>
+          <button data-bind="event:{click:function(event){onCancelNew(event)}}" type="buttton" class="btn btn-default">Cancel</button>
+          </div>
+        </div>
+      </form>
+            </div>
+        </div>
+          
+         </div>     
+           
+             
+     </div>
+    </div>
+   
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+     
+      
+        var view =new OTS.ViewModels.TestViewModel();
+        ko.applyBindings(view,$("#view-content")[0]); 
+       $('.datepicker').datepicker({
+            autoclose: true,
+            todayBtn: "linked"
+         });
+    
+    });
+ 
+    $("#txt-startTime").timepicker('showWidget');;
+    $("#txt-endTime").timepicker('showWidget');
+</script>

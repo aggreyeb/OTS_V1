@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Courseassignment" table="courseassignment" catalog="otsdb" optimistic-lock="version">
+        <composite-id name="id" class="OTS.DataModels.CourseassignmentId">
+            <key-property name="teacherId" type="int">
+                <column name="TeacherId" />
+            </key-property>
+            <key-property name="courseId" type="int">
+                <column name="CourseId" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="academiccourse" class="OTS.DataModels.Academiccourse" update="false" insert="false" fetch="select">
+            <column name="CourseId" not-null="true" />
+        </many-to-one>
+        <property name="assignOn" type="timestamp">
+            <column name="AssignOn" length="19" />
+        </property>
+        <property name="endDate" type="timestamp">
+            <column name="EndDate" length="19" />
+        </property>
+        <property name="isCompleted" type="java.lang.Boolean">
+            <column name="IsCompleted" />
+        </property>
+    </class>
+</hibernate-mapping>

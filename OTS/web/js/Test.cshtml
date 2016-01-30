@@ -1,0 +1,82 @@
+﻿<div id="myConetent" role="tabpanel">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#test-items" aria-controls="home" role="tab" data-toggle="tab">Generate Test Items</a></li>
+        <li role="presentation"><a href="#question-bank" aria-controls="profile" role="tab" data-toggle="tab">Question Bank</a></li>
+        <li role="presentation"><a href="#test-sheet" aria-controls="messages" role="tab" data-toggle="tab">Test Sheet</a></li>
+        <li role="presentation"><a href="#answer-sheet" aria-controls="settings" role="tab" data-toggle="tab">Answer Sheet</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="test-items">...</div>
+        <div role="tabpanel" class="tab-pane" id="question-bank" style="max-height: 200px;overflow-y: auto">
+            @*<div style="width: 300px; margin-left: 10px" class="panel panel-default">
+                <div style="height: 30px" class="panel-heading">
+                    <span>Plant has root</span>
+                </div>
+                <div class="panel-body text-left">
+                    <div class="input-group">
+                        True <input name="qoption" type="radio" /> False <input name="qoption" type="radio" />
+                    </div>
+                </div>
+                <div class="panel-footer"></div>
+            </div>*@
+            <ul data-bind="foreach:Questions" class="list-group" style="list-style-type: none;margin: 10px">
+                <li>
+                    <span>1.</span> <span data-bind="text:QuestionText"><b>Plant has root</b></span>
+                    <div data-bind="foreach:Answers" class="input-group">
+                        <span  data-bind="text:Text">Text</span> <input data-bind="value:Text, checked:ResponseValue,attr:{name:'opt1',value:true},checkedValue:true" style="margin: 5px" type="radio" />
+                    </div><br />
+                </li>
+                <li>
+                    <span>2.</span><b>Which of the following statement is true</b>  <span></span>
+                    <div style="border-left: 1px;margin: 2px" class="input-group">
+                        A.<input type="checkbox" /> Accra is the capital town of Ghana <br />
+                        B.<input type="checkbox" /> New York ins In Amereica
+                    </div><br/>
+                </li>
+            </ul>
+           
+        </div>
+        <div role="tabpanel" class="tab-pane" id="test-sheet">...</div>
+        <div role="tabpanel" class="tab-pane" id="answer-sheet">...</div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        var Response = function(text,value) {
+            var me = this;
+            me.Text = text;
+            me.ResponseValue = ko.observable(value);
+        };
+        var Question = function () {
+            var me = this;
+            me.QuestionType = '';
+            me.QuestionText = '';
+            me.Answers = [];
+
+        };
+        $(document).ready(function() {
+            var viewModel = function () {
+                var me = this;
+                me.Questions = ko.observableArray([]);
+                $(function () {
+                    var question1 = new Question();
+                    question1.QuestionType = "TrueOrFalse";
+                    question1.QuestionText = "Plant has root";
+                    question1.Answers.push(new Response("True",false));
+                    question1.Answers.push(new Response("False", false));
+                    me.Questions.push(question1);
+                });
+            };
+            ko.applyBindings(new viewModel(), $("#myConetent")[0]);
+        });
+
+      
+    </script>
+}

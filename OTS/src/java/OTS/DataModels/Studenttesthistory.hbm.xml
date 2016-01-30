@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Studenttesthistory" table="studenttesthistory" catalog="otsdb" optimistic-lock="version">
+        <id name="studentTestHistoryId" type="java.lang.Integer">
+            <column name="StudentTestHistoryId" />
+            <generator class="identity" />
+        </id>
+        <property name="testId" type="java.lang.Integer">
+            <column name="TestId" />
+        </property>
+        <property name="studentId" type="java.lang.Integer">
+            <column name="StudentId" />
+        </property>
+        <property name="startDate" type="timestamp">
+            <column name="StartDate" length="19" />
+        </property>
+        <property name="endDate" type="timestamp">
+            <column name="EndDate" length="19" />
+        </property>
+        <property name="totalMark" type="java.lang.Float">
+            <column name="TotalMark" precision="12" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

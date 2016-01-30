@@ -1,0 +1,74 @@
+
+<div >
+      <table id="tbl-knowledgemap" class="table table-striped">
+         <thead>
+           <a  data-bind="event:{click:function(event){onNew(event)}}" class=" btn btn-info btn-sm pull-left" href="#" >New</a> 
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>                         
+           </tr>
+         </thead>
+      <tbody data-bind="foreach:knowledgeMaplist">
+         <tr>
+           <td style="width:50px" data-bind="text:id"></td>
+           <td style="width:200px" data-bind="text:label"></td>
+           <td style="width:200px" data-bind="text:description"></td>
+           <td >
+          <div class="btn-group pull-right text-right" >
+             <button id="btn-ConceptHierarchy" data-bind="event:{click:function(item,event){$parent.onConceptHierarchy(item,event)}}" class="btn btn-primary">Edit</button>
+             <button id="btn-rename-knowledgemap" data-bind="event:{click:function(item,event){$parent.onRename(item,event)}}" class="btn btn-primary">Rename</button>
+             <button id="btn-duplicate-knowledgemap" data-bind="event:{click:function(item,event){$parent.onDeplicate(item,event)}}" class="btn btn-default">Duplicate</button>
+             <button id="btn-delete-knowledgemap" data-bind="event:{click:function(item,event){$parent.onDelete(item,event)}}" class="btn btn-danger">Delete</button>
+           </div>
+            </td>
+            </tr>
+          </tbody>
+      </table>  
+     <div id="div-loadingMessage" class=" panel-footer">  
+      <h4><span  class="label label-info">Loading please wait...</span></h4>
+     </div>
+   </div>
+   <!-- *********************** form start ******************************-->
+   <hr>
+  <div class="alert alert-danger" data-bind="visible:form.responseMessageVisible,attr:{'class':form.responseBoxStyle}" >
+          <a id="lnk-hideMessageBox" data-bind="event:{click:function(event){form.closeMessageBox(event)}}" href="#" class="close" data-hide="alert">&times;</a>
+          <strong data-bind="text:form.responseDialog">Error!</strong> <span data-bind="text:form.responseMessageText">A problem has been occurred while submitting your data.</span>
+  </div>
+   <p></p>     
+   <div class=" panel-footer" data-bind="visible:form.visible"> <!-- Knowledge map form panel-->
+     
+       <form class="form-horizontal ">
+      <h4><span data-bind="text:form.heading" class="label label-default">Create New</span></h4>
+        <div class="form-group">
+          <label  class="control-label col-xs-2">Name</label>
+          <div class="col-xs-10">
+          <input id="txt-knowledgemapname" data-bind="value:form.name,valueUpdate: 'afterkeydown'" type="text" class="form-control"  placeholder="Name -Required Field">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2">Description</label>
+          <div class="col-xs-10">
+           <input data-bind="value:form.description" type="text" class="form-control"  placeholder="Description">
+          </div>
+        </div>        
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-10">
+          <button data-bind="event:{click:function(event){onSubmitNew(event)}}" type="buttton" class="btn btn-primary">Submit</button>
+          <button data-bind="event:{click:function(event){onCancelNew(event)}}" type="buttton" class="btn btn-default">Cancel</button>
+          </div>
+        </div>
+      </form>
+  </div> <!-- End of knowledge map form panel-->
+   
+   <!-- *********************** form end ******************************** --> 
+<script>
+
+    $(document).ready(function(){
+     
+      var view= new OTS.ViewModels.TeacherKnowledgeMapList(new OTS.ViewModels.ConceptHierarchy());
+      ko.applyBindings(view,$("#view-content")[0]); 
+  
+   }) ;
+</script>

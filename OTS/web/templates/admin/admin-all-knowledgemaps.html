@@ -1,0 +1,44 @@
+
+<div >
+      <table id="tbl-knowledgemap" class="table table-striped">
+         <thead>
+         
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date Created</th>
+            <th>Created By</th> 
+            <th>Is Public ?</th>                         
+           </tr>
+         </thead>
+      <tbody data-bind="foreach:knowledgeMapList">
+         <tr>
+           <td data-bind="text:Name"></td>
+           <td  data-bind="text:Description"></td>
+           <td  data-bind="text:CreatedOn"></td>
+           <td data-bind="text:CreatedBy"></td>
+           <td data-bind="text:Public"></td>
+           <td>
+          <div class="btn-group pull-right text-right" >
+           <!--  <button id="btn-ConceptHierarchy" data-bind="event:{click:function(item,event){$parent.onConceptHierarchy(item,event)}}" class="btn btn-primary">Edit</button>-->
+             
+           </div>
+            </td>
+            </tr>
+          </tbody>
+      </table>  
+     <div id="div-loadingMessage" class=" panel-footer">  
+    
+     </div>
+   </div>
+ 
+  
+  
+  <script>
+
+    $(document).ready(function(){
+      var view= new OTS.ViewModels.AdminAllKnowledgeMap();
+      ko.applyBindings(view,$("#view-content")[0]); 
+  
+   }) ;
+</script>

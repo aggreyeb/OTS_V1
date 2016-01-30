@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Testanswersheet" table="testanswersheet" catalog="otsdb" optimistic-lock="version">
+        <id name="testAnswerSheetId" type="java.lang.Integer">
+            <column name="TestAnswerSheetId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="test" class="OTS.DataModels.Test" fetch="select">
+            <column name="TestId" />
+        </many-to-one>
+        <many-to-one name="testitem" class="OTS.DataModels.Testitem" fetch="select">
+            <column name="TestItemId" />
+        </many-to-one>
+        <property name="lineNumber" type="java.lang.Integer">
+            <column name="LineNumber" />
+        </property>
+        <property name="a" type="java.lang.Boolean">
+            <column name="A" />
+        </property>
+        <property name="b" type="java.lang.Boolean">
+            <column name="B" />
+        </property>
+        <property name="c" type="java.lang.Boolean">
+            <column name="C" />
+        </property>
+        <property name="d" type="java.lang.Boolean">
+            <column name="D" />
+        </property>
+    </class>
+</hibernate-mapping>

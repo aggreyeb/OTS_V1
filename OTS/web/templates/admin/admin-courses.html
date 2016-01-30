@@ -1,0 +1,73 @@
+
+<div id="admin-courses">
+      <table id="tbl-knowledgemap" class="table table-striped">
+         <thead>
+           <a  data-bind="event:{click:function(event){onNew(event)}}" class=" btn btn-info btn-sm pull-left" href="#" >New</a> 
+          <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Name</th>
+            <th></th>                         
+           </tr>
+         </thead>
+         <tbody data-bind="foreach:MyCourses">
+         <tr>
+           <td data-bind="text:CourseTypeId"></td>
+           <td data-bind="text:Number"></td>
+           <td data-bind="text:Name"></td>
+           <td>
+               <div class="btn-group">
+                   <button data-bind="event:{click:function(item,event){$parent.onEdit(item,event)}}" class="btn btn-primary" type="button">Edit</button>
+                   <button data-bind="event:{click:function(item,event){$parent.onDelete(item,event)}}" class="btn btn-danger" type="button">Delete</button>
+               </div>
+            </td>
+          </tr>
+          </tbody> 
+      </table>  
+   </div>
+   <!-- *********************** form start ******************************-->
+   <hr>
+  <div class="alert alert-danger" data-bind="visible:form.responseMessageVisible,attr:{'class':form.responseBoxStyle}" >
+          <a id="lnk-hideMessageBox" data-bind="event:{click:function(event){form.closeMessageBox(event)}}" href="#" class="close" data-hide="alert">&times;</a>
+          <strong data-bind="text:form.responseDialog">Error!</strong> <span data-bind="text:form.responseMessageText">A problem has been occurred while submitting your data.</span>
+  </div>
+   <p></p>     
+   <div class=" panel-footer" data-bind="visible:form.visible">
+     
+       <form class="form-horizontal ">
+      <h4><span data-bind="text:form.heading" class="label label-default">Create New</span></h4>
+        <div class="form-group">
+          <label  class="control-label col-xs-2">Id</label>
+          <div class="col-xs-10">
+              <input readonly id="txt-knowledgemapname" data-bind="value:form.CourseTypeId,valueUpdate: 'afterkeydown'" type="text" class="form-control"  placeholder="Id -Read Only">
+          </div>
+        </div>
+      
+      <div class="form-group">
+          <label  class="control-label col-xs-2">Number</label>
+          <div class="col-xs-10">
+          <input id="txt-knowledgemapname" data-bind="value:form.Number,valueUpdate: 'afterkeydown'" type="text" class="form-control"  placeholder="Number -Required Field">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2">Name</label>
+          <div class="col-xs-10">
+           <input data-bind="value:form.Name" type="text" class="form-control"  placeholder="Name">
+          </div>
+        </div>        
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-10">
+          <button data-bind="event:{click:function(event){onSubmitNew(event)}}" type="buttton" class="btn btn-primary">Submit</button>
+          <button data-bind="event:{click:function(event){onCancelNew(event)}}" type="buttton" class="btn btn-default">Cancel</button>
+          </div>
+        </div>
+      </form>
+  </div> 
+  
+   <script type="text/javascript">
+    $(document).ready(function(){
+        var view =new OTS.ViewModels.CourseManagementViewModel();
+        ko.applyBindings(view,$("#view-content")[0]); 
+    });
+ 
+</script>

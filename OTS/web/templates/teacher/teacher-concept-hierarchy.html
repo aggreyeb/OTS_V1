@@ -1,0 +1,184 @@
+<div>
+    <div class="col-lg-3">
+        <div class="row">
+       
+         <div class=" panel panel-primary">
+             <div class="panel-heading">
+                Concept Hierarchy       
+             </div>
+             <div class=" panel-body">
+               <div class="text-right">
+                <a id="lnk-addconceptnode" data-bind="event:{click:function(event){add(event)}}" href="#"><span class="glyphicon  glyphicon-plus-sign">Add</span></a>
+              <!--  <a id="lnk-updateconceptnode" data-bind="event:{click:function(event){update(event)}}" href="#"><span class="glyphicon glyphicon-pencil"></span>Update</a> |-->
+              <!--  <a id="lnk-deleteconceptnode" data-bind="event:{click:function(event){deletenode(event)}}" href="#"><span class="glyphicon glyphicon-remove-sign"></span>Delete</a>-->
+               </div>
+               <form class="form-inline">
+                 <div class="form-group">
+                  <label></label>
+                  <input placeholder="Select Node first and type name" id="txtSelectedItem" data-bind="value:NewConceptHierarchy" type="text" class="form-control"/>
+                 </div>
+                
+                <div class="form-group">
+                    <label style="color: ghostwhite">Select Option</label>
+                 <Select  id="sel-relationType" class="form-control" data-bind="options:relationTypes,optionsText:'id',value:NewRelationTypeSelected">
+                                                  
+                 </Select>
+                </div>
+              
+            </form>
+           
+           </div>
+             <div class="panel-footer">
+               <div id="tv-conceptHierarchy"> </div>
+                
+             </div>
+         </div>
+        </div>
+        
+    </div>
+    
+    <div class="col-lg-1"></div>
+     
+     <div class="col-lg-8">
+          
+         <div class="panel-footer">
+             
+             <hr>
+             <table id="tbl-editConceptHirarchy" class="table-responsive">
+                 <thead>
+                    <h4><span class="label label-default">Node Information</span></h4> 
+                 </thead>
+                 <tbody>
+                     <tr>
+                         <td><label>Node Name:</label></td>
+                         <td><input id="txt-nodename" data-bind="value:SelectedNodeName" type="text" class="form-control"/><span>.</span></td> 
+                     </tr>
+                     <tr >
+                      <td><label>Parent Node:</label></td>
+                      <td><input  id="txt-nodename" data-bind="value:SelectedNodeParent" type="text"  readonly class="form-control"/><span>.</span></td>
+                     </tr>
+                     
+                    <tr>
+                      <td><label>Relation with parent:</label></td>
+                      <td>  <Select  id="myrelationType" class="form-control" >
+                             <option value=""></option>
+                              <option value="PartOf">PartOf</option>
+                              <option value="TypeOf">TypeOf</option> 
+                            </Select>
+                          <span>.</span>
+                      </td>
+                     </tr>
+                     <tr>
+                         <td>
+                             <div >
+                                 <a id="lnk-updateconceptnode" data-bind="event:{click:function(event){update(event)}}" href="#"><span class="glyphicon glyphicon-pencil"></span>Update</a> |
+                                 <a id="lnk-deleteconceptnode" data-bind="event:{click:function(event){deletenode(event)}}" href="#"><span class="glyphicon glyphicon-remove-sign"></span>Delete</a>
+                             </div>  
+                             
+                         </td>
+                     </tr>
+                 </tbody>
+                
+             </table>
+            
+         </div><p></p>
+         
+         <div  id="div-hide-conceptSchema" class="panel panel-primary">
+             <div class="panel-heading">
+                Concept Schema       
+             </div>
+             <div   class="panel-body">
+                 
+                   <div class="alert alert-danger" data-bind="visible:conceptSchemaResponseMessageVisible,attr:{'class':conceptScheamResponseBoxStyle}" >
+                       <a id="lnk-hideMessageBox" data-bind="event:{click:function(event){closeConceptSchemaMessageBox(event)}}" href="#" class="close" data-hide="alert">&times;</a>
+                     <strong data-bind="text:conceptResponseDialog">Error!</strong> <span data-bind="text:conceptSchemaResponseMessageText">A problem has been occurred while submitting your data.</span>
+                   </div>
+                  <table class="table table-striped table-responsive">
+                     <thead>
+                     <!--<a  data-bind="click:onNewConceptSchema" id="btn-new-concept-schema" class=" btn btn-info btn-sm pull-left" href="#" >New</a> -->
+                     <button data-bind="click:onNewConceptSchema,enable:enableNewConceptSchema" type="button" class="btn btn-info btn-sm pull-left">New</button>
+                     <tr>
+                          <th>Relation Name</th>
+                          <th>Concept Name</th>
+                          <th>Concept Action</th>
+                          <th>Attribute Name</th>
+                           <th>Concept Value</th>
+                           <th></th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="foreach:ConceptSchemas" >
+                          <tr data-bind="event:{dblclick:function(item,event){$parent.onConceptSchemaSelected(item,event)}}">
+                              <td data-bind="text:relationname"></td>
+                              <td data-bind="text:conceptname"></td>
+                              <td data-bind="text:conceptaction"></td>
+                              <td data-bind="text:attributename"></td>
+                              <td data-bind="text:attributevalue"></td>
+                              <td>
+                                  <div data-bind="if:relationname">
+                                        <button id="btn-Edit" data-bind="event:{click:function(item,event){$parent.onConceptSchemaSelected(item,event)}}" class="btn btn-primary">Edit</button> 
+                                  </div>
+                               
+                              </td>
+                           </tr>
+                          </tbody>
+                     </table>
+           
+             </div>
+        <div class="panel-footer">
+            <div data-bind="visible:conceptSchemaFormVisible"> <!-- Concept Schema Form -->
+          
+           <p></p> 
+              <form class="form-horizontal">
+                 <h4><span data-bind="text:conceptSchemaFormHeading" class="label label-default"></span></h4>
+                <div class="form-group">
+                   <label  class="control-label col-xs-2">Relation Name</label>
+                   <div class="col-xs-10">
+                       <input  required data-bind="value:ConceptSchemaForm.relationname" type="text" class="form-control" id="inputEmail" placeholder="Relation Name">
+                  </div>
+               </div>
+             <div class="form-group">
+               <label class="control-label col-xs-2">Concept Name</label>
+               <div class="col-xs-10">
+                   <input data-bind="value:ConceptSchemaForm.conceptname" type="text" class="form-control"  placeholder="Concept Name">
+              </div>
+           </div>
+          <div class="form-group">
+            <label class="control-label col-xs-2">Concept Action</label>
+            <div class="col-xs-10">
+                <input data-bind="value:ConceptSchemaForm.conceptaction" type="text" class="form-control"  placeholder="Concept Action">
+            </div>
+        </div>
+        
+          <div class="form-group">
+            <label class="control-label col-xs-2">Attribute Name</label>
+            <div class="col-xs-10">
+                <input data-bind="value:ConceptSchemaForm.attributename" type="text" class="form-control"  placeholder="Attribute Name">
+            </div>
+        </div>
+          <div class="form-group">
+            <label class="control-label col-xs-2">Attribute Value</label>
+            <div class="col-xs-10">
+                <input data-bind="value:ConceptSchemaForm.attributevalue" type="text" class="form-control"  placeholder="Attribute Value">
+            </div>
+        </div>
+          <div class="form-group">
+              <div data-bind="visible:newConceptSchemaActionsVisible" class="col-xs-offset-2 col-xs-10">
+                  <button data-bind="click:submitNewConceptSchema" type="button" class="btn btn-primary">Submit</button>
+                <button data-bind="click:onCancelNewConceptSchema" type="button" class="btn btn-default">Cancel</button>
+             </div>
+              <div  data-bind="visible:editConceptSchemaActionsVisible" class="col-xs-offset-2 col-xs-10">
+                <button data-bind="click:updateConceptSchama" type="button" class="btn btn-primary">Update</button>
+                <button data-bind="click:DeleteConceptSchema" type="button" class="btn btn-danger">Delete</button>
+                <button data-bind="click:onCancelEdit" type="button" class="btn btn-default">Cancel</button>
+            </div>
+              
+             
+          </div>
+         </form>
+        </div> 
+        
+      </div>
+         </div>
+    </div>
+</div>
+

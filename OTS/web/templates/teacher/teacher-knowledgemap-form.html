@@ -1,0 +1,27 @@
+ <div> <!-- Knowledge map form panel-->
+   <div id="div-messageBox" class="alert alert-danger">
+    <a id="lst-closeMessageBox"  href="#" class="close" data-hide="alert">&times;</a>
+    <strong id="message-dialog">Error!</strong> <span id="message-text">A problem has been occurred while submitting your data.</span>
+   </div>
+    <form class="form-horizontal ">
+      <h4><span id="form-heading" class="label label-default">Create New</span></h4>
+       <div class="form-group">
+         <label  class="control-label col-xs-2">Name</label>
+          <div class="col-xs-10">
+              <input data-bind="value:test" id="txt-knowledgemapname"  type="text" class="form-control"  placeholder="Name -Required Field">
+         </div>
+       </div>
+       <div class="form-group">
+        <label class="control-label col-xs-2">Description</label>
+         <div class="col-xs-10">
+         <input id="txt-knowledgemapdescription" type="text" class="form-control"  placeholder="Description">
+         </div>
+       </div>        
+        <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+         <button id="btn-submit-new" type="buttton" class="btn btn-primary">Submit</button>
+         <button id="btn-cancel-new" type="buttton" class="btn btn-default">Cancel</button>
+        </div>
+       </div>
+    </form>
+  </div> <!-- End of knowledge map p-->

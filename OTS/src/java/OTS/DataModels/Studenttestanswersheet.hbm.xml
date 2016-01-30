@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Studenttestanswersheet" table="studenttestanswersheet" catalog="otsdb" optimistic-lock="version">
+        <id name="studentTestAnswerSheetId" type="java.lang.Integer">
+            <column name="StudentTestAnswerSheetId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="test" class="OTS.DataModels.Test" fetch="select">
+            <column name="TestId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="testitem" class="OTS.DataModels.Testitem" fetch="select">
+            <column name="TestItemId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="OTS.DataModels.User" fetch="select">
+            <column name="StudentId" not-null="true" />
+        </many-to-one>
+        <property name="a" type="java.lang.Boolean">
+            <column name="A" />
+        </property>
+        <property name="b" type="java.lang.Boolean">
+            <column name="B" />
+        </property>
+        <property name="c" type="java.lang.Boolean">
+            <column name="C" />
+        </property>
+        <property name="d" type="java.lang.Boolean">
+            <column name="D" />
+        </property>
+        <property name="isCorrect" type="java.lang.Boolean">
+            <column name="IsCorrect" />
+        </property>
+        <property name="totalCorrectAnswers" type="int">
+            <column name="TotalCorrectAnswers" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

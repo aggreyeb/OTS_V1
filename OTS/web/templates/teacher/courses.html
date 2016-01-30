@@ -1,0 +1,131 @@
+
+<div class="table-responsive">
+    
+    <div class="panel panel-primary">
+    <div class="panel-heading hidden">
+        <h3 class="panel-title">Course List</h3>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-striped   table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Number</th>
+                <th>Name</th>
+              
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:teacherCouresList">
+            <tr>
+                <td data-bind="text:Id"></td>
+                <td data-bind="text:Number"></td>
+                <td data-bind="text:Name"></td>
+                <td>
+                  <div class="btn-group">
+                    <button  data-bind="event:{click:function(item,event){$parent.onCoureseSelected(item,event)}}" type="button" class="btn btn-primary">Associate Knowledge Map (s)</button>
+                  </div>
+                </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+     <div id="div-loadingMessage" class=" panel-footer">  
+      <h4><span  class="label label-info">Loading please wait...</span></h4>
+     </div>
+    </div>
+    
+    <div class="panel-footer">
+        <div data-bind="visible:knowledgeMaplistVisible" >
+    <div class="alert alert-danger" data-bind="visible:responseMessageVisible,attr:{'class':responseBoxStyle}" >
+          <a id="lnk-hideMessageBox"  data-bind="event:{click:function(event){oncloseMessageBox(event)}}"  href="#" class="close" data-hide="alert">&times;</a>
+          <strong data-bind="text:responseDialog">Error!</strong> <span data-bind="text:responseMessageText">A problem has been occurred while submitting your data.</span>
+    </div>
+        <div>
+            <h4><span class="label label-default">Selected Course</span></h4> 
+        </div>
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td> <label>Number:</label><span data-bind="text:selectedCourseNumber">test1</span></td>
+                </tr>
+                <tr>
+                    <td><label>Name&nbsp;&nbsp;&nbsp;&nbsp;:</label><span data-bind="text:selectedCourseName">test2</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div><br>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+          <div>
+            <h4><span class="label label-default">Your Knowledge Maps</span></h4> 
+          </div>
+             <table class="table table-striped   table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            <tbody data-bind="foreach:teacherKnowledgeMaps">
+                <tr>
+                    <td data-bind="text:KnowledgeMapId"></td>
+                    <td data-bind="text:Name"></td>
+                    <td data-bind="text:Description"></td>
+                    <td>
+                        <button  data-bind="text:ActionText,enable:CanEnableSelect, event:{click:function(item,event){$parent.onSelect(item,event)}}" class="btn btn-primary">Select</button>
+                    </td>
+                </tr>
+            </tbody>
+            </thead>
+        </table>
+            
+        </div>
+        <div class="col-lg-6">
+             <div>
+            <h4><span class="label label-default">Knowledge Maps Associated to Course</span></h4> 
+          </div>
+             <table class="table table-striped   table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                  <!--  <th>Description</th> -->
+                    <th></th>
+                </tr>
+            <tbody data-bind="foreach:selectedKnowledgeMaps">
+                <tr>
+                    <td data-bind="text:KnowledgeMapId"></td>
+                    <td data-bind="text:Name"></td>
+                   <!-- <td data-bind="text:Description"></td> -->
+                    <td>
+                        <button  data-bind="event:{click:function(item,event){$parent.onRemove(item,event)}}" class="btn btn-danger">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+            </thead>
+        </table>
+        </div>
+       
+    </div>
+       
+        
+ 
+   <!--  <button data-bind="event:{click:function(event){onSubmit(event)}}" type="buttton" class="btn btn-primary ">Submit</button>-->
+     <button data-bind="event:{click:function(event){onCancel(event)}}" type="buttton" class="btn btn-default ">Cancel</button>
+    </div>
+    </div><br>
+      
+</div>
+ 
+</div>
+
+ <script>
+    $(document).ready(function(){
+     //ko.applyBindings(new OTS.ViewModels.TeacherCoursesViewModel(), $("#view-content")[0]);
+       ko.applyBindings(new OTS.ViewModels.TeacherCoursesViewModel());
+    });
+</script>

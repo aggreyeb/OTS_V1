@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Courseknowledgemap" table="courseknowledgemap" catalog="otsdb" optimistic-lock="version">
+        <composite-id name="id" class="OTS.DataModels.CourseknowledgemapId">
+            <key-property name="courseId" type="int">
+                <column name="CourseId" />
+            </key-property>
+            <key-property name="knowledgeMapId" type="int">
+                <column name="KnowledgeMapId" />
+            </key-property>
+        </composite-id>
+        <property name="assignBy" type="java.lang.Integer">
+            <column name="AssignBy" />
+        </property>
+        <property name="assignOn" type="timestamp">
+            <column name="AssignOn" length="19" />
+        </property>
+        <property name="actionText" type="string">
+            <column name="ActionText" length="100" />
+        </property>
+        <property name="canEnableSelect" type="java.lang.Boolean">
+            <column name="CanEnableSelect" />
+        </property>
+    </class>
+</hibernate-mapping>

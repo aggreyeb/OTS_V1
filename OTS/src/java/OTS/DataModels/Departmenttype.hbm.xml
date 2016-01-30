@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 20, 2014 11:09:04 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Departmenttype" table="departmenttype" catalog="otsdb" optimistic-lock="version">
+        <id name="departmentTypeId" type="java.lang.Integer">
+            <column name="DepartmentTypeId" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="Name" length="100" />
+        </property>
+        <property name="description" type="string">
+            <column name="Description" length="100" />
+        </property>
+        <set name="users" table="user" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="DepartmentTypeId" />
+            </key>
+            <one-to-many class="OTS.DataModels.User" />
+        </set>
+    </class>
+</hibernate-mapping>

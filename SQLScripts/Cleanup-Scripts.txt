@@ -1,0 +1,4 @@
+Delete from questionlineitem;
+Delete from question;
+Delete from test;
+Delete from teachercoursetest;

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Studentcourseregistration" table="studentcourseregistration" catalog="otsdb" optimistic-lock="version">
+        <id name="studentCourseId" type="java.lang.Integer">
+            <column name="StudentCourseId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="academiccourse" class="OTS.DataModels.Academiccourse" fetch="select">
+            <column name="CourseId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="OTS.DataModels.User" fetch="select">
+            <column name="StudentId" not-null="true" />
+        </many-to-one>
+        <property name="date" type="timestamp">
+            <column name="Date" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

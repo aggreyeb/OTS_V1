@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Studenttest" table="studenttest" catalog="otsdb" optimistic-lock="version">
+        <id name="studentTestId" type="java.lang.Integer">
+            <column name="StudentTestId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="academiccourse" class="OTS.DataModels.Academiccourse" fetch="select">
+            <column name="CourseId" />
+        </many-to-one>
+        <many-to-one name="test" class="OTS.DataModels.Test" fetch="select">
+            <column name="TestId" />
+        </many-to-one>
+        <many-to-one name="user" class="OTS.DataModels.User" fetch="select">
+            <column name="StudentId" />
+        </many-to-one>
+        <property name="mark" type="java.lang.Float">
+            <column name="Mark" precision="12" scale="0" />
+        </property>
+        <property name="grade" type="string">
+            <column name="Grade" />
+        </property>
+        <property name="isTestCompleted" type="java.lang.Boolean">
+            <column name="IsTestCompleted" />
+        </property>
+        <property name="dateCompleted" type="timestamp">
+            <column name="DateCompleted" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

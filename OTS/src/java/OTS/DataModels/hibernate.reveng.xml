@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="otsdb"/>
+  <table-filter match-name="usertype"/>
+  <table-filter match-name="question"/>
+  <table-filter match-name="studenttest"/>
+  <table-filter match-name="questiontype"/>
+  <table-filter match-name="user"/>
+  <table-filter match-name="teachercoursetest"/>
+  <table-filter match-name="knowledgemap"/>
+  <table-filter match-name="questionnaturetype"/>
+  <table-filter match-name="academiccourse"/>
+  <table-filter match-name="answer"/>
+  <table-filter match-name="questionlineitem"/>
+  <table-filter match-name="test"/>
+  <table-filter match-name="studentcourseregistration"/>
+  <table-filter match-name="courseassignment"/>
+  <table-filter match-name="cognitiveleveltype"/>
+  <table-filter match-name="courseknowledgemap"/>
+  <table-filter match-name="useraccount"/>
+  <table-filter match-name="testanswersheet"/>
+  <table-filter match-name="testitem"/>
+  <table-filter match-name="testitemoption"/>
+  <table-filter match-name="studenttestanswersheet"/>
+  <table-filter match-name="studenttesthistory"/>
+</hibernate-reverse-engineering>

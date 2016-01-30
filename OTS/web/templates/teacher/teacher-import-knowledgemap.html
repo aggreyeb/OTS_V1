@@ -1,0 +1,41 @@
+<div id="div-Import-knowledgemaps-list" class="row">
+     <table id="tbl-knowledgemap" class="table table-striped table-responsive">
+       <thead>
+                <tr>
+                 <th>Id</th>
+                 <th>Name</th>
+                  <th>Description</th>
+                  <th></th>                   
+                </tr>
+      </thead>
+      <tbody data-bind="foreach:knowledgemapList" >
+          <tr>
+            <td data-bind="text:id" >1</td>
+            <td data-bind="text:label" >Garden</td>
+            <td data-bind="text:description">Garden Concept</td>
+            <td>
+                <input data-bind="checked:selected" type="checkbox"/>
+            </td>
+          </tr>
+       </tbody>
+   </table>
+    <div style="padding-left:5px">
+        <button data-bind="click:onImport" type="button" class="btn btn-primary pull-left ">Import</button>
+    </div><br><br><br>
+    
+     <div class="alert alert-danger" data-bind="visible:responseMessageVisible,attr:{'class':responseBoxStyle}" >
+          <a id="lnk-hideMessageBox" data-bind="event:{click:function(event){closeMessageBox(event)}}" href="#" class="close" data-hide="alert">&times;</a>
+          <strong data-bind="text:responseDialog">Error!</strong> <span data-bind="text:responseMessageText">A problem has been occurred while submitting your data.</span>
+    </div>
+   <p></p>  
+  </div> 
+ 
+<script>
+
+    $(document).ready(function(){
+     
+   var view= new OTS.ViewModels.ImportKnowlegeMapView();
+    ko.applyBindings(view,$("#view-content")[0]); 
+  
+   }) ;
+</script>

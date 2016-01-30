@@ -1,0 +1,298 @@
+﻿<div id="myConetent" role="tabpanel">
+    <div id="div-myMessageBox"></div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a data-bind="event:{click:function(item,event){TabChanged(item,event)}}" href="#test-items" aria-controls="home" role="tab" data-toggle="tab">Generate Test Items</a></li>
+        <li role="presentation"><a data-bind="event:{click:function(item,event){TabChanged(item,event)}}" href="#question-quetion-bank" aria-controls="question-quetion-bank" role="tab" data-toggle="tab">Test Question Bank</a></li>
+        <li role="presentation"><a data-bind="event:{click:function(item,event){TabChanged(item,event)}}" href="#test-sheet" aria-controls="messages" role="tab" data-toggle="tab">Test Sheet</a></li>
+        <li role="presentation"><a data-bind="event:{click:function(item,event){TabChanged(item,event)}}" href="#answer-sheet" aria-controls="settings" role="tab" data-toggle="tab">Answer Sheet</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="test-items">
+            <div>
+     <div class="alert alert-danger" style="display: none" id="div-messageBox">
+       
+     </div>
+    <div class="col-lg-5">
+        <div class="row">
+            <div class="form-group">
+                <div >
+                   <h4><span class="label label-default">Your Course Knowledge Maps</span></h4> 
+                </div> 
+                <div style="overflow-y: scroll" id="tv-courseknowledgemaps"> </div><hr>
+            </div>
+            <div>
+                   <h4><span class="label label-default">Test Item Options</span></h4> 
+             </div>
+           
+            <label> Cognitive Level</label>
+            <select id="cboCognitive" data-bind="options:CognitiveTypeList,optionsText:'Name', optionsValue:'Id', value:CognitiveTypeSelected,optionsCaption: 'Choose...',event:{change:CognitiveTypeChanged}" class="form-control">
+             
+            </select>
+             <label> Item Type</label>
+             <select id="cboQuestionType" data-bind="options:QuestionTypeList,optionsText:'Name', optionsValue:'Id', value:QuestionTypeSelected,optionsCaption: 'Choose...',event:{change:QuestionTypeChanged}" class="form-control">
+                
+            </select>
+             
+              <label> Nature of Item</label>
+             <select id="cboQuestionNature" data-bind="options:QuestionNatureTypeList,optionsText:'Name', optionsValue:'Id', value:QuestionNatureSelected,optionsCaption: 'Choose...',enable:EnableQuestionNature"  class="form-control">
+                <option value="1">Correct</option>
+                <option value="2">Negative</option>
+                <option value="3">Incorrect</option>
+                <option value="4">Negative Incorrect</option>
+             </select><p></p>
+            
+          <div class="btn-group">
+        <button id="btn-submit" data-bind="click:Submit,enable:EnableSubmit" class="btn btn-primary" type="button">Submit</button>
+       <!-- <button class="btn btn-default" type="button">Cancel</button>-->
+      
+          </div> <p></p>
+          
+      
+        </div>
+    </div>
+    <div class="col-lg-2">
+        
+    </div>
+    
+     <div class="col-lg-5">
+         <div class="row">
+               <h4><span class="label label-default">Node Information</span></h4> 
+                <label>Node Name</label><input data-bind="value:KnowledgeMapSelected.NodeName" class="form-control" type="text" readonly="readonly"/>
+                <label>Parent Node</label><input data-bind="value:KnowledgeMapSelected.ParentNode" class="form-control" type="text" readonly="readonly"/>
+                <label>Relation with Parent</label><input data-bind="value:KnowledgeMapSelected.RelationWithParent" class="form-control" type="text" readonly="readonly"/>
+                <input data-bind="checked:KnowledgeMapSelected.IncludeSubTrees" type="checkbox"/><label>Include Sub Trees?</label>
+         </div><br>
+         <div class="row">
+             <div class="panel panel-info">
+                 <div class="panel-heading">
+                     Generated Item: <span id="div-outputheader"><b></b> </span> 
+                 </div>
+              
+                 <div id="div-output-body" class="panel-body" style="max-height: 150px;overflow-y: auto">
+                    
+                    
+                 </div>
+                 <div class="panel-footer">
+                       <span  id="spProgress" class="label label-warning ">Please wait loading ...</span>
+                 </div>
+             </div>
+         </div>
+     </div><p></p>
+     
+    
+  </div>
+    </div>
+        <!--Test question Bank Tab-->
+        <div role="tabpanel" class="tab-pane" id="question-quetion-bank">
+            <div class="alert alert-info" style="margin-top: 5px">
+                Select questions to be added or remove to test sheet<span class="pull-right"><button data-bind="click:AddTestSheetItems,enable:EnableSubmit" type="button" class="btn btn-primary btn-sm">Add</button> <button  type="button" class="btn btn-default btn-sm hidden">Remove</button> </span>
+            </div>
+            <div style="max-height: 600px;overflow-y: auto">
+             <table class="table table-striped table-hover ">
+                    <thead>
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Question Type</th>
+                    <th>Select</th>
+                    </thead>
+                    <tbody data-bind="foreach:TestQuestionBank">
+                        <tr>
+                            <td data-bind="text:Number">1</td>
+                         <td>
+                          <span data-bind="text:QuestionText">Plant has root</span>
+                          <ul data-bind="foreach:LineItems">
+                              <li data-bind="text:$data">test1</li>
+                          </ul>
+                         </td>
+                         <td data-bind="text:QuestionType">True/False</td>
+                           <td>
+                             <span>
+                                 <input data-bind="checked:Selected" type="checkbox" />
+                             </span>
+                           </td>
+                        </tr>
+                    </tbody>
+                </table>
+          </div>
+            
+        </div>
+        <div role="tabpanel" class="tab-pane" id="test-sheet">
+            <div class="alert alert-info" style="margin-top: 5px">
+                Select correct answer(s) and click submit to create answer sheet<span class="pull-right"><button data-bind="click:UpdateTestSheet,enable:EnableSubmit" type="button" class="btn btn-primary btn-sm">Submit</button> <button data-bind="click:RemoveTestSheetItems,enable:EnableSubmit" type="button" class="btn btn-default btn-sm">Remove Selected</button> </span>
+            </div>
+            
+            <div style="max-height: 600px;overflow-y: auto">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Select</th>
+                         <th>Mark</th>
+                        <th>Question</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:TestSheetItems">
+                    <tr>
+                        <td data-bind="text:ItemNumber"></td>
+                         <td>
+                             <span>
+                                 <input data-bind="checked:Selected" type="checkbox" />
+                             </span>
+                           </td>
+                          <td>
+                             <span>
+                                 <input class="input-mask" style="width:30px " data-bind="value:Mark,event:{blur:MarkChanged}" type="text" />
+                             </span>
+                           </td>
+                        <td data-bind="text:ItemText"></td>
+                   
+                        <td>
+                            <!--True or false-->
+                           
+                            <div data-bind="foreach:AnswerOptions">
+                                <div data-bind="if:$parent.IsTrueFalse">
+                                   <!--  <input   data-bind="attr:{name:UniqueId,value:CheckedText}, checked:CheckedText, event:{click:function(item,event){MyTrueFalse(item,event);return true}} "  type="radio"/><span data-bind="text:AnswerOptionText"></span>-->
+                                   <div class="btn-group">
+                                       <button style="margin-bottom: 1px" data-bind="text:AnswerOptionValue,style:{color:CheckedStyle}, event:{click:function(item,event){MyTrueFalse(item, event);return true}}" class="btn btn-default"></button>
+                                      <!-- <button class="btn btn-default">False</button>-->
+                                   </div>
+                                </div> 
+                                <div data-bind="if:$parent.IsMultipleChoiceMultipleAnswers">
+                                   <button style="margin-bottom: 1px" class="btn btn-default" data-bind="text:LabelText,style:{color:CheckedStyle}, event:{click:function(item,event){MyMultipleChoiceMultipleAnswersCheckbox(item,event) ;return true}}"> Check </button><span data-bind="text:AnswerOptionText"></span>
+                                </div> 
+                                
+                                 <div data-bind="if:$parent.IsMultipleChoiceSingleAnswer">
+                                    
+                                    <!-- <span style="margin-right: 20px" data-bind="text:LabelText"></span><input   data-bind="value:AnswerOptionValue,checked:AnswerOptionValue,event:{click:function(item,event){MyMultipleChoiceSingleAnswer(item,event);return true}},  attr:{name:UniqueId,value: false}"  type="radio"/><span data-bind="text:AnswerOptionText"></span>-->
+                                    <button data-bind="text:LabelText,style:{color:CheckedStyle}, event:{click:function(item,event){MyMultipleChoiceSingleAnswer(item,event);return true}}" style="margin-bottom: 1px" class="btn btn-default" type="button"> Check </button><span data-bind="text:AnswerOptionText"></span>
+                                </div> 
+                            </div>
+                             
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div> 
+        </div>
+        <div role="tabpanel" class="tab-pane" id="answer-sheet">
+            <table class="table table-hover table-striped">
+                <thead>
+                 <tr>   
+                  <th>#</th>
+                  <th>Question Type</th>
+                   <th>A</th>
+                   <th>B</th> 
+                   <th>C</th>
+                   <th>D</th>
+                 </tr>
+                </thead>
+                <tbody data-bind="foreach:AnswersSheetItems">
+                    <tr>
+                        <td data-bind="text:LineNumber"></td>
+                        <td data-bind="text:QuestionTypeText"></td>
+                        <td><input data-bind="checked:A ,enable:false" type="checkbox"/></td>
+                        <td><input data-bind="checked:B ,enable:false" type="checkbox"/></td>
+                        <td><input data-bind="checked:C ,enable:false" type="checkbox"/></td>
+                        <td><input data-bind="checked:D ,enable:false" type="checkbox"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function MyTrueFalse(item,event){
+        var x= ko.toJS(item);
+        console.log(event);
+        console.log(x);
+        ToggleQuestionOptionColor(item);
+    };
+    
+   function ToggleQuestionOptionColor(item){
+          var items=[];
+        for(var i=0;i<item.Parent().length;i++){
+                for(var j=0;j<item.Parent()[i].AnswerOptions().length;j++){
+                    if(item.Parent()[i].AnswerOptions()[j].UniqueId()===item.UniqueId()){ 
+                      items.push(item.Parent()[i].AnswerOptions()[j]);
+                   }
+                }
+            }
+            for(var i=0;i<items.length;i++){
+                if(items[i].AnswerOptionId===item.AnswerOptionId){
+                    items[i].IsCorrect(true);
+                     items[i].IsChecked("true");
+                     items[i].CheckedStyle("Green");
+                }
+                else{
+                     items[i].CheckedStyle("");
+                     items[i].IsCorrect(false);
+                     items[i].IsChecked("false");
+                }
+            }
+   };
+   
+  
+  
+  function ToggleQuestionOptionMultipleAnswersColor(item){
+          var items=[];
+        for(var i=0;i<item.Parent().length;i++){
+                for(var j=0;j<item.Parent()[i].AnswerOptions().length;j++){
+                    if(item.Parent()[i].AnswerOptions()[j].UniqueId()===item.UniqueId()){ 
+                      items.push(item.Parent()[i].AnswerOptions()[j]);
+                   }
+                }
+            }
+            for(var i=0;i<items.length;i++){
+                if(items[i].AnswerOptionId===item.AnswerOptionId){
+                    if(!items[i].IsCorrect()){
+                     items[i].IsCorrect(true);
+                     items[i].IsChecked("true");
+                     items[i].CheckedStyle("Green");
+                    }
+                    else{
+                      items[i].IsCorrect(false);
+                     items[i].IsChecked("false");
+                     items[i].CheckedStyle("");
+                    }
+                    
+                }
+                else{
+                    // items[i].CheckedStyle("");
+                   //  items[i].IsCorrect(false);
+                    // items[i].IsChecked("false");
+                }
+            }
+   };
+   
+    
+    function MyMultipleChoiceMultipleAnswersCheckbox(item,event){
+      
+       var x= ko.toJS(item);
+       ToggleQuestionOptionMultipleAnswersColor(item);
+        console.log(x);
+    };
+    
+    function MyMultipleChoiceSingleAnswer(item,event){
+       var x= ko.toJS(item);
+        ToggleQuestionOptionColor(item);
+        console.log(x);
+    };
+    
+    
+   function MarkChanged(item,event){
+        console.log(item);
+        console.log(event);
+       
+  };
+  $(document).ready(function(){
+      
+    
+       
+  });
+</script>

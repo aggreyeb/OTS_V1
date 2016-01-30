@@ -1,0 +1,12 @@
+build
+/OTS/dist/
+/OTS/nbproject
+/OTS-BuisinessModels/602-EIMDomainModel/bin
+/OTS-BuisinessModels/602-EIMDomainModel/obj
+/OTS-BuisinessModels/OTS.DataModel/bin
+/OTS-BuisinessModels/OTS.DataModel/obj
+/OTS-BuisinessModels/602-EIMApp/bin
+/OTS-BuisinessModels/602-EIMApp/obj
+/OTS-BuisinessModels/602-EIM-Test/bin
+/OTS-BuisinessModels/602-EIM-Test/obj
+

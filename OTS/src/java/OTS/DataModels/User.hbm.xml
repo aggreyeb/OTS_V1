@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.User" table="user" catalog="otsdb" optimistic-lock="version">
+        <id name="userId" type="java.lang.Integer">
+            <column name="UserId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="useraccount" class="OTS.DataModels.Useraccount" fetch="select">
+            <column name="UserAccountId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usertype" class="OTS.DataModels.Usertype" fetch="select">
+            <column name="UserTypeId" />
+        </many-to-one>
+        <property name="email" type="string">
+            <column name="Email" />
+        </property>
+        <property name="phone" type="string">
+            <column name="Phone" length="15" />
+        </property>
+        <property name="firstName" type="string">
+            <column name="FirstName" length="60" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="LastName" length="60" not-null="true" />
+        </property>
+        <property name="number" type="string">
+            <column name="Number" length="50" />
+        </property>
+        <property name="street" type="string">
+            <column name="Street" length="100" />
+        </property>
+        <property name="city" type="string">
+            <column name="City" length="60" />
+        </property>
+        <property name="province" type="string">
+            <column name="Province" length="60" />
+        </property>
+        <set name="studenttests" table="studenttest" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="StudentId" />
+            </key>
+            <one-to-many class="OTS.DataModels.Studenttest" />
+        </set>
+        <set name="studentcourseregistrations" table="studentcourseregistration" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="StudentId" not-null="true" />
+            </key>
+            <one-to-many class="OTS.DataModels.Studentcourseregistration" />
+        </set>
+        <set name="teachercoursetests" table="teachercoursetest" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TeacherId" not-null="true" />
+            </key>
+            <one-to-many class="OTS.DataModels.Teachercoursetest" />
+        </set>
+        <set name="knowledgemaps" table="knowledgemap" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CreatedBy" />
+            </key>
+            <one-to-many class="OTS.DataModels.Knowledgemap" />
+        </set>
+        <set name="studenttestanswersheets" table="studenttestanswersheet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="StudentId" not-null="true" />
+            </key>
+            <one-to-many class="OTS.DataModels.Studenttestanswersheet" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Test" table="test" catalog="otsdb" optimistic-lock="version">
+        <id name="testId" type="java.lang.Integer">
+            <column name="TestId" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="Name" />
+        </property>
+        <property name="totalMark" type="java.lang.Float">
+            <column name="TotalMark" precision="12" scale="0" />
+        </property>
+        <property name="numberOfQuestion" type="java.lang.Integer">
+            <column name="NumberOfQuestion" />
+        </property>
+        <property name="startDate" type="timestamp">
+            <column name="StartDate" length="19" />
+        </property>
+        <property name="startTime" type="string">
+            <column name="StartTime" length="50" />
+        </property>
+        <property name="endTime" type="string">
+            <column name="EndTime" length="50" />
+        </property>
+        <property name="isActivated" type="java.lang.Boolean">
+            <column name="IsActivated" />
+        </property>
+        <set name="teachercoursetests" table="teachercoursetest" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TestId" not-null="true" />
+            </key>
+            <one-to-many class="OTS.DataModels.Teachercoursetest" />
+        </set>
+        <set name="testitems" table="testitem" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Test_id" />
+            </key>
+            <one-to-many class="OTS.DataModels.Testitem" />
+        </set>
+        <set name="studenttests" table="studenttest" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TestId" />
+            </key>
+            <one-to-many class="OTS.DataModels.Studenttest" />
+        </set>
+        <set name="studenttestanswersheets" table="studenttestanswersheet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TestId" not-null="true" />
+            </key>
+            <one-to-many class="OTS.DataModels.Studenttestanswersheet" />
+        </set>
+        <set name="testanswersheets" table="testanswersheet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TestId" />
+            </key>
+            <one-to-many class="OTS.DataModels.Testanswersheet" />
+        </set>
+    </class>
+</hibernate-mapping>

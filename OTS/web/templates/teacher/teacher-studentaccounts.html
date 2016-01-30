@@ -1,0 +1,132 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading"></div>
+ <div  class="panel-body">
+        <div>
+   <!-- Split button -->
+        <div class="btn-group">
+          <button data-bind="click:OnCreateNew" type="button" class="btn btn-info">New</button>
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a  data-bind="click:OnCreateBatch" href="#">Batch</a></li>
+          </ul>
+        </div><br>
+        <p></p>
+        <!--End new button-->
+   <div>
+       <table class="table table-hover table-striped ">
+           <thead>
+               <tr>
+                   <th>Id</th>
+                   <th>First Name</th>
+                   <th>Last Name</th>
+                   <th>Phone</th>
+                   <th>Email</th>
+                   <th></th>
+               </tr>
+           </thead>
+           <tbody data-bind="foreach:userList">
+               <tr>
+                   <td data-bind="text:Id">Id</td>
+                   <td data-bind="text:FirstName">John</td>
+                   <td data-bind="text:LastName">Smith</td>
+                   <td data-bind="text:Phone">Phone</td>
+                   <td data-bind="text:Email">Email</td>
+                   <td>
+                      <div class=" btn-group">
+                         <button data-bind="event:{click:function(item,event){$parent.onEditStudent(item,event)}}" class="btn btn-group-sm btn-primary" type="button">Edit</button>
+                         <button data-bind="event:{click:function(item,event){$parent.onDeleteStudent(item,event)}}" class="btn btn-group-sm btn-danger" type="button">Delete</button>
+                             <button  class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+                                  Actions <span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a data-bind="event:{click:function(item,event){$parent.onResetPassword(item,event)}}" role="menuitem" tabindex="-1" href="#">Reset Password</a></li>
+                              </ul>
+                       </div>
+                   </td>
+               </tr>
+           </tbody>
+       </table>
+       
+         <div class="alert alert-danger" data-bind="visible:form.responseMessageVisible,attr:{'class':form.responseBoxStyle}" >
+          <a id="lnk-hideMessageBox" data-bind="event:{click:function(event){form.closeMessageBox(event)}}"  href="#" class="close" data-hide="alert">&times;</a>
+          <strong data-bind="text:form.responseDialog">Error!</strong> <span data-bind="text:form.responseMessageText">A problem has been occurred while submitting your data.</span>
+        </div>
+      
+   </div>
+</div>
+   
+      <div class="panel-footer">
+
+     <div  style="background-color: lightyellow; display: none" id="div-validation">
+                
+     </div>  
+   <div data-bind="visible:form.formVisible">
+    <form class="form-horizontal ">
+          <div  id="div-form-heading">
+         <h4><span  id="form-heading" class="label label-default"><span data-bind="text:form.headingText ">Create New</span></span></h4>  
+         </div>    
+       
+       <div class="form-group">
+         <label  class="control-label col-xs-2">First Name</label>
+          <div class="col-xs-10">
+              <input data-bind="value:student.FirstName"   type="text" class="form-control"  placeholder="FirstName -Required Field">
+         </div>
+       </div>
+       <div class="form-group">
+        <label class="control-label col-xs-2">List Name</label>
+         <div class="col-xs-10">
+         <input data-bind="value:student.LastName"  type="text" class="form-control"  placeholder="LastName- Required Field">
+         </div>
+       </div>   
+      
+       <div class="form-group">
+        <label class="control-label col-xs-2">Phone</label>
+         <div class="col-xs-10">
+         <input data-bind="value:student.Phone" type="text" class="form-control"  placeholder="Phone- Required Field">
+         </div>
+       </div>  
+      
+      <div class="form-group">
+        <label class="control-label col-xs-2">Email</label>
+         <div class="col-xs-10">
+         <input data-bind="value:student.Email" type="text" class="form-control"  placeholder="Email- Required Field">
+         </div>
+       </div>  
+      
+       <div class="form-group">
+        <label class="control-label col-xs-2">Password</label>
+         <div class="col-xs-10">
+             <input data-bind="value:student.Password" type="text" class="form-control" readonly="readonly"  placeholder="Temporary Password will be generated">
+         </div><br>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10"><p></p>
+         <button  data-bind="click:SubmitNewStudent" type="button" class="btn btn-primary">Submit</button>
+         <button  data-bind="click:CancelAddNewStudent" type="button" class="btn btn-default">Cancel</button>
+        </div>
+       </div>
+    </form><p></p>
+     </div>
+ 
+</div>
+ </div> <!-- end of footer -->   
+        
+ </div>
+  
+ 
+   
+
+ 
+ <script>
+
+    $(document).ready(function(){
+    
+      var view= new OTS.ViewModels.StudentAccounts(new OTS.ViewModels.TeacherCourseAssigment());
+      ko.applyBindings(view,$("#view-content")[0]); 
+  
+   }) ;
+</script>
+
