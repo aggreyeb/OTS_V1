@@ -233,8 +233,8 @@ OTS.ViewModels.TeacherKnowledgeMapList=function(conceptHirarchyViewModel){
     
    
     me.onDeplicate=function(item,event){
-        item.label=item.label + "Copy";
-        item.description=item.description +"Copy";
+        item.label=item.label + " " + "Copy";
+        item.description=item.description + " " +"Copy";
         me.selectedItem=item;
         me.currentAction=me.actionType.DUPLICATE;
         me.changeFormHeading(me.formHeadingType.Duplicate);

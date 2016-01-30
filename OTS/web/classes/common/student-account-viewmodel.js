@@ -34,6 +34,11 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
     
     me.SelectedUserType=me.UserType.Student;
     
+    me.validateEmail=  function (email) {
+       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    
     me.student={Id:ko.observable(0),
                    FirstName:ko.observable(""),
                    LastName:ko.observable(""),
@@ -80,7 +85,12 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                       
                        if(!me.student.HasValidEmail() ){
                           me.student.Message.push("Invalid Email");
-                         me.student.HasErrors=true;
+                          me.student.HasErrors=true;
+                       }
+                        var result=me.validateEmail(me.student.Email());
+                       if(!result){
+                          me.student.Message.push("Invalid Email format");
+                          me.student.HasErrors=true;
                        }
                                
                       if(!me.student.HasValidPhoneNumber()){
@@ -317,9 +327,10 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                 
                   if(message.response.status==="ok"){
                      
-                     var item=JSON.parse(message.response.content);
+                    
                      
                      if(me.SelectedAction==="new"){
+                    var item=JSON.parse(message.response.content);
                        user.Id=message.response.id;
                        user.Password=item.Password;
                        me.userList.push(user);
