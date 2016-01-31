@@ -65,21 +65,10 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                        me.student.Password("");
                    },
                    HasValidEmail:function(){
-                      if(me.student.Email()!==""){
-                           return true;
-                      }
-                      else{
-                          return false; 
-                      }
-                     
+                      return me.student.Email()!==""
                    },
                    HasValidPhoneNumber:function(){
-                       if( me.student.Phone()!==""){
-                          return true;
-                       }
-                       else{
-                           return false;
-                       }
+                      return  me.student.Phone()!==""
                    },
                    Validate:function(){
                       
@@ -196,13 +185,16 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
           var selected=  me.userDropDownSelected();
           if(selected===1){
               me.SelectedUserType=me.UserType.Administrator;
+              me.IsTeacherSelected(false);
           }
           if(selected===2){
               me.SelectedUserType=me.UserType.Student;
+               me.IsTeacherSelected(false);
           }
           
            if(selected===3){
               me.SelectedUserType=me.UserType.Teacher;
+               me.IsTeacherSelected(true);
           }
           me.loadUsers();
           me.form.responseMessageVisible(false);
@@ -299,7 +291,8 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
    
    
    me.SubmitNewStudent=function(){
-   
+       me.student.Message=[];
+       me.student.HasErrors=false;
        me.ClearError();
        me.student.Validate();
        if(!me.student.HasErrors){
@@ -333,10 +326,13 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                     var item=JSON.parse(message.response.content);
                        user.Id=message.response.id;
                        user.Password=item.Password;
+                       user.IsTeacherSelected=me.IsTeacherSelected();
                        me.userList.push(user);
                     }
                     else{
-                        me.userList.replace(selectedUser,user);
+                        //user.IsTeacherSelected=me.IsTeacherSelected();
+                       // me.userList.replace(selectedUser,user);
+                        me.loadUsers();
                     }
                     me.form.formVisible(false);
                     me.form.headingVisisble(false);
