@@ -38,7 +38,7 @@ public class AcademicTests {
        
         List<Courseassignment> courseAssignments= new ArrayList();
      
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, courseAssignments,CourseAssignmentDescription.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(courseAssignments));
@@ -50,7 +50,7 @@ public class AcademicTests {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
     
     }
@@ -73,7 +73,7 @@ public class AcademicTests {
         List<AcademicTestDescription> tests= new ArrayList();
          // List<Test> tests= new ArrayList();
         
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, tests,AcademicTestDescription.class);
         
         for(AcademicTestDescription t:tests){
@@ -93,7 +93,7 @@ public class AcademicTests {
         callBackMessage.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     
    }
@@ -110,8 +110,8 @@ public class AcademicTests {
          test.setEndTime(desc.EndTime);
          test.setTotalMark(desc.TotalMark);
          
-        this.dataSource.Open();
-        this.dataSource.BeginTransaction();
+        //this.dataSource.Open();
+       // this.dataSource.BeginTransaction();
          Academiccourse academicCourse= (Academiccourse)this.dataSource.Find(Academiccourse.class,
                  new Integer(courseId));
           OTS.DataModels.User user= (OTS.DataModels.User)this.dataSource.Find(OTS.DataModels.User.class,new Integer(teacherId));
@@ -126,20 +126,20 @@ public class AcademicTests {
       
         this.dataSource.Save(test);
         this.dataSource.Save(courseTest);
-        this.dataSource.Commit();
+       // this.dataSource.Commit();
         Gson g = new Gson();
         callBackMessage.UpdateID(test.getTestId());
         callBackMessage.ChangeContent("");
         callBackMessage.ChangeStatus("ok");
       }
       catch(Throwable ex){
-        this.dataSource.Rollback();
+       // this.dataSource.Rollback();
         callBackMessage.ChangeContent("");
         callBackMessage.ChangeStatus("exception");
         callBackMessage.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     
    }
@@ -147,8 +147,8 @@ public class AcademicTests {
    public void Update(AcademicTestDescription desc,Message callBackMessage){
       
         try{
-               this.dataSource.Open();
-               this.dataSource.BeginTransaction();
+               //this.dataSource.Open();
+              // this.dataSource.BeginTransaction();
               Test test= (Test)this.dataSource.Find(Test.class,new Integer(desc.TestId));
               if(test !=null){
                
@@ -160,7 +160,7 @@ public class AcademicTests {
                  test.setEndTime(desc.EndTime);
                  test.setTotalMark(desc.TotalMark);
                  this.dataSource.Update(test);
-                 this.dataSource.Commit();
+                // this.dataSource.Commit();
                  callBackMessage.UpdateID(test.getTestId());
                  callBackMessage.ChangeContent("");
                  callBackMessage.ChangeStatus("ok");
@@ -174,13 +174,13 @@ public class AcademicTests {
                  
            }
            catch(Throwable ex){
-              this.dataSource.Rollback();
+             // this.dataSource.Rollback();
               callBackMessage.ChangeContent("");
               callBackMessage.ChangeStatus("exception");
               callBackMessage.UpdateError(ex.toString());
            }
            finally{
-               this.dataSource.Close();
+              // this.dataSource.Close();
            }
            
    }
@@ -191,15 +191,15 @@ public class AcademicTests {
       
         try{
             String sql="Delete from teachercoursetest where TestId=" + testId;
-               this.dataSource.Open();
-               this.dataSource.BeginTransaction();
+              // this.dataSource.Open();
+              // this.dataSource.BeginTransaction();
               Test test= (Test)this.dataSource.Find(Test.class,new Integer(testId));
               if(test !=null){
                 
                  this.dataSource.ExecuteNonQuery(sql);
                  this.dataSource.Delete(test);
                  
-                 this.dataSource.Commit();
+                // this.dataSource.Commit();
                  callBackMessage.ChangeContent("");
                  callBackMessage.ChangeStatus("ok");
                  callBackMessage.UpdateError("");
@@ -212,13 +212,13 @@ public class AcademicTests {
                 
            }
            catch(Throwable ex){
-              this.dataSource.Rollback();
+             // this.dataSource.Rollback();
               callBackMessage.ChangeContent("");
               callBackMessage.ChangeStatus("exception");
               callBackMessage.UpdateError(ex.toString());
            }
            finally{
-               this.dataSource.Close();
+             //  this.dataSource.Close();
            }
            
    }
@@ -227,14 +227,14 @@ public class AcademicTests {
      public void ActivateTest( int testId,  Message callBackMessage ){
            try{
             
-               this.dataSource.Open();
-               this.dataSource.BeginTransaction();
+              // this.dataSource.Open();
+              // this.dataSource.BeginTransaction();
               Test test= (Test)this.dataSource.Find(Test.class,new Integer(testId));
               if(test !=null){
                  test.setIsActivated(Boolean.TRUE);
                  this.dataSource.Update(test);
                  
-                 this.dataSource.Commit();
+               //  this.dataSource.Commit();
                  callBackMessage.ChangeContent("");
                  callBackMessage.ChangeStatus("ok");
                  callBackMessage.UpdateError("");
@@ -247,27 +247,27 @@ public class AcademicTests {
                 
            }
            catch(Throwable ex){
-              this.dataSource.Rollback();
+              //this.dataSource.Rollback();
               callBackMessage.ChangeContent("");
               callBackMessage.ChangeStatus("exception");
               callBackMessage.UpdateError(ex.toString());
            }
            finally{
-               this.dataSource.Close();
+              // this.dataSource.Close();
            }
      }
      
      public void DeActivateTest( int testId,  Message callBackMessage ){
           try{
             
-               this.dataSource.Open();
-               this.dataSource.BeginTransaction();
+              // this.dataSource.Open();
+              // this.dataSource.BeginTransaction();
               Test test= (Test)this.dataSource.Find(Test.class,new Integer(testId));
               if(test !=null){
                  test.setIsActivated(Boolean.FALSE);
                  this.dataSource.Update(test);
                  
-                 this.dataSource.Commit();
+                 //this.dataSource.Commit();
                  callBackMessage.ChangeContent("");
                  callBackMessage.ChangeStatus("ok");
                  callBackMessage.UpdateError("");
@@ -280,13 +280,13 @@ public class AcademicTests {
                 
            }
            catch(Throwable ex){
-              this.dataSource.Rollback();
+             // this.dataSource.Rollback();
               callBackMessage.ChangeContent("");
               callBackMessage.ChangeStatus("exception");
               callBackMessage.UpdateError(ex.toString());
            }
            finally{
-               this.dataSource.Close();
+              // this.dataSource.Close();
            }
      }
    
@@ -301,7 +301,7 @@ public class AcademicTests {
        
         String sqlTeacherCourseTest="Select TestId from  teachercoursetest  where TeacherId=" + userId +  " and CourseId=" + courseId  + " and TestId=" + testId;
         
-        this.dataSource.Open();
+      //  this.dataSource.Open();
         List items=  this.dataSource.Execute(sqlTeacherCourseTest);
         
        List<Integer> ids=(List<Integer>)items;
@@ -331,7 +331,7 @@ public class AcademicTests {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
     
     }
@@ -341,7 +341,7 @@ public class AcademicTests {
      try{
        
         String sql="select * from questionlineitem a where  a.Question_id=" + questionId;
-        this.dataSource.Open();
+       // this.dataSource.Open();
         List<TestQuestionLineItem> testQuestionLineItems= new ArrayList();
         this.dataSource.ExecuteCustomDataSet(sql, testQuestionLineItems,TestQuestionLineItem.class);
         Gson g = new Gson();
@@ -355,7 +355,7 @@ public class AcademicTests {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
     
     } 
@@ -364,25 +364,25 @@ public class AcademicTests {
      public void UpdateQuestionLineItem(TestQuestionLineItem[] items,  Message message){
      try{
          
-        this.dataSource.Open();
-        this.dataSource.BeginTransaction();
+      //  this.dataSource.Open();
+       // this.dataSource.BeginTransaction();
          for(int i=0;i<items.length;i++){
               Questionlineitem item= (Questionlineitem) this.dataSource.Find(Questionlineitem.class, new Integer(items[i].QuestionLineItemId));
              item.setIsCorrect(items[i].IsCorrect);
              this.dataSource.Save(item);
          }
-        this.dataSource.Commit();;
+       // this.dataSource.Commit();;
         message.ChangeStatus("ok");
         
       }
       catch(Throwable ex){
-        this.dataSource.Rollback();
+      //  this.dataSource.Rollback();
         message.ChangeContent("");
         message.ChangeStatus("exception");
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
     
     } 
@@ -391,12 +391,12 @@ public class AcademicTests {
     public void UpdateQuestionLineItem(int QustionLineItemId, Boolean IsCorrect,  Message message){
      try{
          
-        this.dataSource.Open();
-        this.dataSource.BeginTransaction();
+        //this.dataSource.Open();
+       // this.dataSource.BeginTransaction();
          Questionlineitem item= (Questionlineitem) this.dataSource.Find(Questionlineitem.class, new Integer(QustionLineItemId));
         item.setIsCorrect(IsCorrect);
         this.dataSource.Save(item);
-        this.dataSource.Commit();;
+       // this.dataSource.Commit();;
         Gson g = new Gson();
         TestQuestionLineItem lineItem= new TestQuestionLineItem();
         lineItem.QuestionLineItemId=item.getQuestionLineItemId();
@@ -408,13 +408,13 @@ public class AcademicTests {
         
       }
       catch(Throwable ex){
-        this.dataSource.Rollback();
+       // this.dataSource.Rollback();
         message.ChangeContent("");
         message.ChangeStatus("exception");
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     
     } 
@@ -424,8 +424,8 @@ public class AcademicTests {
         
         try{
          
-        this.dataSource.Open();
-        this.dataSource.BeginTransaction();
+        //this.dataSource.Open();
+       // this.dataSource.BeginTransaction();
          //Get List of student registered for a a particular test =a
          String sqlStudentRegisteredForTestCount="select count(*) as count\n" +
                     " from studentcourseregistration sr \n" +
@@ -440,7 +440,7 @@ public class AcademicTests {
            String sqlTestMarkedCount= "Select Count(*) as count from studenttesthistory where  TotalMark >0  and TestId= " + testId;
            List<Integer> MarkedTestCount= new ArrayList();
            this.dataSource.ExecuteDataSet(sqlTestMarkedCount, MarkedTestCount);
-           this.dataSource.Commit();
+         //  this.dataSource.Commit();
         //If a.Size==b.Size  then all marked
         //else pending items to mark
            if(registerStudentCount.size()> 0 & MarkedTestCount.size()>0 ){
@@ -452,11 +452,11 @@ public class AcademicTests {
         
       }
       catch(Throwable ex){
-        this.dataSource.Rollback();
+       // this.dataSource.Rollback();
        
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
         return isMarked;
     }

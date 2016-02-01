@@ -60,7 +60,7 @@ public class Questions {
         String sql=this.queryString + parentConceptNodeId;
           Object[] knowledgemaps= new Object[1];
          // this.dataSource.BeginTransaction();
-            this.dataSource.Open();
+          //  this.dataSource.Open();
            this.dataSource.ExecuteDataSet(sql, entities, knowledgemaps);
             if(knowledgemaps.length>0){
                 Object obj=knowledgemaps[0];
@@ -76,7 +76,7 @@ public class Questions {
          
          }
          finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
          }
          return  knowledgemap;
     }
@@ -128,8 +128,8 @@ public class Questions {
              //Find test by id
         nodeName=  this.RetriveNodeName(input); 
             
-       this.dataSource.Open();
-       this.dataSource.BeginTransaction();
+      // this.dataSource.Open();
+      // this.dataSource.BeginTransaction();
        Test test= (Test)this.dataSource.Find(Test.class, new Integer(input.TestId));
         //Find the conginitive level type
       Cognitiveleveltype cognitiveType=(Cognitiveleveltype)this.dataSource.Find(Cognitiveleveltype.class, new Integer(input.CognitiveType));
@@ -173,7 +173,7 @@ public class Questions {
              }
             if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test, q1.getText()))
              {
-                this.dataSource.Commit();
+                //this.dataSource.Commit();
              }
              break;
            
@@ -221,7 +221,7 @@ public class Questions {
                   }
              
                this.dataSource.Save(q);
-               this.dataSource.Commit();
+             //  this.dataSource.Commit();
               }
              break;  
                 
@@ -233,11 +233,11 @@ public class Questions {
         return true;
         }
         catch(Throwable ex){
-             this.dataSource.Rollback();
+            // this.dataSource.Rollback();
             return false;
         }
         finally{
-            this.dataSource.Close();
+            //this.dataSource.Close();
             this.RemoveOphanQuestion(QuestionId);
         }
     } 
@@ -245,21 +245,21 @@ public class Questions {
     
      public void RemoveOphanQuestion(int questionId){
         try{
-             this.dataSource.Open();
-             this.dataSource.BeginTransaction();
+             //this.dataSource.Open();
+           //  this.dataSource.BeginTransaction();
              String sql="select * from questionlineitem where question_Id=" + questionId;
              String sqlDelete="Delete from question where QuestionId=" + questionId;
            List list=this.dataSource.Execute(sql);
            if(list.size()==0){
                this.dataSource.ExecuteNonQuery(sqlDelete);
            } 
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     }
     
@@ -289,7 +289,7 @@ public class Questions {
       
        
            try {
-            this.dataSource.Open();
+           // this.dataSource.Open();
         
             String sql="select q.QuestionId as QuestionUniqueId,\n" +
 "                      q.Text as QuestionText,\n" +
@@ -347,7 +347,7 @@ public class Questions {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
        return list;
@@ -361,7 +361,7 @@ public class Questions {
       
        
            try {
-            this.dataSource.Open();
+            //this.dataSource.Open();
            
             String sql="select q.QuestionId as QuestionUniqueId,\n" +
                         "      q.Text as QuestionText,\n" +
@@ -402,7 +402,7 @@ public class Questions {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
        return list;
@@ -426,7 +426,7 @@ public class Questions {
           
           String sqlOptionsTemplate="select TestItemOptionId,Text,IsCorrect,TestItem_id as TestItemId from testitemoption  where TestItem_id=";
            try {
-            this.dataSource.Open();
+           // this.dataSource.Open();
            // this.dataSource.BeginTransaction();
             this.dataSource.ExecuteCustomDataSet(sql, list, QuestionItem.class);
             int count=1;
@@ -501,7 +501,7 @@ public class Questions {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
         
        return testItemList;
@@ -512,7 +512,7 @@ public class Questions {
           List<TestAnswerSheetListItem> list= new ArrayList();
        
            try {
-            this.dataSource.Open();
+           // this.dataSource.Open();
             //this.dataSource.BeginTransaction();
             String sql ="select t.QuestionType as QuestionTypeId , \n" +
                         "ts.TestAnswerSheetId,\n" +
@@ -536,7 +536,7 @@ public class Questions {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
        return list;
@@ -556,8 +556,8 @@ public class Questions {
            List<TestSheetItem> items= new ArrayList();
        
            try {
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+            //this.dataSource.Open();
+           // this.dataSource.BeginTransaction();
              Gson g= new Gson();
              QuestionItem[] questionItems= (QuestionItem[])g.fromJson(itemJsons, QuestionItem[].class);
        
@@ -598,16 +598,16 @@ public class Questions {
                  }  
               }
             
-            this.dataSource.Commit();
+           // this.dataSource.Commit();
             message.ChangeStatus("ok");
             message.ChangeContent(new Gson().toJson(items));
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
           
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
        return items;
@@ -618,8 +618,8 @@ public class Questions {
             Boolean result=false;
        
            try {
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+            //this.dataSource.Open();
+            //this.dataSource.BeginTransaction();
             Gson g= new Gson();
             TestSheetItem[] questionItems= (TestSheetItem[])g.fromJson(jsonData, TestSheetItem[].class);
             for(TestSheetItem item:questionItems){
@@ -656,15 +656,15 @@ public class Questions {
                   }
                  
             }
-            this.dataSource.Commit();
+           // this.dataSource.Commit();
              message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
           
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
        return result;
@@ -690,8 +690,8 @@ public class Questions {
         Boolean result=false;
         String sqlOptionsTemplate="select TestItemOptionId,Text,IsCorrect,TestItem_id as TestItemId from testitemoption  where TestItem_id=";
            try {
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+           // this.dataSource.Open();
+           // this.dataSource.BeginTransaction();
               Gson g= new Gson();
               questionItems= (TestSheetItem[])g.fromJson(jsonData, TestSheetItem[].class);
               
@@ -764,16 +764,16 @@ public class Questions {
                    }
               }
               
-             this.dataSource.Commit();
+            // this.dataSource.Commit();
               message.ChangeStatus("ok");
               result=true;
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
            result=false;
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
        return result;
@@ -788,8 +788,8 @@ public class Questions {
             
                Gson g= new Gson();
              TestSheetItem[]  studentQuestionItems= (TestSheetItem[])g.fromJson(jsonData, TestSheetItem[].class);
-               this.dataSource.Open();
-               this.dataSource.BeginTransaction();
+               //this.dataSource.Open();
+              // this.dataSource.BeginTransaction();
                OTS.DataModels.User user=  (OTS.DataModels.User)this.dataSource.Find(OTS.DataModels.User.class, new Integer(studentId));
                Test test=  (Test)this.dataSource.Find(Test.class, new Integer(testid));
                
@@ -829,15 +829,15 @@ public class Questions {
                }
                
                RecordStudentTestEndDateTime(testid,studentId);
-               this.dataSource.Commit();
+              // this.dataSource.Commit();
                 message.ChangeStatus("ok");
            } 
            catch (Throwable ex) {
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
    }
    
@@ -845,8 +845,8 @@ public class Questions {
    public void RecordStudentTestStartDateTime(int testId,int studentId){
        
        try{
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+          // this.dataSource.Open();
+          // this.dataSource.BeginTransaction();
            
            // Check if Student has record in the history  table for a particular test
            //if record count is 0 then save
@@ -861,17 +861,17 @@ public class Questions {
          
            h.setTotalMark(-1F);
            this.dataSource.Save(h);
-            this.dataSource.Commit();
+          //  this.dataSource.Commit();
            }
           
            message.ChangeStatus("ok");
        }
         catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
    }
    
@@ -890,7 +890,7 @@ public class Questions {
              }
        }
         catch (Throwable ex) {
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {

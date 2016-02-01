@@ -19,7 +19,6 @@
             <table class="table">
             <tr>
                 <th>Name</th>
-                <th>Questions</th>
                 <th>Marks</th>
                 <th>Start Date</th>
                 <th>Start Time</th>
@@ -29,12 +28,11 @@
             </tr>
             <tbody data-bind="foreach:mytestList">
                 <tr>
-                   <td style="width:150px" data-bind="text:Name"></td>
-                   <td style="width:10px" data-bind="text:NumberOfQuestion"></td>
+                   <td style="width:160px" data-bind="text:Name"></td>
                    <td style="width:10px" data-bind="text:TotalMark"></td> 
-                   <td style="width:50px" data-bind="text:StartDate"></td> 
-                   <td style="width:50px" data-bind="text:StartTime"></td> 
-                   <td style="width:50px" data-bind="text:EndTime"></td>
+                   <td style="width:80px" data-bind="text:StartDate"></td> 
+                   <td style="width:80px" data-bind="text:StartTime"></td> 
+                   <td style="width:80px" data-bind="text:EndTime"></td>
                    <td style="width:30px" data-bind="text:Activated"></td>
                    <td>
                        <div class=" btn-group">
@@ -75,21 +73,12 @@
           <input id="txt-knowledgemapname" data-bind="value:form.name,valueUpdate: 'afterkeydown'" type="text" class="form-control"  placeholder="Required Field">
           </div>
         </div>
-        <div class="form-group">
-          <label class="control-label col-xs-2">Questions</label>
-          <div class="col-xs-10">
-           <input data-bind="value:form.questions" type="text" class="form-control"  placeholder="Required Field">
-          </div>
-        </div>  
-      
        <div class="form-group">
           <label class="control-label col-xs-2">Marks</label>
           <div class="col-xs-10">
            <input data-bind="value:form.marks" type="text" class="form-control"  placeholder="Required Field">
           </div>
         </div>  
-      
-      
         <div class="form-group">
           <label class="control-label col-xs-2">Start Date</label>
           <div class="col-xs-10">

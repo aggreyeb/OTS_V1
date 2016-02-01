@@ -45,8 +45,8 @@ public class ConceptNodeTransaction implements ConceptTransaction {
     public void CreateConceptNode(int userId, String name,String description,Callback callback) {
      
        try{
-          this.dataSource.Open();
-          this.dataSource.BeginTransaction();
+          //this.dataSource.Open();
+         // this.dataSource.BeginTransaction();
          String identity=Identity.NewGiudIdentity().ID.toString();
           Knowledgemap km= new Knowledgemap();
           km.setName(name);
@@ -56,16 +56,16 @@ public class ConceptNodeTransaction implements ConceptTransaction {
           km.setIsPublic(Boolean.TRUE);
           km.setCreateOn(currentDate);
           this.dataSource.Save(km);
-          this.dataSource.Commit();
+         // this.dataSource.Commit();
           Node node= new Node(km);
           callback.OnSucces(km.getKnowledgeMapId(), "ok",node.ToJsonDiscription());
        }
        catch(Throwable ex){
-          this.dataSource.Rollback();
+         // this.dataSource.Rollback();
           callback.OnFailure(0, "fail", ex.toString());
        }
        finally{
-          this.dataSource.Close();
+          //this.dataSource.Close();
        }
     }
 
@@ -81,19 +81,19 @@ public class ConceptNodeTransaction implements ConceptTransaction {
           km.setName(item.Name);
           km.setDescription(item.description);
           km.setLastUpdated(currentDate);
-          this.dataSource.Open();
-          this.dataSource.BeginTransaction();
+          //this.dataSource.Open();
+         // this.dataSource.BeginTransaction();
           this.dataSource.Update(km);
-          this.dataSource.Commit();
+          //this.dataSource.Commit();
            n= new Node(km);
             callback.OnSucces(km.getKnowledgeMapId(), "ok",n.ToJsonDiscription());
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             callback.OnFailure(0, "fail", ex.toString());
         }
         finally{
-          this.dataSource.Close();
+         // this.dataSource.Close();
         }
     }
     
@@ -118,20 +118,20 @@ public class ConceptNodeTransaction implements ConceptTransaction {
            String temp=node.NodesToXml();
            km.setConcepts(temp);
            km.setLastUpdated(new Date());
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction(); 
+           // this.dataSource.Open();
+           // this.dataSource.BeginTransaction(); 
             this.dataSource.Update(km);
-            this.dataSource.Commit();
-            this.dataSource.Close();
+            //this.dataSource.Commit();
+           // this.dataSource.Close();
             n= new Node(km);
             callback.OnSucces(km.getKnowledgeMapId(), "ok",n.ToJsonDiscription());
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
             callback.OnFailure(0, "fail", ex.toString());
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     
     }
@@ -163,8 +163,8 @@ public class ConceptNodeTransaction implements ConceptTransaction {
        try
        {
            Knowledgemap knowledgemap=null;
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();  
+          // this.dataSource.Open();
+         //  this.dataSource.BeginTransaction();  
            List<Object> entities=new ArrayList();
            entities.add(new Knowledgemap());
            entities.add(new User());
@@ -177,7 +177,7 @@ public class ConceptNodeTransaction implements ConceptTransaction {
                   knowledgemap.setName(item.Name);
                   knowledgemap.setDescription(item.description); 
                   this.dataSource.Save(knowledgemap);
-                  this.dataSource.Commit();
+                 // this.dataSource.Commit();
                   Node n= new Node(knowledgemap);
                 callback.OnSucces(knowledgemap.getKnowledgeMapId(), "ok",n.ToJsonDiscription());
                  
@@ -187,11 +187,11 @@ public class ConceptNodeTransaction implements ConceptTransaction {
             }
        }
        catch(Throwable ex){
-          this.dataSource.Rollback();
+          //this.dataSource.Rollback();
           callback.OnFailure(0, "fail", ex.toString());
        }
        finally{
-          this.dataSource.Close();
+         // this.dataSource.Close();
        }
     }
 
@@ -218,40 +218,40 @@ public class ConceptNodeTransaction implements ConceptTransaction {
                nodeItem.Add(newNodeitem);
            }
            Knowledgemap km=this.Find(parentId);
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+          // this.dataSource.Open();
+         //  this.dataSource.BeginTransaction();
            km.setConcepts(node.NodesToXml());
            this.dataSource.Update(km);
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
           Node n= new Node(km);
            callback.OnSucces(km.getKnowledgeMapId(), "ok", n.ToJsonDiscription());
        }
       catch(Throwable ex){
-          this.dataSource.Rollback();
+         // this.dataSource.Rollback();
           callback.OnFailure(0, "fail", ex.toString());
        }
        finally{
-          this.dataSource.Close();
+        //  this.dataSource.Close();
        }
     }
     
     public void RemoveParentNode(DeleteConceptNodeState state, Callback callback){
       try{
           Knowledgemap km=this.Find(state.ParentId);
-          this.dataSource.Open();
-          this.dataSource.BeginTransaction();
+          //this.dataSource.Open();
+          //this.dataSource.BeginTransaction();
           this.dataSource.Delete(km);
           Node n= new Node(km);
-          this.dataSource.Commit();
+         // this.dataSource.Commit();
           callback.OnSucces(km.getKnowledgeMapId(), "ok", n.ToJsonDiscription());
       }
       catch(Throwable ex){
-           this.dataSource.Rollback();
+          // this.dataSource.Rollback();
           callback.OnFailure(0, "fail", ex.toString());
       }
       finally
       {
-          this.dataSource.Close();
+          //this.dataSource.Close();
       }
     
     }
@@ -275,22 +275,22 @@ public class ConceptNodeTransaction implements ConceptTransaction {
                  parent.Remove(child);
               }
             }
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+         //  this.dataSource.Open();
+          // this.dataSource.BeginTransaction();
             String temp=node.NodesToXml();
            km.setConcepts(temp);
            km.setLastUpdated(new Date());
            this.dataSource.Update(km);
            Node n= new Node(km);
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
            callback.OnSucces(km.getKnowledgeMapId(), "ok", n.ToJsonDiscription());
           }
           catch(Throwable ex){
-              this.dataSource.Rollback();
+             // this.dataSource.Rollback();
               callback.OnFailure(0, "fail", ex.toString());
           }
           finally{
-              this.dataSource.Close();
+            //  this.dataSource.Close();
           }
     }
     
@@ -314,7 +314,7 @@ public class ConceptNodeTransaction implements ConceptTransaction {
         String sql=this.queryString + parentConceptNodeId;
           Object[] knowledgemaps= new Object[1];
          // this.dataSource.BeginTransaction();
-            this.dataSource.Open();
+            //this.dataSource.Open();
            this.dataSource.ExecuteDataSet(sql, entities, knowledgemaps);
             if(knowledgemaps.length>0){
                 Object obj=knowledgemaps[0];
@@ -330,7 +330,7 @@ public class ConceptNodeTransaction implements ConceptTransaction {
          
          }
          finally{
-            this.dataSource.Close();
+            //this.dataSource.Close();
          }
          return  knowledgemap;
     }
@@ -352,8 +352,8 @@ public class ConceptNodeTransaction implements ConceptTransaction {
      public void CreateConceptNode(int userId, Knowledgemap kp,Callback callback) {
      
        try{
-          this.dataSource.Open();
-          this.dataSource.BeginTransaction();
+        //  this.dataSource.Open();
+          //this.dataSource.BeginTransaction();
        //  String identity=Identity.NewGiudIdentity().ID.toString();
           Knowledgemap km= new Knowledgemap();
           km.setName(kp.getName());
@@ -365,16 +365,16 @@ public class ConceptNodeTransaction implements ConceptTransaction {
           km.setCreateOn(currentDate);
           km.setLastUpdated(currentDate);
           this.dataSource.Save(km);
-          this.dataSource.Commit();
+         // this.dataSource.Commit();
           Node node= new Node(km);
           callback.OnSucces(km.getKnowledgeMapId(), "ok",node.ToJsonDiscription());
        }
        catch(Throwable ex){
-          this.dataSource.Rollback();
+         // this.dataSource.Rollback();
           callback.OnFailure(0, "fail", ex.toString());
        }
        finally{
-          this.dataSource.Close();
+          //this.dataSource.Close();
        }
     }
     
@@ -406,8 +406,8 @@ public class ConceptNodeTransaction implements ConceptTransaction {
             String name, String description, Callback callback) {
             Knowledgemap km = this.Find(conceptNodeId);
         try{
-          this.dataSource.Open();
-          this.dataSource.BeginTransaction();
+        //  this.dataSource.Open();
+         // this.dataSource.BeginTransaction();
           Node node= new Node(km);
           Knowledgemap newKnowledgeMap= new Knowledgemap();
           newKnowledgeMap.setName(name);
@@ -424,16 +424,16 @@ public class ConceptNodeTransaction implements ConceptTransaction {
             newKnowledgeMap.setConcepts(node.NodesToXml());
            }
           this.dataSource.Update(newKnowledgeMap);
-          this.dataSource.Commit();
+         // this.dataSource.Commit();
          Node n= new Node(newKnowledgeMap);
           callback.OnSucces(newKnowledgeMap.getKnowledgeMapId(), "ok",n.ToJsonDiscription());
        }
        catch(Throwable ex){
-          this.dataSource.Rollback();
+          //this.dataSource.Rollback();
           callback.OnFailure(0, "fail", ex.toString());
        }
        finally{
-           this.dataSource.Close();
+           //this.dataSource.Close();
         }
         
     }
@@ -455,22 +455,22 @@ public class ConceptNodeTransaction implements ConceptTransaction {
                nodeItem.InsertConceptSchema(cs);
              }
            Knowledgemap km=this.Find(item.RootId);
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+          // this.dataSource.Open();
+         //  this.dataSource.BeginTransaction();
            km.setConcepts(node.NodesToXml());
            this.dataSource.Update(km);
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
            Node n= new Node(km);
           callback.OnSucces(km.getKnowledgeMapId(), "ok", n.ToJsonDiscription());
          
        }
       catch(Throwable ex){
-          this.dataSource.Rollback();
+          //this.dataSource.Rollback();
         callback.OnFailure(0, "fail", ex.toString());
          
        }
        finally{
-              this.dataSource.Close();
+             // this.dataSource.Close();
           }
     }
 
@@ -482,22 +482,22 @@ public class ConceptNodeTransaction implements ConceptTransaction {
            ConceptSchema cs=    nodeItem.FindConceptSchema(item.Id);
            cs.RemoveFrom(nodeItem);
            Knowledgemap km=this.Find(item.RootId);
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+          // this.dataSource.Open();
+          // this.dataSource.BeginTransaction();
            km.setConcepts(node.NodesToXml());
            this.dataSource.Update(km);
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
            Node n= new Node(km);
           
           callback.OnSucces(km.getKnowledgeMapId(), "ok", n.ToJsonDiscription());
        }
       catch(Throwable ex){
-          this.dataSource.Rollback();
+         // this.dataSource.Rollback();
          callback.OnFailure(0, "fail", ex.toString());
          
        }
        finally{
-          this.dataSource.Close();
+         // this.dataSource.Close();
         }
     }
 
@@ -519,7 +519,7 @@ public class ConceptNodeTransaction implements ConceptTransaction {
      private User FindUser(int userId){
          
            try{
-               this.dataSource.Open();
+              // this.dataSource.Open();
               User u= (User)this.dataSource.Find(User.class,new Integer(userId));
                return u; 
            }
@@ -527,7 +527,7 @@ public class ConceptNodeTransaction implements ConceptTransaction {
                return null;
            }
            finally{
-               this.dataSource.Close();
+              // this.dataSource.Close();
            }
            
      }

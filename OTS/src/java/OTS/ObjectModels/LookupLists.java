@@ -32,7 +32,7 @@ public class LookupLists {
        
         List<Cognitiveleveltype> cognitiveTypes= new ArrayList();
      
-        this.dataSource.Open();
+        //this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, cognitiveTypes,LookupItem.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(cognitiveTypes));
@@ -44,7 +44,7 @@ public class LookupLists {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
     
     }
@@ -56,7 +56,7 @@ public class LookupLists {
        
         List<Cognitiveleveltype> cognitiveTypes= new ArrayList();
      
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, cognitiveTypes,LookupItem.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(cognitiveTypes));
@@ -68,7 +68,7 @@ public class LookupLists {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     
     }
@@ -81,7 +81,7 @@ public class LookupLists {
        
         List<Cognitiveleveltype> cognitiveTypes= new ArrayList();
      
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, cognitiveTypes,LookupItem.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(cognitiveTypes));
@@ -93,7 +93,7 @@ public class LookupLists {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     
     }
@@ -110,7 +110,7 @@ public class LookupLists {
         List<String> items= new ArrayList();
         List<CourseTestKnowledgeMapDescription> knowledgemaps= new ArrayList();
        // this.dataSource.BeginTransaction();
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, knowledgemaps,CourseTestKnowledgeMapDescription.class);
       //  this.dataSource.Commit();
         if(knowledgemaps.size()>0){
@@ -130,7 +130,7 @@ public class LookupLists {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
        
     } 

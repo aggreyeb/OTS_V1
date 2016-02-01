@@ -32,7 +32,7 @@ public class KnowledgeMaps  {
         List<String> items= new ArrayList();
         List<KnowledgeMapDescription> knowledgemaps= new ArrayList();
        // this.dataSource.BeginTransaction();
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, knowledgemaps,KnowledgeMapDescription.class);
       //  this.dataSource.Commit();
         if(knowledgemaps.size()>0){
@@ -52,7 +52,7 @@ public class KnowledgeMaps  {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
        
     }
@@ -64,7 +64,7 @@ public class KnowledgeMaps  {
         List<String> items= new ArrayList();
         List<KnowledgeMapDescription> knowledgemaps= new ArrayList();
        // this.dataSource.BeginTransaction();
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, knowledgemaps,KnowledgeMapDescription.class);
       //  this.dataSource.Commit();
         if(knowledgemaps.size()>0){
@@ -84,7 +84,7 @@ public class KnowledgeMaps  {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
       }
        
     }
@@ -99,7 +99,7 @@ public class KnowledgeMaps  {
         List<String> items= new ArrayList();
         List<KnowledgeMapDescription> knowledgemaps= new ArrayList();
       //  this.dataSource.BeginTransaction();
-        this.dataSource.Open();
+        //this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, knowledgemaps,KnowledgeMapDescription.class);
       //  this.dataSource.Commit();
         if(knowledgemaps.size()>0){
@@ -119,7 +119,7 @@ public class KnowledgeMaps  {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
         
         }
        
@@ -140,7 +140,7 @@ public class KnowledgeMaps  {
        
         List<KnowledgeMapItem> knowledgemaps= new ArrayList();
    
-        this.dataSource.Open();
+       // this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, knowledgemaps,KnowledgeMapItem.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(knowledgemaps));
@@ -153,7 +153,7 @@ public class KnowledgeMaps  {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+       // this.dataSource.Close();
         
         }
        

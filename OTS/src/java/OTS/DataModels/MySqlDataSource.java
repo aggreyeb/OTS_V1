@@ -6,6 +6,7 @@
 
 package OTS.DataModels;
 
+import App.NewHibernateUtil;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
@@ -30,32 +31,62 @@ public final class MySqlDataSource extends DataSource{
      private  Session session;
      
     public MySqlDataSource() {
-        this.Create();
+        //this.Create();
     }
     
     @Override
     public void Save(Object object) {
+        try{
+            this.Open();
+            this.BeginTransaction();
+             this.session.save(object);
+             this.Commit();
+        }
+        catch(Throwable ex){
+            this.Rollback();
+        }
+        finally{
+          this.Close();
+        }
        
-        this.session.save(object);
+       
     }
 
     @Override
     public void Update(Object object) {
-      
-        
-        this.session.update(object);
+         try{
+             this.Open();
+             this.BeginTransaction();
+            this.session.update(object);
+            this.Commit();
+         }
+         catch(Throwable ex){
+             this.Rollback();
+         }
+         finally{
+             this.Close();
+         }
+       
     }
 
    @Override
     public Object Find(Class type, Serializable obj) {
        
-        return  this.session.get(type, obj);
+          try{
+              this.Open();
+             return  this.session.get(type, obj);
+         }
+         finally{
+             this.Close();
+         }
+        
     }
 
   
      @Override
     public void BeginTransaction() {
-      this.tx.begin();
+     
+        this.tx.begin();
     }
 
     @Override
@@ -68,85 +99,137 @@ public final class MySqlDataSource extends DataSource{
       
         tx.commit();
     }
-     protected  void Create() {
-        try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
-            // config file.
-          this.sessionFactory=  new AnnotationConfiguration().configure().buildSessionFactory();
-         
-        } catch (Throwable ex) {
-            // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
+   
 
     @Override
-    public void Open() {
+    protected void Open() {
+          
+         // if(this.sessionFactory==null){
+              //  this.Create();
+          //  }
+           this.sessionFactory= NewHibernateUtil.getSessionFactory();
             this.session= this.sessionFactory.openSession();
-            this.tx=this.session.getTransaction(); 
+            this.tx=this.session.getTransaction();
+           
+            
     }
 
     @Override
-    public void Close() {
-       if(this.session.isOpen()){
+    protected void Close() {
+        
+        if(this.session.isOpen()){
          this.session.close();
+        
        }
-       
+        
     }
 
     @Override
     public void ExecuteScalar(String sql, int[] returnValue) {
        
-         int value =-1; 
+        try{
+            this.Open();
+            int value =-1; 
          Query query=session.createSQLQuery(sql);
          List result= query.list();
           value  = ((BigInteger )result.get(0)).intValue();
-          returnValue[0]= value;
+          returnValue[0]= value;  
+         }
+         finally{
+            this.Close();
+         }
+        
     }
 
     @Override
     public void ExecuteDataSet(String sql, List items) {
-      
-         Query query=session.createSQLQuery(sql);
-         items.addAll(query.list())  ;
+        try{
+            this.Open();
+             Query query=session.createSQLQuery(sql);
+             items.addAll(query.list())  ;
+         }
+         finally{
+             this.Close();
+         }
+         
     
     }
 
     @Override
     public void ExecuteNonQuery(String sql) { 
-          Query query=session.createSQLQuery(sql);
-          query.executeUpdate();
+          try{
+              this.Open();
+              this.BeginTransaction();
+             Query query=session.createSQLQuery(sql);
+             query.executeUpdate(); 
+             this.Commit();
+          }
+          finally{
+              this.Close();
+          }
+       
     }
 
     @Override
     public void ExecuteDataSet(String sql, List<Object> entities,Object[] list) {
-       
-            SQLQuery query=session.createSQLQuery(sql);
+         try{
+             this.Open();
+              SQLQuery query=session.createSQLQuery(sql);
             for(Object a: entities){
                query.addEntity(a.getClass());
            }
               query.list().toArray(list);
+         }
+         finally{
+            this.Close();
+         }
+           
     }
 
     @Override
     public void Delete(Object object) {
-        
-        this.session.delete(object);
+          try{
+              this.Open();
+              this.BeginTransaction();
+              this.session.delete(object);
+              this.Commit();
+         }
+         catch(Throwable ex){
+             this.Rollback();
+         }
+         finally{
+             this.Close();
+         }
+       
     }
 
     @Override
     public void ExecuteCustomDataSet(String sql, List<?> items,Class<?> type) {   
+         try{
+           this.Open();
            Query query=session.createSQLQuery(sql);
            query.list();
            query.setResultTransformer(Transformers.aliasToBean(type));
            items.addAll(query.list());
+         }
+         finally{
+             this.Close();
+         }
+          
     } 
     
     @Override
     public List Execute(String sql) {   
-           Query query=session.createSQLQuery(sql);
-          return query.list();
+         try{
+             this.Open();
+             Query query=session.createSQLQuery(sql);
+             return query.list();
+         }
+         finally{
+            this.Close();
+         }
+       
     } 
+    
+   
 }

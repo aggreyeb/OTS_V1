@@ -44,13 +44,13 @@ public class QuestionBanks {
                         " inner join questiontype as qt on qb.QuestionTypeId=qt.QuestionType\n" +
                         " where qb.TestId=" + testId;
             
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, items, QuestionBankItem.class);
           
         } catch (Throwable ex) {
            
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
 
        return items;

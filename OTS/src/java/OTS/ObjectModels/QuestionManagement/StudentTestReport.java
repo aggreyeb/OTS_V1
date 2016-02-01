@@ -36,7 +36,7 @@ public class StudentTestReport {
        
         List<LookupItem> items= new ArrayList();
      
-        this.dataSource.Open();
+        //this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, items,LookupItem.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(items));
@@ -48,7 +48,7 @@ public class StudentTestReport {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     }
     
@@ -62,7 +62,7 @@ public class StudentTestReport {
        
         List<StudentTestReportItem> items= new ArrayList();
      
-        this.dataSource.Open();
+        //this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, items,StudentTestReportItem.class);
         Gson g = new Gson();
         message.ChangeContent(g.toJson(items));
@@ -74,7 +74,7 @@ public class StudentTestReport {
         message.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+        //this.dataSource.Close();
       }
     }
 }

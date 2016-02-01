@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/src/java/OTS/Servlets/KnowledgeMapServlet.java</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/src/java/OTS/DataModels/MySqlDataSource.java</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/src/java/hibernate.cfg.xml</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/web/classes/teacher-concept-hierachy-viewmodel.js</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/web/templates/teacher/teacher-tests.html</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/src/java/App/NewHibernateUtil.java</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/web/classes/common/batch-student-account-viewmodel.js</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/web/classes/common/student-account-viewmodel.js</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/web/classes/teacher-test-viewModel.js</file>
+            <file>file:/C:/Repositories/GitHub/OTS_V1/OTS/web/templates/admin/admin-accounts.html</file>
+        </group>
     </open-files>
 </project-private>

@@ -102,8 +102,8 @@ public abstract class CompositeAlgorithm extends Algorithm  {
         int QuestionId=0;
         try{
              //Find test by id
-       this.dataSource.Open();
-       this.dataSource.BeginTransaction();
+      // this.dataSource.Open();
+     //  this.dataSource.BeginTransaction();
        Test test= (Test)this.dataSource.Find(Test.class, new Integer(input.TestId));
         //Find the conginitive level type
       Cognitiveleveltype cognitiveType=(Cognitiveleveltype)this.dataSource.Find(Cognitiveleveltype.class, new Integer(input.CognitiveType));
@@ -145,7 +145,7 @@ public abstract class CompositeAlgorithm extends Algorithm  {
                 
                  }
              }
-             this.dataSource.Commit();
+           //  this.dataSource.Commit();
             // this.RemoveOphanQuestion(q1.getQuestionId());
              
              break;
@@ -173,7 +173,7 @@ public abstract class CompositeAlgorithm extends Algorithm  {
                      this.dataSource.Save(item);
                   }
               this.dataSource.Save(q);
-              this.dataSource.Commit();
+            //  this.dataSource.Commit();
              break;  
                 
            default:
@@ -185,11 +185,11 @@ public abstract class CompositeAlgorithm extends Algorithm  {
         return true;
         }
         catch(Throwable ex){
-             this.dataSource.Rollback();
+            // this.dataSource.Rollback();
             return false;
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
             this.RemoveOphanQuestion(QuestionId);
         }
     }

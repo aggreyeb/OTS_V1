@@ -16,9 +16,9 @@ import java.util.List;
  */
 public abstract class DataSource {
    
-    public  abstract void BeginTransaction();
-    public  abstract void Rollback();
-    public  abstract void  Commit();
+    protected  abstract void BeginTransaction();
+    protected  abstract void Rollback();
+    protected  abstract void  Commit();
     public  abstract void Save(Object object);
     public  abstract void Update(Object object);
     public abstract void Delete(Object object);
@@ -29,8 +29,8 @@ public abstract class DataSource {
     public abstract void ExecuteDataSet(String sql,List<Object> entities,Object[] list);
     public abstract void ExecuteCustomDataSet(String sql,List<?> items,Class<?> type);
     public abstract List Execute(String sql);
-    public abstract  void Open();
-    public abstract void Close();
+    protected abstract  void Open();
+    protected abstract void Close();
 
     
    

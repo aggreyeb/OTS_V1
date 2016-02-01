@@ -38,8 +38,8 @@ public class PublicUniversity extends University {
         int id=0;
         
         try{
-       this.dataSource.Open();
-       this.dataSource.BeginTransaction();  
+     //  this.dataSource.Open();
+      // this.dataSource.BeginTransaction();  
        Usertype ut= (Usertype)this.dataSource.Find(Usertype.class,new Integer(roleTypeId));
         Useraccount ua= new Useraccount();
         ua.setUserName(credential.UserName);
@@ -54,17 +54,17 @@ public class PublicUniversity extends University {
        
       
        this.dataSource.Save(user);
-       this.dataSource.Commit();
+       //this.dataSource.Commit();
        id=ua.getUserAccountId();
         callback.OnSucces(id, "ok");
        }
        catch(Throwable ex){
            
-          this.dataSource.Rollback();
+         // this.dataSource.Rollback();
           callback.OnFailure(-1,"fail",ex.toString());
        }
        finally{
-         this.dataSource.Close();
+        // this.dataSource.Close();
        }
     }
 
@@ -72,8 +72,8 @@ public class PublicUniversity extends University {
     public void CreateBatchAccounts( RoleCredential[] credentials,Callback callback) {
        
         try{
-         this.dataSource.Open();
-         this.dataSource.BeginTransaction();  
+         //this.dataSource.Open();
+        // this.dataSource.BeginTransaction();  
          for(int i=0;i<credentials.length;i++){
           Usertype ut= (Usertype)this.dataSource.Find(Usertype.class,new Integer(credentials[i].RoleTypeId));
          Useraccount ua= new Useraccount();
@@ -88,16 +88,16 @@ public class PublicUniversity extends University {
         user.setUsertype(ut);
         this.dataSource.Save(user);
       }
-      this.dataSource.Commit();   
+     // this.dataSource.Commit();   
          callback.OnSucces(-1, "ok");   
      }
      catch(Throwable ex){
         
-        this.dataSource.Rollback();
+        //this.dataSource.Rollback();
          callback.OnFailure(-1,"fail",ex.toString());
      }
      finally{
-           this.dataSource.Close();
+          // this.dataSource.Close();
         } 
      
     }
@@ -110,11 +110,11 @@ public class PublicUniversity extends University {
                newPassword, credential.UserName,credential.Password);
         
         try{
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+           // this.dataSource.Open();
+           // this.dataSource.BeginTransaction();
             int[] result= new int[1];
             this.dataSource.ExecuteNonQuery(sql);
-            this.dataSource.Commit();
+            //this.dataSource.Commit();
             this.Authenticate(new Credential(credential.UserName,newPassword), callback);
             
             callback.OnSucces(-1, "ok");
@@ -123,7 +123,7 @@ public class PublicUniversity extends University {
               callback.OnSucces(-1, "fail");
         }
         finally{
-           this.dataSource.Close();
+         //  this.dataSource.Close();
         }
     }
 
@@ -175,7 +175,7 @@ public class PublicUniversity extends University {
                         "where BINARY a.UserName=" + "'" + userName + "'" +  "and BINARY a.Password= " + "'" + password + "'";
            // this.dataSource.BeginTransaction();
             List<UserProfile> list= new ArrayList();
-            this.dataSource.Open();
+            //this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, list,UserProfile.class);
             if(list.size()>0){
                userProfile=list.get(0);
@@ -188,7 +188,7 @@ public class PublicUniversity extends University {
              return userProfile;
          }
          finally{
-             this.dataSource.Close();
+             
          }
          
      }

@@ -38,23 +38,23 @@ public class Courses {
       public void Delete(int CourseId, Message message){
     
           try {
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+            //this.dataSource.Open();
+         //   this.dataSource.BeginTransaction();
           Academiccourse ac= (Academiccourse) this.dataSource.Find(Academiccourse.class, new Integer(CourseId));
           if(ac!=null){
             this.dataSource.Delete(ac);
-            this.dataSource.Commit();
+          //  this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeContent("");
             message.ChangeStatus("ok");}
           
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
           
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     }
     
@@ -62,8 +62,8 @@ public class Courses {
     public void Save(CourseItem courseItem,Message message){
     
           try {
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+            //this.dataSource.Open();
+          //  this.dataSource.BeginTransaction();
           Academiccourse ac= (Academiccourse) this.dataSource.Find(Academiccourse.class, new Integer(courseItem.CourseTypeId));
           if(ac==null){
             Academiccourse newCourse=new Academiccourse();
@@ -76,17 +76,17 @@ public class Courses {
               ac.setName(courseItem.Name);
               this.dataSource.Update(ac);
           }
-            this.dataSource.Commit();
+          //  this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeContent("");
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
           
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     }
     
@@ -96,19 +96,19 @@ public class Courses {
            int IsCompleted=0;
             String sql = "insert into courseassignment(TeacherId,CourseId,AssignOn,IsCompleted) Values(" + TeacherId + "," + courseId + "," + "Now()," + IsCompleted + ")"; 
               
-        this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+       // this.dataSource.Open();
+          //  this.dataSource.BeginTransaction();
             this.dataSource.ExecuteNonQuery(sql);
-            this.dataSource.Commit();
+           // this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeContent("");
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
 
     }
@@ -118,20 +118,20 @@ public class Courses {
         try {
             String sql = "delete from courseassignment where  TeacherId=" + TeacherId + " and CourseId=" + courseId;
 
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+           // this.dataSource.Open();
+           // this.dataSource.BeginTransaction();
             this.dataSource.ExecuteNonQuery(sql);
-            this.dataSource.Commit();
+           // this.dataSource.Commit();
 
             message.ChangeContent("");
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             message.ChangeContent("");
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
 
     }
@@ -145,20 +145,20 @@ public class Courses {
             cnp.setAssignBy(userId);
             cnp.setActionText("Selected");
             cnp.setCanEnableSelect(Boolean.FALSE);
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+           // this.dataSource.Open();
+           // this.dataSource.BeginTransaction();
             this.dataSource.Save(cnp);
-            this.dataSource.Commit();
+           // this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeContent("");
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             message.ChangeContent("duplicate");
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
     }
@@ -169,20 +169,20 @@ public class Courses {
             String sql = "delete from  courseknowledgemap where\n"
                     + " CourseId= " + CourseId + " and KnowledgeMapId= " + knowledgeMapId + " and AssignBy=" + userId;
 
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+           // this.dataSource.Open();
+          //  this.dataSource.BeginTransaction();
             this.dataSource.ExecuteNonQuery(sql);
-            this.dataSource.Commit();
+          //  this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeContent("");
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
             message.ChangeContent("");
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+          //  this.dataSource.Close();
         }
 
     }
@@ -193,7 +193,7 @@ public class Courses {
             String sql = "Select Count(*) as count from  courseknowledgemap where\n"
                     + " CourseId= " + CourseId + " and KnowledgeMapId= " + knowledgeMapId + " and AssignBy=" + userId;
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             //  this.dataSource.BeginTransaction();
             List<BigInteger> list = new ArrayList();
 
@@ -218,7 +218,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.getMessage());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
     }
@@ -231,7 +231,7 @@ public class Courses {
 
             List<Courseassignment> courseAssignments = new ArrayList();
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, courseAssignments, CourseAssignmentDescription.class);
             Gson g = new Gson();
             message.ChangeContent(g.toJson(courseAssignments));
@@ -241,7 +241,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+          //  this.dataSource.Close();
         }
 
     }
@@ -256,7 +256,7 @@ public class Courses {
 
             List<Courseassignment> courseAssignments = new ArrayList();
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, courseAssignments, CourseAssignmentDescription.class);
             Gson g = new Gson();
             message.ChangeContent(g.toJson(courseAssignments));
@@ -266,7 +266,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
 
     }
@@ -283,7 +283,7 @@ public class Courses {
 
             List<Courseknowledgemap> Courseknowledgemaps = new ArrayList();
 
-            this.dataSource.Open();
+          //  this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, Courseknowledgemaps, CourseKnowledgeMapDescription.class);
             Gson g = new Gson();
             message.ChangeContent(g.toJson(Courseknowledgemaps));
@@ -294,7 +294,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
     }
@@ -306,7 +306,7 @@ public class Courses {
 
             List<Courseknowledgemap> Courseknowledgemaps = new ArrayList();
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, Courseknowledgemaps, CourseKnowledgeMapDescription.class);
             Gson g = new Gson();
             message.ChangeContent(g.toJson(Courseknowledgemaps));
@@ -316,7 +316,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+         //   this.dataSource.Close();
         }
 
     }
@@ -327,7 +327,7 @@ public class Courses {
 
             List<CourseItem> Courseitems = new ArrayList();
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, Courseitems, CourseItem.class);
             Gson g = new Gson();
             message.ChangeContent(g.toJson(Courseitems));
@@ -337,7 +337,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+          //  this.dataSource.Close();
         }
 
     }
@@ -356,7 +356,7 @@ public class Courses {
             //List all the courses that are assigned to teachers
             List<CourseItem> Courseitems = new ArrayList();
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, Courseitems, CourseItem.class);
             
             //List student Registered courses
@@ -386,7 +386,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
      }
@@ -415,7 +415,7 @@ public class Courses {
             //List all the courses that are assigned to teachers
             List<CourseItem> Courseitems = new ArrayList();
 
-            this.dataSource.Open();
+           // this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, Courseitems, CourseItem.class);
             
             
@@ -427,7 +427,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
     }
@@ -436,8 +436,8 @@ public class Courses {
 
         try {
 
-            this.dataSource.Open();
-            this.dataSource.BeginTransaction();
+            //this.dataSource.Open();
+           // this.dataSource.BeginTransaction();
             for (CourseItem a : courseItems) {
                    OTS.DataModels.User user=(OTS.DataModels.User)this.dataSource.Find(OTS.DataModels.User.class, new Integer(studentId));
                     Studentcourseregistration sc = new Studentcourseregistration();
@@ -448,16 +448,16 @@ public class Courses {
                     this.dataSource.Save(sc);
                // }
             }
-            this.dataSource.Commit();
+           // this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeContent("");
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+          //  this.dataSource.Rollback();
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
 
     }
@@ -468,7 +468,7 @@ public class Courses {
 
             List<CourseItem> Courseitems = new ArrayList();
 
-            this.dataSource.Open();
+            //this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, Courseitems, CourseItem.class);
             if (Courseitems.size() > 0) {
                 return true;
@@ -477,7 +477,7 @@ public class Courses {
         } catch (Throwable ex) {
             return false;
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
     }
@@ -500,7 +500,7 @@ public class Courses {
             
             List<StudentRegistedCourseItem> StudentCourseTests = new ArrayList();
 
-            this.dataSource.Open();
+            //this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, StudentCourseTests, StudentRegistedCourseItem.class);
              
             for(StudentRegistedCourseItem a:StudentCourseTests){
@@ -527,7 +527,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
          
     }
@@ -538,7 +538,7 @@ public class Courses {
            
             String sql="Select Count(*) as counter from studenttestanswersheet  where TestId= " + testId +  " and StudentId="  + studentId ;
             
-            this.dataSource.Open();
+            //this.dataSource.Open();
            
            List list= this.dataSource.Execute(sql);
            BigInteger big=(BigInteger) list.get(0);
@@ -549,7 +549,7 @@ public class Courses {
         } catch (Throwable ex) {
            
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
         return testTaken;
@@ -562,7 +562,7 @@ public class Courses {
            
             String sql="Select * from studenttesthistory  where TestId= " + testId +  " and StudentId="  + studentId ;
             
-            this.dataSource.Open();
+           // this.dataSource.Open();
             List<TestHistoryItem> items=new ArrayList();
             this.dataSource.ExecuteCustomDataSet(sql, items, TestHistoryItem.class);
             if(items.size()>0){
@@ -573,7 +573,7 @@ public class Courses {
         } catch (Throwable ex) {
            
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
         return testHistory;
@@ -594,7 +594,7 @@ public class Courses {
             
             List<StudentRegistedCourseItem> StudentCourseTests = new ArrayList();
 
-            this.dataSource.Open();
+            //this.dataSource.Open();
             this.dataSource.ExecuteCustomDataSet(sql, StudentCourseTests, StudentRegistedCourseItem.class);
             Gson g = new Gson();
             message.ChangeContent(g.toJson(StudentCourseTests));
@@ -604,7 +604,7 @@ public class Courses {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
 
     }
@@ -613,22 +613,22 @@ public class Courses {
      public  void UnRegisterCourse(int studentCourseId,Message message){
          
          try {
-          this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+          //this.dataSource.Open();
+         //  this.dataSource.BeginTransaction();
           Studentcourseregistration item=  (Studentcourseregistration)this.dataSource.Find(Studentcourseregistration.class, new Integer(studentCourseId));
            if(item!=null){
               this.dataSource.Delete(item);
            }
-            this.dataSource.Commit();
+            //this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeStatus("ok");
         } catch (Throwable ex) {
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
             message.ChangeContent("");
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-            this.dataSource.Close();
+            //this.dataSource.Close();
         }
         
      }

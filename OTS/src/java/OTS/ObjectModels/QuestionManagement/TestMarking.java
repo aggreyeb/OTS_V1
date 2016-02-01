@@ -35,8 +35,8 @@ public class TestMarking {
     public void Mark(int studentId,int testId,Message response){
         
         try{
-             this.dataSource.Open();
-             this.dataSource.BeginTransaction();
+            // this.dataSource.Open();
+           //  this.dataSource.BeginTransaction();
              String creteria="(q.QuestionType=1 or q.QuestionType=2)";
              String sqlCorrectTrueFalseMultipleSingleAnswer="select sta.StudentTestAnswerSheetId as AnswerSheetId, q.TestItemId,q.QuestionType, q.CognitiveLevelTypeId,q.QuestionNatureType, q.Mark  from testanswersheet ta \n" +
                                         "inner join studenttestanswersheet sta on ta.TestItemId=sta.TestItemId \n" +
@@ -62,7 +62,7 @@ public class TestMarking {
              this.dataSource.ExecuteCustomDataSet(sqlInCorrectMultipleSingleAnswer, correctList, TestMarkingItem.class);
              this.MarkInCorrectAnswers(testId, studentId, inCorrectList);
              this.MarkMultipleChoiceMultipleAnswers(testId, studentId);
-             this.dataSource.Commit();
+             //this.dataSource.Commit();
              
              float totalMark=  this.CalculateTotalMark(testId, studentId);
              this.RecordMarking(studentId, testId, totalMark);
@@ -71,19 +71,19 @@ public class TestMarking {
              response.ChangeStatus("ok");
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+          //  this.dataSource.Rollback();
             response.ChangeStatus("fail");
             response.UpdateError(ex.toString());
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     }
     
     public void Mark(int testId,Message response){
          try{
-             this.dataSource.Open();
-             this.dataSource.BeginTransaction();
+            // this.dataSource.Open();
+           //  this.dataSource.BeginTransaction();
              
              String sql="select * from \n" +
 " (select sta.StudentTestAnswerSheetId as AnswerSheetId,sta.StudentId, q.TestItemId,q.QuestionType, q.CognitiveLevelTypeId,q.QuestionNatureType, q.Mark  from testanswersheet ta \n" +
@@ -100,7 +100,7 @@ public class TestMarking {
             
             List<TestMarkingItem> items=new ArrayList();
             this.dataSource.ExecuteCustomDataSet(sql, items, TestMarkingItem.class);
-             this.dataSource.Commit();
+             //this.dataSource.Commit();
              if(items.size()>0){
              for(TestMarkingItem a:items){
                  this.Mark(a.StudentId, testId, response);
@@ -110,12 +110,12 @@ public class TestMarking {
              response.ChangeStatus("ok");
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
             response.ChangeStatus("fail");
             response.UpdateError(ex.toString());
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     }
     
@@ -242,8 +242,8 @@ public class TestMarking {
     
     public float CalculateTotalMark(int testId,int studentId){
         try{
-             this.dataSource.Open();
-             this.dataSource.BeginTransaction();
+            // this.dataSource.Open();
+          //   this.dataSource.BeginTransaction();
              String sqlStudentTestSheetItems="select ta.StudentTestAnswerSheetId as AnswerSheetId, q.TestItemId,\n" +
                                             "         q.QuestionType,\n" +
                                             "		   q.CognitiveLevelTypeId,\n" +
@@ -276,11 +276,11 @@ public class TestMarking {
          return (totalMark/totalTestMark) * 100;
         }
         catch(Throwable ex){
-           this.dataSource.Rollback();
+         //  this.dataSource.Rollback();
             return 0;
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         
       
@@ -290,8 +290,8 @@ public class TestMarking {
          int totalAnswerCorrect=0;
          
         try{
-             this.dataSource.Open();
-             this.dataSource.BeginTransaction();
+             //this.dataSource.Open();
+            // this.dataSource.BeginTransaction();
              String sql="select   q.TestItemId,\n" +
                     "         q.QuestionType,\n" +
                     "         q.CognitiveLevelTypeId,\n" +
@@ -307,7 +307,7 @@ public class TestMarking {
        //Test AnswerSheet
          List<TestMarkingAnswerSheet> answerSheetItems=new ArrayList();
          this.dataSource.ExecuteCustomDataSet(sql, answerSheetItems, TestMarkingAnswerSheet.class);
-          this.dataSource.Commit();
+         // this.dataSource.Commit();
           for(TestMarkingAnswerSheet t:answerSheetItems){
               
                 if(t.A){
@@ -328,7 +328,7 @@ public class TestMarking {
           return totalAnswerCorrect;
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             return totalAnswerCorrect;
         }
         finally{
@@ -341,8 +341,8 @@ public class TestMarking {
     public Boolean RecordMarking(int studentId,int testId,float totalMark){
           Boolean result=false;
         try{
-            this.dataSource.Open();
-             this.dataSource.BeginTransaction();  
+           // this.dataSource.Open();
+             //this.dataSource.BeginTransaction();  
              String sql="Select * from  studenttesthistory where StudentId=" + studentId + " and TestId=" + testId;
              List<TestHistoryItem>  items= new ArrayList();
              this.dataSource.ExecuteCustomDataSet(sql, items, TestHistoryItem.class);
@@ -351,16 +351,16 @@ public class TestMarking {
                 item.setTotalMark(totalMark);
                 this.dataSource.Update(item);
              }
-             this.dataSource.Commit();
+             //this.dataSource.Commit();
               result=true;
               return result;
           }
           catch(Throwable ex){
-              this.dataSource.Rollback();
+            //  this.dataSource.Rollback();
               
           }
           finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
         return result;
     }

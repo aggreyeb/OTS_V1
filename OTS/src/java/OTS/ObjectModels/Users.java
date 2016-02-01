@@ -57,7 +57,7 @@ public class Users {
                     " where u.UserTypeId=" + userType;
        
         List<OTS.DataModels.User> users= new ArrayList();
-        this.dataSource.Open();
+        //this.dataSource.Open();
         this.dataSource.ExecuteCustomDataSet(sql, users,UserAccountItem.class);
         Gson g = new Gson();
         this.response.ChangeContent(g.toJson(users));
@@ -69,34 +69,34 @@ public class Users {
         response.UpdateError(ex.toString());
       }
       finally{
-        this.dataSource.Close();
+      //  this.dataSource.Close();
       }
     }
     
      public void ResetPassword(int userId){
         
         try{
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+           //this.dataSource.Open();
+           //this.dataSource.BeginTransaction();
            OTS.DataModels.User user= (OTS.DataModels.User)dataSource.Find(OTS.DataModels.User.class, new Integer(userId));
            String password=randomString(CHARSET_AZ_09,5);
           Useraccount ua=  user.getUseraccount();
            ua.setPassword(password);
            this.dataSource.Update(ua);
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
            response.UpdateID(userId);
            response.ChangeContent("");
            response.ChangeStatus("ok");
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             response.UpdateID(0);
             response.ChangeContent("");
             response.ChangeStatus("exception");
             response.UpdateError(ex.toString());
         }
         finally{
-           this.dataSource.Close();
+           //this.dataSource.Close();
         }
     }
     
@@ -104,26 +104,26 @@ public class Users {
     public void Delete(int userId){
         
         try{
-           this.dataSource.Open();
-           this.dataSource.BeginTransaction();
+          // this.dataSource.Open();
+          // this.dataSource.BeginTransaction();
            OTS.DataModels.User user= (OTS.DataModels.User)dataSource.Find(OTS.DataModels.User.class, new Integer(userId));
            this.dataSource.Delete(user);
            this.dataSource.Delete(user.getUseraccount());
-           this.dataSource.Commit();
+           //this.dataSource.Commit();
            response.UpdateID(userId);
            response.ChangeContent("");
            response.ChangeStatus("ok");
            
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+           // this.dataSource.Rollback();
             response.UpdateID(0);
             response.ChangeContent("");
             response.ChangeStatus("exception");
             response.UpdateError(ex.toString());
         }
         finally{
-           this.dataSource.Close();
+           //this.dataSource.Close();
         }
     }
     
@@ -155,8 +155,8 @@ public class Users {
     
     protected void CreateUser(UserAccountItem userAccount){
         try{
-        this.dataSource.Open();
-        this.dataSource.BeginTransaction(); 
+        //this.dataSource.Open();
+        //this.dataSource.BeginTransaction(); 
          Useraccount ua= new Useraccount();
          ua.setUserName(userAccount.Email);
          
@@ -173,7 +173,7 @@ public class Users {
         user.setUsertype(ut);
         this.dataSource.Save(user);
         userAccount.Id=user.getUserId();
-        this.dataSource.Commit();
+      //  this.dataSource.Commit();
         response.UpdateID(user.getUserId());
         response.ChangeContent(new Gson().toJson(userAccount));
         response.ChangeStatus("ok");
@@ -183,10 +183,10 @@ public class Users {
         response.ChangeContent("");
         response.ChangeStatus("exception");
         response.UpdateError(ex.toString());
-        this.dataSource.Rollback();
+       // this.dataSource.Rollback();
         }
         finally{
-          this.dataSource.Close();
+          //this.dataSource.Close();
         }
     }
     
@@ -195,8 +195,8 @@ public class Users {
       
         try{
         
-       this.dataSource.Open();
-       this.dataSource.BeginTransaction();
+       //this.dataSource.Open();
+       //this.dataSource.BeginTransaction();
       
         OTS.DataModels.User user= (OTS.DataModels.User)dataSource.Find(OTS.DataModels.User.class, new Integer(userAccount.Id));
        // user.setFirstName(userAccount.FirstName);
@@ -208,7 +208,7 @@ public class Users {
         
         Useraccount ua=(Useraccount)this.dataSource.Find(Useraccount.class, new Integer(user.getUseraccount().getUserAccountId()));
         ua.setUserName(user.getEmail());
-        this.dataSource.Commit();
+       // this.dataSource.Commit();
         response.UpdateID(user.getUserId());
         response.ChangeContent("");
         response.ChangeStatus("ok"); 
@@ -218,10 +218,10 @@ public class Users {
          response.ChangeContent("");
          response.ChangeStatus("exeception"); 
          response.UpdateError(ex.toString());
-         this.dataSource.Rollback();
+        // this.dataSource.Rollback();
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
         }
     }
   

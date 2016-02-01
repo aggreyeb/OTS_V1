@@ -114,13 +114,15 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
           for(var i=0;i<array.length;i++){
            array[i].StartDate=me.dateToShort(array[i].StartDate);
            if(array[i].IsActivated){
-             array[i].Activated="Yes"  
-             array[i].ActivatedStyle=disableColor  
+             array[i].Activated="Yes"  ;
+             array[i].ActivatedStyle=disableColor ; 
              
            }
            else{
-                array[i].Activated="No"  
-                array[i].ActivatedStyle=""  
+                array[i].Activated="No" ; 
+                array[i].ActivatedStyle=""  ;
+                 array[i].IsAllMarked=false;
+                array[i].ActivatedStyle="" ; 
            }
            
            if(array[i].IsAllMarked){
@@ -311,7 +313,7 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                TestId:0,
                Name:me.form.name(),
                TotalMark:me.form.marks(),
-               NumberOfQuestion:me.form.questions(),
+               NumberOfQuestion:0,
                StartDate:null,
                StartTime:me.form.startTime(),
                EndTime:me.form.endTime(),
@@ -324,11 +326,29 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 if(msg != ""){ 
                 var message =JSON.parse(msg);
                 if(message.response.status==="ok"){
-                
+                /*
                var currentId= message.response.id;
                 test.TestId=currentId;
                 test.StartDate=me.form.startdate();
+                var Activated="";
+                if(test.IsActivated){
+                    test.Activated="Yes";
+                    test.ActivatedStyle ="";
+                    test.MarkTestStyle ="";
+                    test.IsAllMarked=false;
+                }
+                else{
+                    test.Activated="No";
+                    test.ActivatedStyle ="";
+                    test.IsAllMarked=false;
+                    test.MarkTestStyle ="";
+                    
+                }
                 me.mytestList.push(test);
+                 */
+                     //Reload current course test 
+                     me.onCourseChanged();
+
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test Created");
                 me.form.responseBoxStyle("alert alert-success");
@@ -421,6 +441,10 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                      IsActivated:true,
                      Activated:"Yes"
                  } ;
+                    test.Activated="Yes";
+                    test.ActivatedStyle ="";
+                    test.IsAllMarked=false;
+                    test.MarkTestStyle ="";
                 me.mytestList.replace(me.selectedTest,test);
                 
                 me.form.responseDialog("Success!");
@@ -468,6 +492,10 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                      IsActivated:false,
                      Activated:"No"
                  } ;
+                    test.Activated="No";
+                    test.ActivatedStyle ="";
+                    test.IsAllMarked=false;
+                    test.MarkTestStyle ="";
                 me.mytestList.replace(me.selectedTest,test);
                 
                 me.form.responseDialog("Success!");
@@ -640,12 +668,13 @@ var  isValidtimeRange=function(t,st,et){
             hasError=true;
             error+="<li>Invalid marks</li>"
        };
-       
+      /*
           if(!isNumeric(me.form.questions())){
             hasError=true;
             error+="<li>Invalid number of questions</li>"
+            
        };
-       
+       */
        return {
            hasError:hasError,
            error :error +"</ul>" 

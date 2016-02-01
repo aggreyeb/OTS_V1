@@ -50,7 +50,7 @@ public abstract class Algorithm implements ITestItemGeneration {
         String sql=this.queryString + parentConceptNodeId;
           Object[] knowledgemaps= new Object[1];
          // this.dataSource.BeginTransaction();
-            this.dataSource.Open();
+           // this.dataSource.Open();
            this.dataSource.ExecuteDataSet(sql, entities, knowledgemaps);
             if(knowledgemaps.length>0){
                 Object obj=knowledgemaps[0];
@@ -66,7 +66,7 @@ public abstract class Algorithm implements ITestItemGeneration {
          
          }
          finally{
-            this.dataSource.Close();
+            //this.dataSource.Close();
          }
          return  knowledgemap;
     }
@@ -152,8 +152,8 @@ public abstract class Algorithm implements ITestItemGeneration {
          int QuestionId=0;
      try{
              //Find test by id
-       this.dataSource.Open();
-       this.dataSource.BeginTransaction();
+      // this.dataSource.Open();
+      // this.dataSource.BeginTransaction();
        Test test= (Test)this.dataSource.Find(Test.class, new Integer(input.TestId));
         //Find the conginitive level type
       Cognitiveleveltype cognitiveType=(Cognitiveleveltype)this.dataSource.Find(Cognitiveleveltype.class, new Integer(input.CognitiveType));
@@ -187,7 +187,7 @@ public abstract class Algorithm implements ITestItemGeneration {
                 this.dataSource.Save(q1);
                 QuestionId=q1.getQuestionId();
              }
-              this.dataSource.Commit();
+             // this.dataSource.Commit();
             
              break;
            
@@ -209,7 +209,7 @@ public abstract class Algorithm implements ITestItemGeneration {
                }
                this.dataSource.Save(qqq);
              
-               this.dataSource.Commit();
+              // this.dataSource.Commit();
              
              break;  
                
@@ -221,32 +221,31 @@ public abstract class Algorithm implements ITestItemGeneration {
         return true;
         }
         catch(Throwable ex){
-             this.dataSource.Rollback();
+           //  this.dataSource.Rollback();
             return false;
         }
         finally{
-            this.dataSource.Close();
+           // this.dataSource.Close();
             this.RemoveOphanQuestion(QuestionId);
         }
     }
     
     public void RemoveOphanQuestion(int questionId){
         try{
-             this.dataSource.Open();
-             this.dataSource.BeginTransaction();
-             String sql="select * from questionlineitem where question_Id=" + questionId;
+             //this.dataSource.Open();
+           String sql="select * from questionlineitem where question_Id=" + questionId;
              String sqlDelete="Delete from question where QuestionId=" + questionId;
            List list=this.dataSource.Execute(sql);
            if(list.size()==0){
                this.dataSource.ExecuteNonQuery(sqlDelete);
            } 
-           this.dataSource.Commit();
+          // this.dataSource.Commit();
         }
         catch(Throwable ex){
-            this.dataSource.Rollback();
+            //this.dataSource.Rollback();
         }
         finally{
-            this.dataSource.Close();
+          //  this.dataSource.Close();
         }
     }
      
