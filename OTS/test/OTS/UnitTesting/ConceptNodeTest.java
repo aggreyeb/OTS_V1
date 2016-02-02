@@ -6,12 +6,10 @@
 
 package OTS.UnitTesting;
 
-import OTS.ConceptTransaction;
 import OTS.DataModels.Knowledgemap;
 import OTS.DataModels.MySqlDataSource;
 import OTS.DataModels.Node;
 import OTS.DataModels.NodeItem;
-import OTS.DataModels.NodeList;
 import OTS.DataModels.User;
 import OTS.DeleteConceptNodeState;
 import OTS.Identity;
@@ -22,7 +20,6 @@ import OTS.RelationType;
 import OTS.RenameConceptNodeState;
 import java.util.ArrayList;
 import java.util.List;
-import org.codehaus.jettison.json.JSONArray;
 import org.junit.Test;
 
 /**
@@ -60,13 +57,13 @@ public class ConceptNodeTest {
         String sqlQuery="select * from knowledgemap m inner join user as u" +
                                               " on m.CreatedBy=u.UserId";
        MySqlDataSource db=   new MySqlDataSource();
-       db.BeginTransaction();
+       
        Object[] concepts=new ArrayList().toArray();
        List<Object> entities= new ArrayList();
        entities.add(new Knowledgemap());
        entities.add(new User());
        db.ExecuteDataSet(sqlQuery,entities,concepts);
-       db.Commit();
+     
       System.out.print( concepts.length);
 
     }

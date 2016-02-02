@@ -14,6 +14,7 @@ import OTS.DataModels.Teachercoursetest;
 import OTS.DataModels.Test;
 import OTS.Message;
 import com.google.gson.Gson;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -443,17 +444,21 @@ public class AcademicTests {
          //  this.dataSource.Commit();
         //If a.Size==b.Size  then all marked
         //else pending items to mark
-           if(registerStudentCount.size()> 0 & MarkedTestCount.size()>0 ){
-                if(Objects.equals(registerStudentCount.get(0), MarkedTestCount.get(0))){
-              isMarked=true;
-              }
+        
+           Integer x= new Integer(String.valueOf(registerStudentCount.get(0)));
+           Integer y= new Integer(String.valueOf(MarkedTestCount.get(0)));
+           if(x> 0 & y>0 & Objects.equals(x, y) ){
+               
+               isMarked= true; 
+           }
+           else{
+                isMarked= false;
            }
          
-        
       }
       catch(Throwable ex){
        // this.dataSource.Rollback();
-       
+       String eror=ex.toString();
       }
       finally{
         //this.dataSource.Close();

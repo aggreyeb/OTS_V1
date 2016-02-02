@@ -15,7 +15,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.transform.Transformers;
 
 /**
@@ -26,27 +25,31 @@ import org.hibernate.transform.Transformers;
  */
 public final class MySqlDataSource extends DataSource{
 
-    private SessionFactory sessionFactory;
-    private Transaction  tx;
-     private  Session session;
-     
+  
     public MySqlDataSource() {
-        //this.Create();
+      
     }
     
     @Override
     public void Save(Object object) {
+         Session session=null;
+         Transaction  tx=null;
         try{
-            this.Open();
-            this.BeginTransaction();
-             this.session.save(object);
-             this.Commit();
+             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
+             tx= session.getTransaction();
+            tx.begin();
+             session.save(object);
+             tx.commit();
         }
         catch(Throwable ex){
-            this.Rollback();
+            if(tx!=null)
+              tx.rollback();
         }
         finally{
-          this.Close();
+            if(session!=null){
+                session.close();
+            }
         }
        
        
@@ -54,81 +57,51 @@ public final class MySqlDataSource extends DataSource{
 
     @Override
     public void Update(Object object) {
-         try{
-             this.Open();
-             this.BeginTransaction();
-            this.session.update(object);
-            this.Commit();
+           Session session=null;
+           Transaction  tx=null;
+          try{
+              SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
+             tx= session.getTransaction();
+            tx.begin();
+             session.update(object);
+             tx.commit();
          }
          catch(Throwable ex){
-             this.Rollback();
+             if(tx!=null)
+              tx.rollback();
          }
          finally{
-             this.Close();
+             if(session!=null){
+                session.close();
+            }
          }
        
     }
 
    @Override
     public Object Find(Class type, Serializable obj) {
-       
+        Session session=null;
+         
           try{
-              this.Open();
-             return  this.session.get(type, obj);
+              SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
+             return  session.get(type, obj);
          }
          finally{
-             this.Close();
+              if(session!=null){
+                session.close();
+            }
          }
-        
-    }
-
-  
-     @Override
-    public void BeginTransaction() {
-     
-        this.tx.begin();
-    }
-
-    @Override
-    public void Rollback() {
-       this.tx.rollback();
-    }
-
-    @Override
-    public void Commit() {
-      
-        tx.commit();
-    }
-   
-
-    @Override
-    protected void Open() {
-          
-         // if(this.sessionFactory==null){
-              //  this.Create();
-          //  }
-           this.sessionFactory= NewHibernateUtil.getSessionFactory();
-            this.session= this.sessionFactory.openSession();
-            this.tx=this.session.getTransaction();
-           
-            
-    }
-
-    @Override
-    protected void Close() {
-        
-        if(this.session.isOpen()){
-         this.session.close();
-        
-       }
         
     }
 
     @Override
     public void ExecuteScalar(String sql, int[] returnValue) {
-       
+         Session session=null;
         try{
-            this.Open();
+            SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
             int value =-1; 
          Query query=session.createSQLQuery(sql);
          List result= query.list();
@@ -136,20 +109,26 @@ public final class MySqlDataSource extends DataSource{
           returnValue[0]= value;  
          }
          finally{
-            this.Close();
+            if(session!=null){
+                session.close();
+            }
          }
         
     }
 
     @Override
     public void ExecuteDataSet(String sql, List items) {
+        Session session=null;
         try{
-            this.Open();
+            SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
              Query query=session.createSQLQuery(sql);
              items.addAll(query.list())  ;
          }
          finally{
-             this.Close();
+              if(session!=null){
+                session.close();
+            }
          }
          
     
@@ -157,23 +136,39 @@ public final class MySqlDataSource extends DataSource{
 
     @Override
     public void ExecuteNonQuery(String sql) { 
+           Session session=null;
+           Transaction  tx=null;
           try{
-              this.Open();
-              this.BeginTransaction();
+             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
+             tx= session.getTransaction();
+             tx.begin();
              Query query=session.createSQLQuery(sql);
              query.executeUpdate(); 
-             this.Commit();
+             tx.commit();
+          }
+          catch(Throwable ex){
+              if(tx!=null)
+              {
+                  tx.rollback();
+              }
           }
           finally{
-              this.Close();
+            if(session!=null){
+                session.close();
+            }
           }
        
     }
 
     @Override
     public void ExecuteDataSet(String sql, List<Object> entities,Object[] list) {
-         try{
-             this.Open();
+        Session session=null;
+         
+        try{
+             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
+            
               SQLQuery query=session.createSQLQuery(sql);
             for(Object a: entities){
                query.addEntity(a.getClass());
@@ -181,52 +176,71 @@ public final class MySqlDataSource extends DataSource{
               query.list().toArray(list);
          }
          finally{
-            this.Close();
+             if(session!=null){
+                session.close();
+            }
          }
            
     }
 
     @Override
     public void Delete(Object object) {
-          try{
-              this.Open();
-              this.BeginTransaction();
-              this.session.delete(object);
-              this.Commit();
+          
+         Session session=null;
+           Transaction  tx=null;
+        try{
+             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
+             tx= session.getTransaction();
+             tx.begin();
+             session.delete(object);
+              tx.commit();
          }
          catch(Throwable ex){
-             this.Rollback();
+             if(tx!=null){
+                 tx.rollback();
+             }
          }
          finally{
-             this.Close();
+               if(session!=null){
+                session.close();
+            }
          }
        
     }
 
     @Override
     public void ExecuteCustomDataSet(String sql, List<?> items,Class<?> type) {   
-         try{
-           this.Open();
+          Session session=null;
+        try{
+             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
            Query query=session.createSQLQuery(sql);
            query.list();
            query.setResultTransformer(Transformers.aliasToBean(type));
            items.addAll(query.list());
          }
          finally{
-             this.Close();
+           if(session!=null){
+                session.close();
+            }
          }
           
     } 
     
     @Override
     public List Execute(String sql) {   
-         try{
-             this.Open();
+        Session session=null;
+        try{
+             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             session=  sessionFactory.openSession();
              Query query=session.createSQLQuery(sql);
              return query.list();
          }
          finally{
-            this.Close();
+             if(session!=null){
+                session.close();
+            }
          }
        
     } 

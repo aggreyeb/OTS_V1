@@ -64,13 +64,7 @@ public class NewEmptyJUnitTest {
        ts.ExecuteCommand();
     }
     
-    @Test
-    public void MySqlDataSource(){
-      MySqlDataSource ds= new MySqlDataSource();
-      ds.BeginTransaction();
-      ds.Rollback();
-      
-    }
+   
    
     @Test
     public void UserProfile(){
