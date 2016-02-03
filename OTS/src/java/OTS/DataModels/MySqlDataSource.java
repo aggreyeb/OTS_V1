@@ -25,9 +25,9 @@ import org.hibernate.transform.Transformers;
  */
 public final class MySqlDataSource extends DataSource{
 
-  
+  SessionFactory sessionFactory=null;
     public MySqlDataSource() {
-      
+     
     }
     
     @Override
@@ -35,7 +35,7 @@ public final class MySqlDataSource extends DataSource{
          Session session=null;
          Transaction  tx=null;
         try{
-             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+              sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              tx= session.getTransaction();
             tx.begin();
@@ -50,6 +50,7 @@ public final class MySqlDataSource extends DataSource{
             if(session!=null){
                 session.close();
             }
+          
         }
        
        
@@ -60,7 +61,7 @@ public final class MySqlDataSource extends DataSource{
            Session session=null;
            Transaction  tx=null;
           try{
-              SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+              sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              tx= session.getTransaction();
             tx.begin();
@@ -75,6 +76,7 @@ public final class MySqlDataSource extends DataSource{
              if(session!=null){
                 session.close();
             }
+          
          }
        
     }
@@ -84,7 +86,7 @@ public final class MySqlDataSource extends DataSource{
         Session session=null;
          
           try{
-              SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+               sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              return  session.get(type, obj);
          }
@@ -92,6 +94,8 @@ public final class MySqlDataSource extends DataSource{
               if(session!=null){
                 session.close();
             }
+           
+              
          }
         
     }
@@ -100,7 +104,7 @@ public final class MySqlDataSource extends DataSource{
     public void ExecuteScalar(String sql, int[] returnValue) {
          Session session=null;
         try{
-            SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
             int value =-1; 
          Query query=session.createSQLQuery(sql);
@@ -112,6 +116,7 @@ public final class MySqlDataSource extends DataSource{
             if(session!=null){
                 session.close();
             }
+          
          }
         
     }
@@ -120,7 +125,7 @@ public final class MySqlDataSource extends DataSource{
     public void ExecuteDataSet(String sql, List items) {
         Session session=null;
         try{
-            SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+           sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              Query query=session.createSQLQuery(sql);
              items.addAll(query.list())  ;
@@ -129,6 +134,7 @@ public final class MySqlDataSource extends DataSource{
               if(session!=null){
                 session.close();
             }
+           
          }
          
     
@@ -139,7 +145,7 @@ public final class MySqlDataSource extends DataSource{
            Session session=null;
            Transaction  tx=null;
           try{
-             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+              sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              tx= session.getTransaction();
              tx.begin();
@@ -157,6 +163,7 @@ public final class MySqlDataSource extends DataSource{
             if(session!=null){
                 session.close();
             }
+           
           }
        
     }
@@ -166,7 +173,7 @@ public final class MySqlDataSource extends DataSource{
         Session session=null;
          
         try{
-             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+             sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
             
               SQLQuery query=session.createSQLQuery(sql);
@@ -179,6 +186,7 @@ public final class MySqlDataSource extends DataSource{
              if(session!=null){
                 session.close();
             }
+            
          }
            
     }
@@ -189,7 +197,7 @@ public final class MySqlDataSource extends DataSource{
          Session session=null;
            Transaction  tx=null;
         try{
-             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+              sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              tx= session.getTransaction();
              tx.begin();
@@ -205,6 +213,7 @@ public final class MySqlDataSource extends DataSource{
                if(session!=null){
                 session.close();
             }
+           
          }
        
     }
@@ -213,7 +222,7 @@ public final class MySqlDataSource extends DataSource{
     public void ExecuteCustomDataSet(String sql, List<?> items,Class<?> type) {   
           Session session=null;
         try{
-             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+              sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
            Query query=session.createSQLQuery(sql);
            query.list();
@@ -224,6 +233,7 @@ public final class MySqlDataSource extends DataSource{
            if(session!=null){
                 session.close();
             }
+         
          }
           
     } 
@@ -232,7 +242,7 @@ public final class MySqlDataSource extends DataSource{
     public List Execute(String sql) {   
         Session session=null;
         try{
-             SessionFactory sessionFactory =NewHibernateUtil.getSessionFactory();
+              sessionFactory =NewHibernateUtil.getSessionFactory();
              session=  sessionFactory.openSession();
              Query query=session.createSQLQuery(sql);
              return query.list();
@@ -241,6 +251,7 @@ public final class MySqlDataSource extends DataSource{
              if(session!=null){
                 session.close();
             }
+          
          }
        
     } 
