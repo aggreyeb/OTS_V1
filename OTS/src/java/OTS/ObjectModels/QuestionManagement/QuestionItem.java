@@ -21,6 +21,7 @@ public class QuestionItem {
    public Boolean Selected;
    public Boolean IsMultipleOptions;
    public float Mark=0F;
+   public int CourseId;
    public List<String> LineItems;
    public QuestionItem()
    {

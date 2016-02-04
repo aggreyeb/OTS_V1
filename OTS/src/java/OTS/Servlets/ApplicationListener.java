@@ -16,6 +16,10 @@ import java.nio.file.StandardOpenOption;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import org.hibernate.SessionFactory;
+import org.hibernate.c3p0.internal.C3P0ConnectionProvider;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.internal.SessionFactoryImpl;
 
 /**
  *
@@ -33,13 +37,29 @@ public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
          //System.out.println("ServletContextListener contextDestroyed");
-    
-      if( !NewHibernateUtil.getSessionFactory().isClosed()){
+       try{
+           closeSessionFactory(NewHibernateUtil.getSessionFactory());
+       }
+       catch(Throwable ex){
+          if( !NewHibernateUtil.getSessionFactory().isClosed()){
           NewHibernateUtil.getSessionFactory().close();
-      }
+        }
            
-       // Log("contextDestroyed");
+       }
+    
+      
     }
+    
+    private void closeSessionFactory(SessionFactory factory) { 
+   if(factory instanceof SessionFactoryImpl) {
+      SessionFactoryImpl sf = (SessionFactoryImpl)factory;
+      ConnectionProvider conn = sf.getConnectionProvider();
+      if(conn instanceof C3P0ConnectionProvider) { 
+        ((C3P0ConnectionProvider)conn).close(); 
+      }
+   }
+   factory.close();
+}
     
     public void Log(String text){
         try {

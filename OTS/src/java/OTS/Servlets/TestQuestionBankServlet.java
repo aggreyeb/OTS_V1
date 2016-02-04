@@ -101,7 +101,8 @@ public class TestQuestionBankServlet extends Servlet {
                
               case  "ListQuestionBank":
                 questions= new Questions(db,response);
-                questions.ListQuestionBank();
+                int courseId= Integer.parseInt(request.getParameter("CourseId"));
+                questions.ListQuestionBank(courseId);
                break;
                   
            case  "AddTestSheetItems":

@@ -1,5 +1,5 @@
 package OTS.DataModels;
-// Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1
+// Generated Feb 3, 2016 3:28:45 PM by Hibernate Tools 4.3.1
 
 
 
@@ -18,19 +18,18 @@ public class Studenttestanswersheet  implements java.io.Serializable {
      private Boolean c;
      private Boolean d;
      private Boolean isCorrect;
-     private int totalCorrectAnswers;
+     private Integer totalCorrectAnswers;
 
     public Studenttestanswersheet() {
     }
 
 	
-    public Studenttestanswersheet(Test test, Testitem testitem, User user, int totalCorrectAnswers) {
+    public Studenttestanswersheet(Test test, Testitem testitem, User user) {
         this.test = test;
         this.testitem = testitem;
         this.user = user;
-        this.totalCorrectAnswers = totalCorrectAnswers;
     }
-    public Studenttestanswersheet(Test test, Testitem testitem, User user, Boolean a, Boolean b, Boolean c, Boolean d, Boolean isCorrect, int totalCorrectAnswers) {
+    public Studenttestanswersheet(Test test, Testitem testitem, User user, Boolean a, Boolean b, Boolean c, Boolean d, Boolean isCorrect, Integer totalCorrectAnswers) {
        this.test = test;
        this.testitem = testitem;
        this.user = user;
@@ -105,11 +104,11 @@ public class Studenttestanswersheet  implements java.io.Serializable {
     public void setIsCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
-    public int getTotalCorrectAnswers() {
+    public Integer getTotalCorrectAnswers() {
         return this.totalCorrectAnswers;
     }
     
-    public void setTotalCorrectAnswers(int totalCorrectAnswers) {
+    public void setTotalCorrectAnswers(Integer totalCorrectAnswers) {
         this.totalCorrectAnswers = totalCorrectAnswers;
     }
 

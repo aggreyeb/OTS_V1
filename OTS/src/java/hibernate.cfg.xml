@@ -3,45 +3,47 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-     <property name="show_sql">true</property>
-      <property name="c3p0.acquire_increment">1</property>   
-      <property name="c3p0.idle_test_period">100</property> <!-- seconds -->   
-      <property name="c3p0.max_size">100</property>   
-      <property name="c3p0.max_statements">0</property>   
-      <property name="c3p0.min_size">10</property>   
-      <property name="c3p0.timeout">100</property> <!-- seconds -->  
-      <property name="hibernate.connection.pool_size">1</property>
+    <property name="show_sql">true</property>
+    <property name="c3p0.acquire_increment">1</property>
+    <property name="c3p0.idle_test_period">100</property>
+    <!-- seconds -->
+    <property name="c3p0.max_size">100</property>
+    <property name="c3p0.max_statements">0</property>
+    <property name="c3p0.min_size">10</property>
+    <property name="c3p0.timeout">100</property>
+    <!-- seconds -->
+    <property name="hibernate.connection.pool_size">1</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/otsdb?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">appdbuser</property>
     <property name="hibernate.connection.password">appdbuser</property>
-    <mapping resource="OTS/DataModels/Teacherprofile.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Studentcourseregistration.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Useraccount.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Teachercoursetest.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Testsheetansweroption.hbm.xml"/>
     <mapping resource="OTS/DataModels/Courseregistration.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Test.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Questionnaturetype.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Answer.hbm.xml"/>
-    <mapping resource="OTS/DataModels/User.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Questiontype.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Testanswersheet.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Usertype.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Studenttesthistory.hbm.xml"/>
     <mapping resource="OTS/DataModels/Questionbank.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Testitemoption.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Academiccourse.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Test.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Teacherprofile.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Questionnaturetype.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Studenttestanswersheet.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Studenttest.hbm.xml"/>
+    <mapping resource="OTS/DataModels/User.hbm.xml"/>
     <mapping resource="OTS/DataModels/Departmenttype.hbm.xml"/>
     <mapping resource="OTS/DataModels/Questionlineitem.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Teachercoursetest.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Useraccount.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Testitem.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Cognitiveleveltype.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Courseassignment.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Studentcourseregistration.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Question.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Studenttesthistory.hbm.xml"/>
     <mapping resource="OTS/DataModels/Knowledgemap.hbm.xml"/>
     <mapping resource="OTS/DataModels/Testsheet.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Studenttest.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Testsheetansweroption.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Academiccourse.hbm.xml"/>
-    <mapping resource="OTS/DataModels/Studenttestanswersheet.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Usertype.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Testitem.hbm.xml"/>
     <mapping resource="OTS/DataModels/Courseknowledgemap.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Question.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Testitemoption.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Courseassignment.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Cognitiveleveltype.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Questiontype.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Answer.hbm.xml"/>
+    <mapping resource="OTS/DataModels/Testanswersheet.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

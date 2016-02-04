@@ -1,5 +1,5 @@
 package OTS.DataModels;
-// Generated Jan 28, 2016 10:02:56 AM by Hibernate Tools 4.3.1
+// Generated Feb 3, 2016 3:28:45 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,23 +12,23 @@ public class Question  implements java.io.Serializable {
 
 
      private Integer questionId;
+     private Academiccourse academiccourse;
      private Cognitiveleveltype cognitiveleveltype;
      private Questionnaturetype questionnaturetype;
      private Questiontype questiontype;
      private String text;
-     private Float mark;
      private Set questionlineitems = new HashSet(0);
      private Set answers = new HashSet(0);
 
     public Question() {
     }
 
-    public Question(Cognitiveleveltype cognitiveleveltype, Questionnaturetype questionnaturetype, Questiontype questiontype, String text, Float mark, Set questionlineitems, Set answers) {
+    public Question(Academiccourse academiccourse, Cognitiveleveltype cognitiveleveltype, Questionnaturetype questionnaturetype, Questiontype questiontype, String text, Set questionlineitems, Set answers) {
+       this.academiccourse = academiccourse;
        this.cognitiveleveltype = cognitiveleveltype;
        this.questionnaturetype = questionnaturetype;
        this.questiontype = questiontype;
        this.text = text;
-       this.mark = mark;
        this.questionlineitems = questionlineitems;
        this.answers = answers;
     }
@@ -39,6 +39,13 @@ public class Question  implements java.io.Serializable {
     
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+    public Academiccourse getAcademiccourse() {
+        return this.academiccourse;
+    }
+    
+    public void setAcademiccourse(Academiccourse academiccourse) {
+        this.academiccourse = academiccourse;
     }
     public Cognitiveleveltype getCognitiveleveltype() {
         return this.cognitiveleveltype;
@@ -67,13 +74,6 @@ public class Question  implements java.io.Serializable {
     
     public void setText(String text) {
         this.text = text;
-    }
-    public Float getMark() {
-        return this.mark;
-    }
-    
-    public void setMark(Float mark) {
-        this.mark = mark;
     }
     public Set getQuestionlineitems() {
         return this.questionlineitems;

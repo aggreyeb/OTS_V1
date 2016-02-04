@@ -308,7 +308,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
   
   me.LoadTestQuestionBank=function(){
       console.log(selectedTest.TestId);
-            $.post("TestQuestionBankServlet",{action:"ListQuestionBank"},function(msg){
+            $.post("TestQuestionBankServlet",{action:"ListQuestionBank",CourseId:selectedCourse.Id},function(msg){
                // console.log(msg);
                 try{
                  var message =JSON.parse(msg);

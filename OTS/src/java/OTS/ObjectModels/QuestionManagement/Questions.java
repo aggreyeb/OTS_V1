@@ -5,6 +5,7 @@
  */
 package OTS.ObjectModels.QuestionManagement;
 
+import OTS.DataModels.Academiccourse;
 import OTS.DataModels.Cognitiveleveltype;
 import OTS.DataModels.DataSource;
 import OTS.DataModels.Knowledgemap;
@@ -138,6 +139,8 @@ public class Questions {
         //Find Question type
        
       Questiontype questiontype=(Questiontype)this.dataSource.Find(Questiontype.class, new Integer(input.ItemType));
+      
+      Academiccourse academicCourse=(Academiccourse)this.dataSource.Find(Academiccourse.class, new Integer(input.CourseId));
      
       
       // Create question object
@@ -157,7 +160,8 @@ public class Questions {
                 q1.setCognitiveleveltype(cognitiveType);
                 q1.setQuestiontype(questiontype);
                 q1.setQuestionnaturetype(questionNature);
-            
+                q1.setAcademiccourse(academicCourse);
+                
                 this.dataSource.Save(q1);  
                 Questionlineitem item= new Questionlineitem();
                  item.setQuestion(q1);
@@ -185,6 +189,7 @@ public class Questions {
              q.setCognitiveleveltype(cognitiveType);
              q.setQuestiontype(questiontype);
              q.setQuestionnaturetype(questionNature);
+             q.setAcademiccourse(academicCourse);
              //Classify or Describe
              if( cognitiveType.getCognitiveLevel()==2)
              {//Classify
@@ -283,7 +288,7 @@ public class Questions {
     }
      
     
-      public List<QuestionItem> ListQuestionBank(){
+      public List<QuestionItem> ListQuestionBank(int CourseId){
         
         List<QuestionItem> list= new ArrayList();
       
@@ -292,25 +297,25 @@ public class Questions {
            // this.dataSource.Open();
         
             String sql="select q.QuestionId as QuestionUniqueId,\n" +
-"                      q.Text as QuestionText,\n" +
+"                      q.Text as QuestionText,q.CourseId,\n" +
 "                      qt.QuestionType as QuestionTypeId,\n" +
 "                      qt.Name as QuestionType \n" +
 "                      from  question as q \n" +
 "                      inner join questiontype as qt on q.QuestionTypeId=qt.QuestionType\n" +
 "                       inner join questionnaturetype nt on q.QuestionNatureType_id=nt.QuestionNatureType\n" +
 "                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel\n" +
-"                       where q.QuestionId not in  (select QuestionBankId from testitem )";
+"                       where q.QuestionId not in  (select QuestionBankId from testitem ) and q.CourseId=" + CourseId;
   
      
           
             String sql2="select q.QuestionId as QuestionUniqueId,\n" +
-"                      q.Text as QuestionText,\n" +
+"                      q.Text as QuestionText,q.CourseId,\n" +
 "                      qt.QuestionType as QuestionTypeId,\n" +
 "                      qt.Name as QuestionType \n" +
 "                      from  question as q \n" +
 "                      inner join questiontype as qt on q.QuestionTypeId=qt.QuestionType\n" +
 "                       inner join questionnaturetype nt on q.QuestionNatureType_id=nt.QuestionNatureType\n" +
-"                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel";
+"                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel where q.CourseId=" + CourseId;
 
   
             this.dataSource.ExecuteCustomDataSet(sql, list, QuestionItem.class); 
