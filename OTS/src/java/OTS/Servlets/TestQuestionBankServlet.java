@@ -109,8 +109,9 @@ public class TestQuestionBankServlet extends Servlet {
                
                  questions= new Questions(db,response);
                  id= Integer.parseInt(request.getParameter("testid"));
+                  courseId= Integer.parseInt(request.getParameter("CourseId"));
                  String json=request.getParameter("itemJsons");
-                 questions.AddTestSheetItems(json, id);
+                 questions.AddTestSheetItems(json, id,courseId);
                  break;     
                  
              case  "ListTestSheet":
@@ -132,7 +133,15 @@ public class TestQuestionBankServlet extends Servlet {
                   id= Integer.parseInt(request.getParameter("testid"));
                   json=request.getParameter("data");
                    questions.RemoveTestSheetItem(id, json);
-                 break;  
+                 break; 
+                case "RemoveSelectedTestSheetItems":
+                  questions= new Questions(db,response);
+                  id= Integer.parseInt(request.getParameter("testid"));
+                 int courseid= Integer.parseInt(request.getParameter("CourseId"));
+                  json=request.getParameter("data");
+                  questions.RemoveSelectedTestSheetItems(id,courseid, json);
+                 break;      
+                    
                 case "ListTestAnswerSheet":
                   questions= new Questions(db,response);
                   id= Integer.parseInt(request.getParameter("testid"));

@@ -1,5 +1,5 @@
 package OTS.DataModels;
-// Generated Feb 3, 2016 3:28:45 PM by Hibernate Tools 4.3.1
+// Generated Feb 4, 2016 2:42:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -20,11 +20,12 @@ public class Academiccourse  implements java.io.Serializable {
      private Set studentcourseregistrations = new HashSet(0);
      private Set courseassignments = new HashSet(0);
      private Set studenttests = new HashSet(0);
+     private Set testitems = new HashSet(0);
 
     public Academiccourse() {
     }
 
-    public Academiccourse(String number, String name, String description, Set questions, Set teachercoursetests, Set studentcourseregistrations, Set courseassignments, Set studenttests) {
+    public Academiccourse(String number, String name, String description, Set questions, Set teachercoursetests, Set studentcourseregistrations, Set courseassignments, Set studenttests, Set testitems) {
        this.number = number;
        this.name = name;
        this.description = description;
@@ -33,6 +34,7 @@ public class Academiccourse  implements java.io.Serializable {
        this.studentcourseregistrations = studentcourseregistrations;
        this.courseassignments = courseassignments;
        this.studenttests = studenttests;
+       this.testitems = testitems;
     }
    
     public Integer getCourseTypeId() {
@@ -97,6 +99,13 @@ public class Academiccourse  implements java.io.Serializable {
     
     public void setStudenttests(Set studenttests) {
         this.studenttests = studenttests;
+    }
+    public Set getTestitems() {
+        return this.testitems;
+    }
+    
+    public void setTestitems(Set testitems) {
+        this.testitems = testitems;
     }
 
 

@@ -150,12 +150,14 @@ OTS.ViewModels.TestGenerationViewModel=function(){
           selectedItems.push(qbItems[i]);
       }
       var data=JSON.stringify(selectedItems);
-      $.post("TestQuestionBankServlet",{action:"AddTestSheetItems",testid:selectedTest.TestId,itemJsons:data},function(msg){
+      $.post("TestQuestionBankServlet",{action:"AddTestSheetItems",CourseId:selectedCourse.Id,testid:selectedTest.TestId,itemJsons:data},function(msg){
           
            try{
                  var message =JSON.parse(msg);
                   var status=message.response.status;
                   if(status==="ok"){
+                   
+                     me.LoadTestSheetItems();
                      me.LoadTestQuestionBank();
                     msgBox.DisplaySuccess("<p>Test sheet item(s) added </p>");
                   }
@@ -213,14 +215,15 @@ OTS.ViewModels.TestGenerationViewModel=function(){
          }
       }
       var jdata=JSON.stringify(items);
-      $.post("TestQuestionBankServlet",{action:"RemoveTestSheetItems",testid:selectedTest.TestId, data:jdata},function(msg){
-         
+     // $.post("TestQuestionBankServlet",{action:"RemoveTestSheetItems",CourseId:selectedCourse.Id,testid:selectedTest.TestId, data:jdata},function(msg){
+          $.post("TestQuestionBankServlet",{action:"RemoveSelectedTestSheetItems",CourseId:selectedCourse.Id,testid:selectedTest.TestId, data:jdata},function(msg){
           try{
                  var message =JSON.parse(msg);
                   var status=message.response.status;
                   if(status==="ok"){
                    //  alert("Pass");
                     me.LoadTestSheetItems();
+                    me.LoadTestQuestionBank();
                      msgBox.DisplaySuccess("<p>Test sheet item(s) removed </p>");
                   }
                   else{

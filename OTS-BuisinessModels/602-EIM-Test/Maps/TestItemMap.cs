@@ -16,6 +16,7 @@ namespace _602_EIM_Test.Maps
             References(x => x.QuestionNatureType).Column("QuestionNatureType");
             References(x => x.QuestionType).Column("QuestionType");
             HasMany(x => x.TestItemOptions).Cascade.AllDeleteOrphan().AsBag();
+            References(x => x.Course).Column("CourseId");
         }
     }
 }

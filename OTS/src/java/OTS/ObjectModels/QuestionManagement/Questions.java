@@ -294,34 +294,10 @@ public class Questions {
       
        
            try {
-           // this.dataSource.Open();
-        
-            String sql="select q.QuestionId as QuestionUniqueId,\n" +
-"                      q.Text as QuestionText,q.CourseId,\n" +
-"                      qt.QuestionType as QuestionTypeId,\n" +
-"                      qt.Name as QuestionType \n" +
-"                      from  question as q \n" +
-"                      inner join questiontype as qt on q.QuestionTypeId=qt.QuestionType\n" +
-"                       inner join questionnaturetype nt on q.QuestionNatureType_id=nt.QuestionNatureType\n" +
-"                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel\n" +
-"                       where q.QuestionId not in  (select QuestionBankId from testitem ) and q.CourseId=" + CourseId;
-  
-     
           
-            String sql2="select q.QuestionId as QuestionUniqueId,\n" +
-"                      q.Text as QuestionText,q.CourseId,\n" +
-"                      qt.QuestionType as QuestionTypeId,\n" +
-"                      qt.Name as QuestionType \n" +
-"                      from  question as q \n" +
-"                      inner join questiontype as qt on q.QuestionTypeId=qt.QuestionType\n" +
-"                       inner join questionnaturetype nt on q.QuestionNatureType_id=nt.QuestionNatureType\n" +
-"                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel where q.CourseId=" + CourseId;
-
-  
-            this.dataSource.ExecuteCustomDataSet(sql, list, QuestionItem.class); 
-            if( list.size()==0){
-                this.dataSource.ExecuteCustomDataSet(sql2, list, QuestionItem.class); 
-            }
+      
+            list=FilterSelectedQuestionBankItems(CourseId);
+            
             for(int i=0; i<list.size();i++){
                 list.get(i).Number=i +1;
                 list.get(i).Selected=false;
@@ -358,8 +334,69 @@ public class Questions {
        return list;
     }
       
+    
       
+    private List<QuestionItem> FilterSelectedQuestionBankItems(int courseId){
+        List<QuestionItem>  list= new ArrayList();
+        
+        List<QuestionItem> questionList= new ArrayList();
+        List<QuestionBankIdItem> testItemList= new ArrayList();
+        
+          String sql="select q.QuestionId as QuestionUniqueId,\n" +
+"                      q.Text as QuestionText,q.CourseId,\n" +
+"                      qt.QuestionType as QuestionTypeId,\n" +
+"                      qt.Name as QuestionType \n" +
+"                      from  question as q \n" +
+"                      inner join questiontype as qt on q.QuestionTypeId=qt.QuestionType\n" +
+"                       inner join questionnaturetype nt on q.QuestionNatureType_id=nt.QuestionNatureType\n" +
+"                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel\n" +
+"                       where q.CourseId=" + courseId;
+          
+          
+       String sql2="select QuestionBankId from testitem  where  CourseId=" + courseId;
+
+
+          
+        this.dataSource.ExecuteCustomDataSet(sql, questionList, QuestionItem.class); 
+        this.dataSource.ExecuteCustomDataSet(sql2, testItemList, QuestionBankIdItem.class); 
+        if(testItemList.size()>0){
+            for(QuestionBankIdItem a :testItemList){
+               if(!HasTestItem(questionList,a.QuestionBankId)){
+               QuestionItem item= RetreiveUnlestedTestItem(questionList,a.QuestionBankId);
+               list.add(item);
+              }
+            }
+        }
+        else{
+        
+           list.addAll(questionList);
+        }
+        
+        return list;
+    }
       
+    private Boolean HasTestItem(List<QuestionItem>  list,int itemId){
+        Boolean found =false;
+        for(QuestionItem q:list){
+            if(q.QuestionUniqueId==itemId){
+                found=true;
+                break;
+            }
+        }
+        return found;
+    };
+    
+    private QuestionItem RetreiveUnlestedTestItem(List<QuestionItem>  list,int itemId){
+        QuestionItem found =null;
+        for(QuestionItem q:list){
+            if(q.QuestionUniqueId==itemId){
+                found=q;
+                break;
+            }
+        }
+        return found;
+    };
+    
     public List<QuestionItem> ListTestQuestionBank(int testid){
         
         List<QuestionItem> list= new ArrayList();
@@ -556,7 +593,7 @@ public class Questions {
           return list;
       }
     
-      public List<TestSheetItem> AddTestSheetItems(String itemJsons ,int testid){
+      public List<TestSheetItem> AddTestSheetItems(String itemJsons ,int testid,int courseId){
         
            List<TestSheetItem> items= new ArrayList();
        
@@ -568,6 +605,8 @@ public class Questions {
        
            
              Test t= (Test)this.dataSource.Find(Test.class, new Integer(testid));
+             Academiccourse course= (Academiccourse)this.dataSource.Find(Academiccourse.class, new Integer(courseId));
+             
               if(t!=null){
                 //  Set testItems= new HashSet();
                   for(QuestionItem a:questionItems){
@@ -580,6 +619,7 @@ public class Questions {
                       testItem.setCognitiveleveltype(question.getCognitiveleveltype());
                       testItem.setQuestionnaturetype(question.getQuestionnaturetype());
                       testItem.setQuestiontype(question.getQuestiontype());
+                      testItem.setAcademiccourse(course);
                       testItem.setTest(t);
                       this.dataSource.Save(testItem);
                  //Create Test Answer sheet item
@@ -649,7 +689,9 @@ public class Questions {
                  }
                  Testitem ot= (Testitem)this.dataSource.Find(Testitem.class, new Integer(item.ItemUniqueId));
                  if(ot!=null){
-                     this.dataSource.Delete(ot);
+                    // this.dataSource.Delete(ot);
+                     String sqlDelete="Delete from testitem where TestItemId=" + ot.getTestItemId();
+                     this.dataSource.ExecuteNonQuery(sqlDelete);
                  }
                 
                 //Remove the item from test answer sheet
@@ -661,7 +703,7 @@ public class Questions {
                   }
                  
             }
-           // this.dataSource.Commit();
+           
              message.ChangeStatus("ok");
         } catch (Throwable ex) {
             //this.dataSource.Rollback();
@@ -669,12 +711,40 @@ public class Questions {
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
         } finally {
-           // this.dataSource.Close();
+           
         }
         
        return result;
     }
    
+   
+   public void RemoveSelectedTestSheetItems(int testid,int courseId, String jsonData){
+   
+     try{
+           Gson g= new Gson();
+           TestSheetItem[] questionItems= (TestSheetItem[])g.fromJson(jsonData, TestSheetItem[].class);
+           int count=questionItems.length;
+          
+           for(TestSheetItem t:questionItems){
+              
+                Testitem ot= (Testitem)this.dataSource.Find(Testitem.class, new Integer(t.ItemUniqueId));
+                String sqlTestanswersheet="delete from testanswersheet where TestId=" + testid + " and TestItemId=" + ot.getTestItemId();
+                String sqlTestitemoption="delete from testitemoption where TestItem_id=" +  ot.getTestItemId();
+               // String sqlTestitem="delete from  testitem where Test_id=" + ot.getTestItemId() +  " and CourseId=" + courseId;
+                this.dataSource.ExecuteNonQuery(sqlTestanswersheet);
+                this.dataSource.ExecuteNonQuery(sqlTestitemoption);
+               // this.dataSource.ExecuteNonQuery(sqlTestitem);
+                this.dataSource.Delete(ot);
+                
+           }
+          message.ChangeStatus("ok");
+     }
+     catch(Throwable ex){
+           message.ChangeStatus("exception");
+            message.UpdateError(ex.toString());
+     }
+    
+   }
    
     
     public  AnswerOptionItem FindTestSheetItem(int optionId){

@@ -14,5 +14,7 @@ namespace OTS.DataModel
         public virtual QuestionType QuestionType { get; set; }
         public virtual CognitiveLevelType CognitiveLevelType { get; set; }
         public virtual List<TestItemOption> TestItemOptions { get; set; }
+
+        public virtual AcademicCourse Course { get; set; }
     }
 }

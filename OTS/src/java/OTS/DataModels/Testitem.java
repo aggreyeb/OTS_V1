@@ -1,5 +1,5 @@
 package OTS.DataModels;
-// Generated Feb 3, 2016 3:28:45 PM by Hibernate Tools 4.3.1
+// Generated Feb 4, 2016 2:42:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,6 +12,7 @@ public class Testitem  implements java.io.Serializable {
 
 
      private Integer testItemId;
+     private Academiccourse academiccourse;
      private Cognitiveleveltype cognitiveleveltype;
      private Questionnaturetype questionnaturetype;
      private Questiontype questiontype;
@@ -26,7 +27,8 @@ public class Testitem  implements java.io.Serializable {
     public Testitem() {
     }
 
-    public Testitem(Cognitiveleveltype cognitiveleveltype, Questionnaturetype questionnaturetype, Questiontype questiontype, Test test, Integer questionBankId, String text, Float mark, Set testitemoptions, Set studenttestanswersheets, Set testanswersheets) {
+    public Testitem(Academiccourse academiccourse, Cognitiveleveltype cognitiveleveltype, Questionnaturetype questionnaturetype, Questiontype questiontype, Test test, Integer questionBankId, String text, Float mark, Set testitemoptions, Set studenttestanswersheets, Set testanswersheets) {
+       this.academiccourse = academiccourse;
        this.cognitiveleveltype = cognitiveleveltype;
        this.questionnaturetype = questionnaturetype;
        this.questiontype = questiontype;
@@ -45,6 +47,13 @@ public class Testitem  implements java.io.Serializable {
     
     public void setTestItemId(Integer testItemId) {
         this.testItemId = testItemId;
+    }
+    public Academiccourse getAcademiccourse() {
+        return this.academiccourse;
+    }
+    
+    public void setAcademiccourse(Academiccourse academiccourse) {
+        this.academiccourse = academiccourse;
     }
     public Cognitiveleveltype getCognitiveleveltype() {
         return this.cognitiveleveltype;
