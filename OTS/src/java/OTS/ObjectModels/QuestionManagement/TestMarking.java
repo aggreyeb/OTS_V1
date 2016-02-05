@@ -259,9 +259,7 @@ public class TestMarking {
          //Student Answer Sheet
          List<TestMarkingAnswerSheet> studentAnswerSheetItems=new ArrayList();
          this.dataSource.ExecuteCustomDataSet(sqlStudentTestSheetItems, studentAnswerSheetItems, TestMarkingAnswerSheet.class);
-         
-        
-      
+       
          float totalMark=0F;
          float totalTestMark=0F;
          for(TestMarkingAnswerSheet t:studentAnswerSheetItems){
