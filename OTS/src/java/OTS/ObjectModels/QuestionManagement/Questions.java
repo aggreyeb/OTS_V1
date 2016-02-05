@@ -621,7 +621,7 @@ public class Questions {
                       
                       Testitem testItem= new Testitem();
                       testItem.setText(a.QuestionText);
-                      testItem.setMark(0.0F);
+                      testItem.setMark(1.0F); //default the mark to 1
                       testItem.setQuestionBankId(question.getQuestionId());
                       testItem.setCognitiveleveltype(question.getCognitiveleveltype());
                       testItem.setQuestionnaturetype(question.getQuestionnaturetype());
