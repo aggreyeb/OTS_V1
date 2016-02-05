@@ -360,11 +360,18 @@ public class Questions {
         this.dataSource.ExecuteCustomDataSet(sql, questionList, QuestionItem.class); 
         this.dataSource.ExecuteCustomDataSet(sql2, testItemList, QuestionBankIdItem.class); 
         if(testItemList.size()>0){
+            /*
             for(QuestionBankIdItem a :testItemList){
                if(!HasTestItem(questionList,a.QuestionBankId)){
                QuestionItem item= RetreiveUnlestedTestItem(questionList,a.QuestionBankId);
                list.add(item);
               }
+            }
+            */
+            for(QuestionItem a:questionList){
+                if(!HasTestItem(testItemList,a.QuestionUniqueId)){
+                    list.add(a);
+                }
             }
         }
         else{
@@ -375,10 +382,10 @@ public class Questions {
         return list;
     }
       
-    private Boolean HasTestItem(List<QuestionItem>  list,int itemId){
+    private Boolean HasTestItem(List<QuestionBankIdItem>  list,int itemId){
         Boolean found =false;
-        for(QuestionItem q:list){
-            if(q.QuestionUniqueId==itemId){
+        for(QuestionBankIdItem q:list){
+            if(q.QuestionBankId==itemId){
                 found=true;
                 break;
             }
