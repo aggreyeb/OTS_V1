@@ -60,8 +60,8 @@ public class TestMarking {
              this.MarkCorrectAnswers(testId, studentId, correctList, this.dataSource);
               
              this.dataSource.ExecuteCustomDataSet(sqlInCorrectMultipleSingleAnswer, correctList, TestMarkingItem.class);
-             this.MarkInCorrectAnswers(testId, studentId, inCorrectList);
-             this.MarkMultipleChoiceMultipleAnswers(testId, studentId);
+             this.MarkInCorrectAnswers(testId, studentId, inCorrectList,this.dataSource);
+             this.MarkMultipleChoiceMultipleAnswers(testId, studentId,this.dataSource);
              //this.dataSource.Commit();
              
              float totalMark=  this.CalculateTotalMark(testId, studentId);
@@ -122,31 +122,38 @@ public class TestMarking {
    
     
     protected Boolean MarkCorrectAnswers(int testId,int studentId, List<TestMarkingItem> correctItems,DataSource dataSource){
-        
-         for(TestMarkingItem t:correctItems){
+        try{
+          for(TestMarkingItem t:correctItems){
            Studenttestanswersheet item= (Studenttestanswersheet)dataSource.Find(Studenttestanswersheet.class, new Integer(t.AnswerSheetId));
            
              if(item!=null){
                item.setTotalCorrectAnswers(1);
                item.setIsCorrect(Boolean.TRUE);
+               dataSource.Update(item);
             }
          }
         return true;
+        }
+        catch(Throwable ex){
+            return false;
+        }
+        
     }
     
-    protected Boolean MarkInCorrectAnswers(int testId,int studentId,List<TestMarkingItem> correctItems){
+    protected Boolean MarkInCorrectAnswers(int testId,int studentId,List<TestMarkingItem> correctItems,DataSource dataSource){
         
          for(TestMarkingItem t:correctItems){
-           Studenttestanswersheet item= (Studenttestanswersheet)this.dataSource.Find(Studenttestanswersheet.class, new Integer(t.AnswerSheetId));
+           Studenttestanswersheet item= (Studenttestanswersheet)dataSource.Find(Studenttestanswersheet.class, new Integer(t.AnswerSheetId));
             if(item!=null){
                item.setTotalCorrectAnswers(0);
                item.setIsCorrect(Boolean.FALSE);
+               dataSource.Update(item);
             }
          }
         return true;
     }
     
-    protected Boolean MarkMultipleChoiceMultipleAnswers(int testId,int studentId){
+    protected Boolean MarkMultipleChoiceMultipleAnswers(int testId,int studentId,DataSource dataSource){
        String sql="select   q.TestItemId,\n" +
                     "         q.QuestionType,\n" +
                     "         q.CognitiveLevelTypeId,\n" +
@@ -161,7 +168,7 @@ public class TestMarking {
         
        //Test AnswerSheet
          List<TestMarkingAnswerSheet> answerSheetItems=new ArrayList();
-         this.dataSource.ExecuteCustomDataSet(sql, answerSheetItems, TestMarkingAnswerSheet.class);
+         dataSource.ExecuteCustomDataSet(sql, answerSheetItems, TestMarkingAnswerSheet.class);
       
          String sqlStudentTestSheetItems="select ta.StudentTestAnswerSheetId as AnswerSheetId, q.TestItemId,\n" +
                                             "         q.QuestionType,\n" +
@@ -177,7 +184,7 @@ public class TestMarking {
           
          //Student Answer Sheet
          List<TestMarkingAnswerSheet> studentAnswerSheetItems=new ArrayList();
-         this.dataSource.ExecuteCustomDataSet(sqlStudentTestSheetItems, studentAnswerSheetItems, TestMarkingAnswerSheet.class);
+         dataSource.ExecuteCustomDataSet(sqlStudentTestSheetItems, studentAnswerSheetItems, TestMarkingAnswerSheet.class);
          
         
          
