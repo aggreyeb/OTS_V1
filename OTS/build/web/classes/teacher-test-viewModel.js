@@ -212,6 +212,8 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
   
   
   me.onDeleteTest=function(item,event){
+      me.form.responseMessageVisible(false); 
+      if(!item.IsAllMarked & !item.IsActivated){ 
       me.form.responseMessageVisible(false);
       me.selectedTest=item;
       me.formVisible(false);
@@ -241,7 +243,13 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 me.form.responseMessageVisible(true); 
             }
       });
-     
+      }
+      else{
+                    me.form.responseDialog("Delete Test");
+                    me.form.responseMessageText("Can not delete test already activated or marked");
+                    me.form.responseBoxStyle("alert alert-info");
+                    me.form.responseMessageVisible(true); 
+      }
   };
   
   
@@ -420,10 +428,13 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
        };
        
        me.onActivateTest=function(item,event){
-      
+       
+        if(!item.IsAllMarked){ 
+        me.form.responseMessageVisible(true);   
         me.form.responseMessageVisible(false);
         me.selectedTest=item;
         me.formVisible(false);
+        
       $.post("TestGenerationServlet",{action:"ActivateTest",TestId:item.TestId},function(msg){
           
           if(msg != ""){ 
@@ -461,18 +472,26 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 }
             }
             else{
-                me.form.responseDialog("Fail");
+                me.form.responseDialog("Activate Test");
                 me.form.responseMessageText(message.response.error);
                 me.form.responseBoxStyle("alert alert-danger");
                 me.form.responseMessageVisible(true); 
             }
           });
      
-       
+           }
+           else{
+                    me.form.responseDialog("Activate Test");
+                    me.form.responseMessageText("Can not activate test which has been marked");
+                    me.form.responseBoxStyle("alert alert-info");
+                    me.form.responseMessageVisible(true); 
+           }
+           
        };
        
         me.onDeActivateTest=function(item,event){
-           me.form.responseMessageVisible(false);
+          if(!item.IsAllMarked){ 
+        me.form.responseMessageVisible(false);
         me.selectedTest=item;
         me.formVisible(false);
       $.post("TestGenerationServlet",{action:"DeActivateTest",TestId:item.TestId},function(msg){
@@ -512,12 +531,19 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 }
             }
             else{
-                me.form.responseDialog("Fail");
-                me.form.responseMessageText(message.response.error);
-                me.form.responseBoxStyle("alert alert-danger");
+                me.form.responseDialog("DeActivate Test");
+                me.form.responseMessageText("Can not deactivate a test already marked");
+                me.form.responseBoxStyle("alert alert-info");
                 me.form.responseMessageVisible(true); 
             }
           });
+           }
+           else{
+               me.form.responseDialog("Fail");
+                me.form.responseMessageText(message.response.error);
+                me.form.responseBoxStyle("alert alert-danger");
+                me.form.responseMessageVisible(true);  
+           }
        };
        
        me.onMarkTest=function(item,event){
@@ -540,6 +566,10 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
           });
          }
          else{
+              me.form.responseDialog("Mark Test");
+                me.form.responseMessageText("Can not re-mark test already maked");
+                me.form.responseBoxStyle("alert alert-danger");
+                me.form.responseMessageVisible(true);  
              event.preventDefault();
          }
        };

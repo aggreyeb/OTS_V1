@@ -165,6 +165,7 @@ public class Questions {
                 q1.setQuestiontype(questiontype);
                 q1.setQuestionnaturetype(questionNature);
                 q1.setAcademiccourse(academicCourse);
+                q1.setTest(test);
                 
                 this.dataSource.Save(q1);  
                 Questionlineitem item= new Questionlineitem();

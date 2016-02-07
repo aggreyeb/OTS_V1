@@ -44,8 +44,8 @@
                              </button>
                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                                 <li data-bind="style:{ 'background-color' :  ActivatedStyle }" role="presentation"><a data-bind="event:{click:function(item,event){$parent.onGenerateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Generate Test Items</a></li>
-                                <li role="presentation"><a data-bind="event:{click:function(item,event){$parent.onActivateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Activate Test</a></li>
-                                <li role="presentation"><a data-bind="event:{click:function(item,event){$parent.onDeActivateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">DeActivate Test</a></li>
+                                <li  data-bind="style:{ 'background-color' :  MarkTestStyle }" role="presentation"><a data-bind="event:{click:function(item,event){$parent.onActivateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Activate Test</a></li>
+                                <li data-bind="style:{ 'background-color' :  MarkTestStyle }" role="presentation"><a data-bind="event:{click:function(item,event){$parent.onDeActivateTest(item,event)}}" role="menuitem" tabindex="-1" href="#">DeActivate Test</a></li>
                                 <li data-bind="style:{ 'background-color' :  MarkTestStyle }" role="presentation"><a  data-bind="event:{click:function(item,event){$parent.onMarkTest(item,event)}}" role="menuitem" tabindex="-1" href="#">Mark Test</a></li>
                               </ul>
                        </div>
