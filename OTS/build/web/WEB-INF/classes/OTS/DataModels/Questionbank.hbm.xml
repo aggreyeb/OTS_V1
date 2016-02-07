@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 10-Jun-2015 6:26:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="OTS.DataModels.Questionbank" table="questionbank" catalog="otsdb" optimistic-lock="version">
+        <id name="questionBankId" type="java.lang.Integer">
+            <column name="QuestionBankId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cognitiveleveltype" class="OTS.DataModels.Cognitiveleveltype" fetch="select">
+            <column name="CognitiveLevelTypeId" />
+        </many-to-one>
+        <many-to-one name="questionnaturetype" class="OTS.DataModels.Questionnaturetype" fetch="select">
+            <column name="QuestionNatureTypeId" />
+        </many-to-one>
+        <many-to-one name="questiontype" class="OTS.DataModels.Questiontype" fetch="select">
+            <column name="QuestionTypeId" />
+        </many-to-one>
+        <many-to-one name="test" class="OTS.DataModels.Test" fetch="select">
+            <column name="TestId" />
+        </many-to-one>
+        <property name="questionText" type="string">
+            <column name="QuestionText" />
+        </property>
+        <property name="groupId" type="string">
+            <column name="GroupId" length="40" />
+        </property>
+    </class>
+</hibernate-mapping>

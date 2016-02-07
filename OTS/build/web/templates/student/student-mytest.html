@@ -1,0 +1,42 @@
+<div> 
+           <table class="table">
+            <tr>
+                <th>Number</th>
+                <th>Course Name</th>
+                <th>Test Name</th>
+                <th>Start Date</th>
+                <th>Test Taken</th>
+                <th>Marks(%)</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach:TestList">
+                <tr>
+                    <td style="width:50px; "  data-bind="text:Number"></td>
+                   <td  style="width:50px;" data-bind="text:CourseName"></td>
+                   <td  style="width:150px;" data-bind="text:TestName"></td> 
+                   <td  style="width:150px;" data-bind="text:StartDate"></td> 
+                   <td  data-bind="text:TestTaken"></td> 
+                   <td  data-bind="text:TestScore"></td> 
+                   <td>
+                       <div class=" btn-group">
+                           <button data-bind="event:{click:function(item,event){$parent.TakeTest(item,event)}},enable:CanEnableTest" class="btn btn-primary">Take Test</button>   <button data-bind="enable:CanTestInformationEnable" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+                                  Actions <span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a  role="menuitem" tabindex="-1" href="#">Test Information</a></li>
+                              </ul>
+                       </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+          
+    </div>
+   <script>
+
+    $(document).ready(function(){
+     var view= new OTS.ViewModels.StudentMyTestViewModel();
+      ko.applyBindings(view,$("#view-content")[0]); 
+  
+   }) ;
+</script>

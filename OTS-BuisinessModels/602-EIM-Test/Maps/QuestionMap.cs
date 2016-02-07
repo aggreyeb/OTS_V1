@@ -20,6 +20,7 @@ namespace _602_EIM_Test.Maps
             HasMany(x => x.QuestioLineItems);
             HasMany(x => x.Answers);
             References(x => x.Course).Column("CourseId");
+            References(x => x.Test).Column("TestId");
         }
     }
 }

@@ -16,6 +16,7 @@ namespace OTS.DataModel
         public virtual List<QuestionLineItem> QuestioLineItems { get; set; }
         public virtual List<Answer> Answers { get; set; }
         public virtual AcademicCourse Course { get; set; }
+        public virtual Test Test { get; set; }
 
     }
 }

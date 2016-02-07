@@ -1,0 +1,97 @@
+<div>
+     <div class="alert alert-danger" style="display: none" id="div-messageBox">
+       
+     </div>
+    <div class="col-lg-5">
+        <div class="row">
+            <div class="form-group">
+                <div >
+                   <h4><span class="label label-default">Your Course Knowledge Maps</span></h4> 
+                </div> 
+                <div style="overflow-y: scroll" id="tv-courseknowledgemaps"> </div><hr>
+            </div>
+            <div>
+                   <h4><span class="label label-default">Test Item Options</span></h4> 
+             </div>
+            <!--
+             <select id="cboAlgorithmType"  class="form-control">
+                <option value="ListTrueOrFalseCorrect">List/TrueOrFalse/Correct</option>
+                <option value="ListTrueOrFalseNegative">List/TrueOrFalse/Negative</option>
+                <option value="ListTrueOrFalseIncorrect">List/TrueOrFalse/Incorrect</option>
+                <option value="ListTrueOrFalseNegative-Incorrect">List/TrueOrFalse/Negative-Incorrect</option>
+                <option value="ListSingleAnswerMultipleChoice">List/SingleAnswer/MultipleChoice</option>
+                <option value="ListMultipleAnswerMultipleChoice">List/MuiltipleAnswer/MultipleChoice</option>
+                <option value="DescribeTrueOrFalseCorrect">Describe/TrueOrFalse/Correct</option>
+                <option value="DescribeTrueOrFalseNegative">Describe/TrueOrFalse/Negative</option>
+                <option value="DescribeTrueOrFalseInCorrect">Describe/TrueOrFalse/Incorrect</option>
+                <option value="DescribeTrueOrFalseNegativeIncorrect">Describe/TrueOrFalse/Negative-Incorrect</option>
+                <option value="DescribeSingleAnswerMultipleChoice">Describe/SingleAnswer/MultipleChoice</option>
+                <option value="DescribeMultipleAnswerMultipleChoice">Describe/MultipleAnswer/MultipleChoice</option>
+                <option value="SummarizeMultipleChoice">Describe/Summarize/MultipleChoice</option>
+                <option value="ClassifyMultipleChoice">Classify/MultipleChoice</option>
+             </select><p></p>
+           -->
+            <label> Cognitive Level</label>
+            <select id="cboCognitive" data-bind="options:CognitiveTypeList,optionsText:'Name', optionsValue:'Id', value:CognitiveTypeSelected,optionsCaption: 'Choose...',event:{change:CognitiveTypeChanged}" class="form-control">
+             
+            </select>
+             <label> Item Type</label>
+             <select id="cboQuestionType" data-bind="options:QuestionTypeList,optionsText:'Name', optionsValue:'Id', value:QuestionTypeSelected,optionsCaption: 'Choose...',event:{change:QuestionTypeChanged}" class="form-control">
+                
+            </select>
+             
+              <label> Nature of Item</label>
+             <select id="cboQuestionNature" data-bind="options:QuestionNatureTypeList,optionsText:'Name', optionsValue:'Id', value:QuestionNatureSelected,optionsCaption: 'Choose...',enable:EnableQuestionNature"  class="form-control">
+                <option value="1">Correct</option>
+                <option value="2">Negative</option>
+                <option value="3">Incorrect</option>
+                <option value="4">Negative Incorrect</option>
+             </select><p></p>
+            
+          <div class="btn-group">
+        <button id="btn-submit" data-bind="click:Submit" class="btn btn-primary" type="button">Submit</button>
+       <!-- <button class="btn btn-default" type="button">Cancel</button>-->
+      
+          </div> <p></p>
+          
+      
+        </div>
+    </div>
+    <div class="col-lg-2">
+        
+    </div>
+    
+     <div class="col-lg-5">
+         <div class="row">
+               <h4><span class="label label-default">Node Information</span></h4> 
+                <label>Node Name</label><input data-bind="value:KnowledgeMapSelected.NodeName" class="form-control" type="text" readonly="readonly"/>
+                <label>Parent Node</label><input data-bind="value:KnowledgeMapSelected.ParentNode" class="form-control" type="text" readonly="readonly"/>
+                <label>Relation with Parent</label><input data-bind="value:KnowledgeMapSelected.RelationWithParent" class="form-control" type="text" readonly="readonly"/>
+                <input data-bind="checked:KnowledgeMapSelected.IncludeSubTrees" type="checkbox"/><label>Include Sub Trees?</label>
+         </div><br>
+         <div class="row">
+             <div class="panel panel-info">
+                 <div class="panel-heading">
+                     Generated Item: <span id="div-outputheader"><b></b> </span> 
+                 </div>
+              
+                 <div id="div-output-body" class="panel-body" style="max-height: 150px;overflow-y: auto">
+                    
+                    
+                 </div>
+                 <div class="panel-footer">
+                       <span  id="spProgress" class="label label-warning ">Please wait loading ...</span>
+                 </div>
+             </div>
+         </div>
+     </div><p></p>
+     
+    
+  </div>
+   
+<script type="text/javascript">
+    $(document).ready(function(){
+        
+    });
+ 
+</script>

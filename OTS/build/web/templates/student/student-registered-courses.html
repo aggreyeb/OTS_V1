@@ -1,0 +1,36 @@
+<div> 
+           <table class="table">
+            <tr>
+                <th>Number</th>
+                <th>Course Name</th>
+                <th>Professor</th>
+                <th></th>
+            </tr>
+            <tbody data-bind="foreach:courseTestList">
+                <tr>
+                   <td data-bind="text:Number"></td>
+                   <td  data-bind="text:CourseName"></td>
+                   <td  data-bind="text:Professor"></td> 
+                   <td>
+                       <div class=" btn-group">
+                             <button  class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+                                  Actions <span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a data-bind="event:{click:function(item,event){$parent.onUnregister(item,event)}}" role="menuitem" tabindex="-1" href="#">UnRegister</a></li>
+                              </ul>
+                       </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+          
+    </div>
+   <script>
+
+    $(document).ready(function(){
+      var view= new OTS.ViewModels.StudentAllCourseTest();
+      ko.applyBindings(view,$("#view-content")[0]); 
+  
+   }) ;
+</script>

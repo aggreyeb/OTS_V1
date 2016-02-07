@@ -125,6 +125,7 @@ public class Questions {
     public  Boolean SaveQTestItems(TestGenerationInput input, List<TestItemGenerationOutput> outputs){
         int QuestionId=0;
         String nodeName="";
+        
         try{
              //Find test by id
         nodeName=  this.RetriveNodeName(input); 
@@ -141,7 +142,10 @@ public class Questions {
       Questiontype questiontype=(Questiontype)this.dataSource.Find(Questiontype.class, new Integer(input.ItemType));
       
       Academiccourse academicCourse=(Academiccourse)this.dataSource.Find(Academiccourse.class, new Integer(input.CourseId));
+    
+    
      
+      
       
       // Create question object
      
@@ -175,7 +179,7 @@ public class Questions {
                   QuestionId=q1.getQuestionId();
                  }
              }
-            if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test, q1.getText()))
+            if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test, q1.getText(),input.CourseId))
              {
                 //this.dataSource.Commit();
              }
@@ -190,6 +194,7 @@ public class Questions {
              q.setQuestiontype(questiontype);
              q.setQuestionnaturetype(questionNature);
              q.setAcademiccourse(academicCourse);
+             q.setTest(test);
              //Classify or Describe
              if( cognitiveType.getCognitiveLevel()==2)
              {//Classify
@@ -208,7 +213,7 @@ public class Questions {
                   }
               }
              
-          if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test,  q.getText().toLowerCase())){
+          if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test,  q.getText().toLowerCase(),input.CourseId)){
            
              List<String> duplicateCheckList= new ArrayList();
              for(TestItemGenerationOutput x:outputs){
@@ -217,6 +222,8 @@ public class Questions {
                     duplicateCheckList.add(z);
                   }
                }
+              this.dataSource.Save(q);
+              
               for(String z:duplicateCheckList){
                
                     Questionlineitem item= new Questionlineitem();
@@ -224,9 +231,6 @@ public class Questions {
                      item.setText(z);
                      this.dataSource.Save(item);
                   }
-             
-               this.dataSource.Save(q);
-             //  this.dataSource.Commit();
               }
              break;  
                 
@@ -269,13 +273,13 @@ public class Questions {
     }
     
       protected Boolean CanSaveTestQuestion(Cognitiveleveltype congnitiveType,
-            Questionnaturetype questionNatureType,Questiontype questionType,Test test,String questionText){
+            Questionnaturetype questionNatureType,Questiontype questionType,Test test,String questionText,int courseId){
         Boolean canSave=true;
        
        String sql="select * from question where QuestionTypeId=" + questionType.getQuestionType()  +
                " and QuestionNatureType_id= " + questionNatureType.getQuestionNatureType() + 
                " and CognitiveLevelType_id= " + congnitiveType.getCognitiveLevel()  + 
-               " and Text=" + "'" + questionText + "'" ;
+               " and Text=" + "'" + questionText + "'" + " and CourseId=" + courseId  + " and TestId=" + test.getTestId() ;
         
         //  String sql="select * from question where " +
               //  "Test_id=" + test.getTestId() +  " and Text=" + "'" + questionText + "'" ;
@@ -288,7 +292,7 @@ public class Questions {
     }
      
     
-      public List<QuestionItem> ListQuestionBank(int CourseId){
+      public List<QuestionItem> ListQuestionBank(int CourseId,int testId){
         
         List<QuestionItem> list= new ArrayList();
       
@@ -296,7 +300,7 @@ public class Questions {
            try {
           
       
-            list=FilterSelectedQuestionBankItems(CourseId);
+            list=FilterSelectedQuestionBankItems(CourseId,testId);
             
             for(int i=0; i<list.size();i++){
                 list.get(i).Number=i +1;
@@ -336,7 +340,7 @@ public class Questions {
       
     
       
-    private List<QuestionItem> FilterSelectedQuestionBankItems(int courseId){
+    private List<QuestionItem> FilterSelectedQuestionBankItems(int courseId,int testId){
         List<QuestionItem>  list= new ArrayList();
         
         List<QuestionItem> questionList= new ArrayList();
@@ -350,10 +354,10 @@ public class Questions {
 "                      inner join questiontype as qt on q.QuestionTypeId=qt.QuestionType\n" +
 "                       inner join questionnaturetype nt on q.QuestionNatureType_id=nt.QuestionNatureType\n" +
 "                       inner join cognitiveleveltype ct on q.CognitiveLevelType_id=ct.CognitiveLevel\n" +
-"                       where q.CourseId=" + courseId;
+"                       where q.CourseId=" + courseId + " and TestId=" + testId;
           
           
-       String sql2="select QuestionBankId from testitem  where  CourseId=" + courseId;
+       String sql2="select QuestionBankId from testitem  where  CourseId=" + courseId + " and Test_id=" + testId;
 
 
           

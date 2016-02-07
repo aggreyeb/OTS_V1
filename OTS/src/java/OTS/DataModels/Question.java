@@ -1,5 +1,5 @@
 package OTS.DataModels;
-// Generated Feb 4, 2016 2:42:16 PM by Hibernate Tools 4.3.1
+// Generated 6-Feb-2016 4:41:34 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,6 +16,7 @@ public class Question  implements java.io.Serializable {
      private Cognitiveleveltype cognitiveleveltype;
      private Questionnaturetype questionnaturetype;
      private Questiontype questiontype;
+     private Test test;
      private String text;
      private Set questionlineitems = new HashSet(0);
      private Set answers = new HashSet(0);
@@ -23,11 +24,12 @@ public class Question  implements java.io.Serializable {
     public Question() {
     }
 
-    public Question(Academiccourse academiccourse, Cognitiveleveltype cognitiveleveltype, Questionnaturetype questionnaturetype, Questiontype questiontype, String text, Set questionlineitems, Set answers) {
+    public Question(Academiccourse academiccourse, Cognitiveleveltype cognitiveleveltype, Questionnaturetype questionnaturetype, Questiontype questiontype, Test test, String text, Set questionlineitems, Set answers) {
        this.academiccourse = academiccourse;
        this.cognitiveleveltype = cognitiveleveltype;
        this.questionnaturetype = questionnaturetype;
        this.questiontype = questiontype;
+       this.test = test;
        this.text = text;
        this.questionlineitems = questionlineitems;
        this.answers = answers;
@@ -67,6 +69,13 @@ public class Question  implements java.io.Serializable {
     
     public void setQuestiontype(Questiontype questiontype) {
         this.questiontype = questiontype;
+    }
+    public Test getTest() {
+        return this.test;
+    }
+    
+    public void setTest(Test test) {
+        this.test = test;
     }
     public String getText() {
         return this.text;

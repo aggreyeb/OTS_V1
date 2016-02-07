@@ -1,5 +1,5 @@
 package OTS.DataModels;
-// Generated Feb 4, 2016 2:42:16 PM by Hibernate Tools 4.3.1
+// Generated 6-Feb-2016 4:41:34 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,13 +23,14 @@ public class Test  implements java.io.Serializable {
      private Set teachercoursetests = new HashSet(0);
      private Set testitems = new HashSet(0);
      private Set studenttests = new HashSet(0);
+     private Set questions = new HashSet(0);
      private Set studenttestanswersheets = new HashSet(0);
      private Set testanswersheets = new HashSet(0);
 
     public Test() {
     }
 
-    public Test(String name, Float totalMark, Integer numberOfQuestion, Date startDate, String startTime, String endTime, Boolean isActivated, Set teachercoursetests, Set testitems, Set studenttests, Set studenttestanswersheets, Set testanswersheets) {
+    public Test(String name, Float totalMark, Integer numberOfQuestion, Date startDate, String startTime, String endTime, Boolean isActivated, Set teachercoursetests, Set testitems, Set studenttests, Set questions, Set studenttestanswersheets, Set testanswersheets) {
        this.name = name;
        this.totalMark = totalMark;
        this.numberOfQuestion = numberOfQuestion;
@@ -40,6 +41,7 @@ public class Test  implements java.io.Serializable {
        this.teachercoursetests = teachercoursetests;
        this.testitems = testitems;
        this.studenttests = studenttests;
+       this.questions = questions;
        this.studenttestanswersheets = studenttestanswersheets;
        this.testanswersheets = testanswersheets;
     }
@@ -120,6 +122,13 @@ public class Test  implements java.io.Serializable {
     
     public void setStudenttests(Set studenttests) {
         this.studenttests = studenttests;
+    }
+    public Set getQuestions() {
+        return this.questions;
+    }
+    
+    public void setQuestions(Set questions) {
+        this.questions = questions;
     }
     public Set getStudenttestanswersheets() {
         return this.studenttestanswersheets;

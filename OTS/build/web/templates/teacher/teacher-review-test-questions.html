@@ -1,0 +1,81 @@
+<div>
+    <div class="col-lg-12">
+        <div class="row">
+           <div >
+                   <h4><span class="label label-default">Test Item List</span></h4> 
+           </div>
+           
+            <table class="table table-hover  table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Row</th>
+                        <th>Concept Node</th>
+                        <th>Cognitive Type</th>
+                        <th>Item  Type</th>
+                        <th>Item  Nature</th>
+                        <th>Include SubTrees</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:testQuestions">
+                    <tr>
+                        <td data-bind="text:Row"></td>
+                        <td data-bind="text:Text"></td>
+                        <td data-bind="text:CognitiveType"></td>
+                        <td data-bind="text:QuestionType"></td>
+                        <td data-bind="text:QuestionNatureType"></td>
+                        <td data-bind="text:Correct"></td>
+                        <td>
+                            <div  class="btn-group">
+                              <button  type="button" class="btn btn-primary" data-bind="event:{click:function(item,event){$parent.onEdit(item,event)}}">Edit</button>
+                            <!--  <button  type="button" class="btn btn-danger" data-bind="event:{click:function(item,event){$parent.onDelete(item,event)}}">Delete</button>-->
+                            </div>
+                           
+                        </td>
+                    </tr>
+                  
+                </tbody>
+                
+            </table>
+        </div>
+        
+        <div id="div-lineitems" class="row">
+             <div >
+                 <h5>Selected row Number :<span class="label label-default" data-bind="text:selectedTestItem"></span></h5> 
+           </div> 
+            
+           
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Check Answers</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:testQuestionLineItems">
+                    <tr>
+                        <td data-bind="text:Text"></td>
+                        <td>
+                            <input data-bind="checked:IsCorrect" type="checkbox"/>
+                        </td>
+                    </tr>
+                  
+                </tbody>
+                
+            </table><br>
+           
+            <div class="btn-group" >
+                <button type="button" class="btn btn-primary" data-bind="click:onSubmitQuestionLineItems">Submit</button>
+            </div><br><br>
+              <div id="div-message" style="display:none " id="message-box" class="alert-success"> 
+                  <p id="p-message">
+                     Success ! Update done successfully
+                  </p> 
+              </div>
+            
+        </div>
+        
+         
+    </div>
+    
+</div>

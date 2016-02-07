@@ -1,0 +1,56 @@
+
+<div style="overflow-y: auto">
+    <div class="col-lg-12">
+          <div>
+             <h4><span class="label label-default">Tests</span></h4> 
+          </div> 
+        <select class="form-control" data-bind="options:TestList,optionsText:'Name', optionsValue:'Id', value:SelectedTest,optionsCaption: 'Choose...',event: {change: onTestChanged}">
+           
+        </select>
+    </div>
+     <div class="col-lg-12 ">
+         <div style="padding-top:  10px">
+             <div class="panel panel-primary t">
+            <div class="panel-heading">Student Test Report</div>
+        <div class="panel-body">
+            
+            <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Time Spent(mm)</th>
+                <th>Marked</th>
+                <th>Mark(%)</th>
+                
+              
+            </tr>
+            <tbody data-bind="foreach:StudentTestList">
+                <tr>
+                   <td style="width:150px" data-bind="text:Name"></td>
+                   <td style="width:10px" data-bind="text:StartDate"></td>
+                   <td style="width:10px" data-bind="text:EndDate"></td> 
+                   <td style="width:50px" data-bind="text:TimeSpent"></td> 
+                   <td style="width:50px" data-bind="text:Marked"></td> 
+                   <td style="width:50px" data-bind="text:TotalMark"></td>
+               
+                </tr>
+            </tbody>
+        </table>
+        </div>
+          
+      </div>
+         </div>
+ </div>
+    
+</div><!-- container-->
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var view =new OTS.ViewModels.StudentTestReport();
+        ko.applyBindings(view,$("#view-content")[0]); 
+    });
+ 
+  
+</script>
