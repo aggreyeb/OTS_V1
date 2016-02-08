@@ -5,9 +5,9 @@ delete from testitemoption;
 delete from testitem;
 delete from  studenttesthistory;
 delete from  teachercoursetest;
-delete from  test;
 delete from questionlineitem;
 delete from question;
+delete from  test;
 delete from studenttestanswersheet;
 
 select * from test;

@@ -113,23 +113,28 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
          var disableColor="silver";
           for(var i=0;i<array.length;i++){
            array[i].StartDate=me.dateToShort(array[i].StartDate);
+           array[i].CanEnableDelete =false;
+           
            if(array[i].IsActivated){
              array[i].Activated="Yes"  ;
              array[i].ActivatedStyle=disableColor ; 
-             
+             array[i].CanEnableDelete=false;
            }
            else{
                 array[i].Activated="No" ; 
                 array[i].ActivatedStyle=""  ;
                  array[i].IsAllMarked=false;
-                array[i].ActivatedStyle="" ; 
+                array[i].ActivatedStyle="" ;
+                array[i].CanEnableDelete=true;
            }
            
            if(array[i].IsAllMarked){
-                array[i].MarkTestStyle=disableColor  
+                array[i].MarkTestStyle=disableColor ; 
+                array[i].CanEnableDelete=false;
            }
            else{
-                array[i].MarkTestStyle=""  
+                array[i].MarkTestStyle=""; 
+            
            }
              me.mytestList.push(array[i]);
          }
@@ -275,9 +280,11 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 if(msg != ""){ 
                 var message =JSON.parse(msg);
                 if(message.response.status==="ok"){
+                /*
                 var currentId= message.response.id;
                 test.TestId=currentId;
                 test.StartDate=me.form.startdate();
+                test.CanEnableDelete =false;
                 if(test.IsActivated){
                     test.Activated="Yes"
                 }
@@ -285,6 +292,8 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                     test.Activated="No"
                 }
                 me.mytestList.replace(me.selectedTest,test);
+                */
+               me.onCourseChanged();
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test Updated");
                 me.form.responseBoxStyle("alert alert-success");
@@ -334,28 +343,9 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 if(msg != ""){ 
                 var message =JSON.parse(msg);
                 if(message.response.status==="ok"){
-                /*
-               var currentId= message.response.id;
-                test.TestId=currentId;
-                test.StartDate=me.form.startdate();
-                var Activated="";
-                if(test.IsActivated){
-                    test.Activated="Yes";
-                    test.ActivatedStyle ="";
-                    test.MarkTestStyle ="";
-                    test.IsAllMarked=false;
-                }
-                else{
-                    test.Activated="No";
-                    test.ActivatedStyle ="";
-                    test.IsAllMarked=false;
-                    test.MarkTestStyle ="";
-                    
-                }
-                me.mytestList.push(test);
-                 */
-                     //Reload current course test 
-                     me.onCourseChanged();
+              
+                 //Reload current course test 
+                  me.onCourseChanged();
 
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test Created");
@@ -428,7 +418,7 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
        };
        
        me.onActivateTest=function(item,event){
-       
+      
         if(!item.IsAllMarked){ 
         me.form.responseMessageVisible(true);   
         me.form.responseMessageVisible(false);
@@ -440,7 +430,9 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
           if(msg != ""){ 
                 var message =JSON.parse(msg);
                 if(message.response.status==="ok"){
-                item.Activated="Yes"
+                /*
+                  item.Activated="Yes";
+                
                     var test={
                      TestId:me.selectedTest.TestId,
                      Name:me.selectedTest.Name,
@@ -450,14 +442,17 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                      StartTime:me.selectedTest.StartTime,
                      EndTime:me.selectedTest.EndTime,
                      IsActivated:true,
-                     Activated:"Yes"
+                     Activated:"Yes",
+                     CanEnableDelete:false
                  } ;
                     test.Activated="Yes";
+                    test.CanEnableDelete =false;
                     test.ActivatedStyle ="";
                     test.IsAllMarked=false;
                     test.MarkTestStyle ="";
                 me.mytestList.replace(me.selectedTest,test);
-                
+                */
+               me.onCourseChanged();
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test Activated");
                 me.form.responseBoxStyle("alert alert-success");
@@ -499,6 +494,7 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
           if(msg != ""){ 
                 var message =JSON.parse(msg);
                 if(message.response.status==="ok"){
+                  /*
                   item.Activated="Yes"
                     var test={
                      TestId:me.selectedTest.TestId,
@@ -516,7 +512,8 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                     test.IsAllMarked=false;
                     test.MarkTestStyle ="";
                 me.mytestList.replace(me.selectedTest,test);
-                
+                */
+               me.onCourseChanged();
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test DeActivated");
                 me.form.responseBoxStyle("alert alert-success");
@@ -551,7 +548,7 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
            me.selectedTest=item;
            $.post("TestGenerationServlet",{action:"MarkTest",TestId:item.TestId},function(msg){
                  if(msg != ""){
-                     
+                      me.onCourseChanged(); //Refresh list
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test Marked");
                 me.form.responseBoxStyle("alert alert-success");

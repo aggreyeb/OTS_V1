@@ -37,7 +37,7 @@
                    <td>
                        <div class=" btn-group">
                          <button data-bind="event:{click:function(item,event){$parent.onEditTest(item,event)}}" class="btn btn-group-sm btn-primary" type="button">Edit</button>
-                         <button data-bind="event:{click:function(item,event){$parent.onDeleteTest(item,event)}}" class="btn btn-group-sm btn-danger" type="button">Delete</button>
+                         <button data-bind="enable:CanEnableDelete,event:{click:function(item,event){$parent.onDeleteTest(item,event)}}" class="btn btn-group-sm btn-danger" type="button">Delete</button>
                          <!--<button data-bind="event:{click:function(item,event){$parent.onGenerateTest(item,event)}}" class="btn btn-group-sm btn-default" type="button">Generate</button>-->
                              <button  class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
                                   Actions <span class="caret"></span>
