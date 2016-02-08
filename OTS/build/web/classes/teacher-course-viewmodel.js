@@ -70,6 +70,8 @@ OTS.ViewModels.TeacherCoursesViewModel=function(){
             if(me.courseKnowledgeMapCache.length<=0){ 
               me.ReloadTeacherCoureseKnowledgeMap();
             }
+            
+            
        });
        me.hideLoadingMessage();
     });
@@ -117,7 +119,8 @@ OTS.ViewModels.TeacherCoursesViewModel=function(){
     
     
     me.ReloadTeacherCoureseKnowledgeMap=function(){
-         $.post("CourseServlet",{action:"ListAllCourseKnowledgeMap"},function(msg){
+       
+        $.post("CourseServlet",{action:"ListAllCourseKnowledgeMap"},function(msg){
           
            var message =JSON.parse(msg);
           var contents=JSON.parse(message.response.content);
@@ -133,6 +136,9 @@ OTS.ViewModels.TeacherCoursesViewModel=function(){
               me.courseKnowledgeMapCache[i].KnowledegeMaps=array;
             }
        });
+       
+    
+       
     };
     
     me.ReloadCourseKnowledgeMapFromCache=function(courseId){
@@ -159,7 +165,10 @@ OTS.ViewModels.TeacherCoursesViewModel=function(){
     me.onCoureseSelected=function(item,event){
        
         var courseId=item.Id;
-        me.ReloadCourseKnowledgeMapFromCache(courseId);
+       // me.ReloadCourseKnowledgeMapFromCache(courseId);
+         if(me.courseKnowledgeMapCache.length<=0){ 
+              me.ReloadTeacherCoureseKnowledgeMap();
+            }
        
         $.post("CourseServlet",{action:"ListCourseKnowledgeMap",CourseId:courseId},function(msg){
           
@@ -202,15 +211,16 @@ OTS.ViewModels.TeacherCoursesViewModel=function(){
         me.knowledgeMaplistVisible(true);
        });
   
-     
+       // Replace Teacher knowledgemaps from the cache by course id;
+     me.ReloadCourseKnowledgeMapFromCache(courseId);
     };
     
     me.ToggleTeacherKnowledgeMap=function(knowledgeMap, bStatus,actionText){
          for(var i=0;i<me.teacherKnowledgeMaps().length;i++){
                    var km=me.teacherKnowledgeMaps()[i];
                    if(km.KnowledgeMapId===knowledgeMap.KnowledgeMapId){
-                       me.teacherKnowledgeMaps.replace(km,{ActionText:actionText,
-                                                           CanEnableSelect:bStatus,
+                       me.teacherKnowledgeMaps.replace(km,{ActionText:"Selected",
+                                                           CanEnableSelect:false,
                                                            CourseTypeId:0,
                                                            Description:km.Description,
                                                            KnowledgeMapId:km.KnowledgeMapId,
