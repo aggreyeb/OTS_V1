@@ -52,12 +52,12 @@ OTS.TestItemOptions=function(){
      
         var list= new OTS.TestItemOption(1,"List"); 
         list.ItemTypes.push({Id:1,Name:"TrueOrFalse"});
-        list.ItemTypes.push({Id:2,Name:"MultipleChoice-SingleAnswer"});
+       // list.ItemTypes.push({Id:2,Name:"MultipleChoice-SingleAnswer"});
         list.ItemTypes.push({Id:3,Name:"MultipleChoice-MultipleAnwsers"});
         list.NatureOfItemTypes.push({Id:1,Name:"Correct"});
         list.NatureOfItemTypes.push({Id:2,Name:"Negative"});
-        list.NatureOfItemTypes.push({Id:3,Name:"Incorrect"});
-        list.NatureOfItemTypes.push({Id:4,Name:"Negative-Incorrect"});
+        //list.NatureOfItemTypes.push({Id:3,Name:"Incorrect"});
+        //list.NatureOfItemTypes.push({Id:4,Name:"Negative-Incorrect"});
       
         items.push(list);
         
@@ -71,7 +71,7 @@ OTS.TestItemOptions=function(){
         describe.NatureOfItemTypes.push({Id:3,Name:"Incorrect"});
         describe.NatureOfItemTypes.push({Id:4,Name:"Negative-Incorrect"});
        
-         items.push(describe);
+        // items.push(describe);
      //Summarize
         var summarize=new OTS.TestItemOption(3,"Summarize"); 
         summarize.ItemTypes.push({Id:3,Name:"MultipleChoice-MultipleAnwsers"});

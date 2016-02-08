@@ -28,7 +28,7 @@ public class LookupLists {
      
     public void ListCognitiveTypes(Message message){
      try{
-        String sql= "select CognitiveLevel as Id,Name from cognitiveleveltype where cognitiveLevel";
+        String sql= "select CognitiveLevel as Id,Name from cognitiveleveltype where cognitiveLevel in (1,4)";
        
         List<Cognitiveleveltype> cognitiveTypes= new ArrayList();
      
