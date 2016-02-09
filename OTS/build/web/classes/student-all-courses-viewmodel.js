@@ -42,6 +42,24 @@ OTS.ViewModels.StudentAllCourses=function(){
         });
     });
     
+   me.LoadAllCourse=function(){
+        $.post("CourseServlet",{action:"ListAllCourses"},function(msg){
+            try{
+               me.courseList([]);
+               var message =JSON.parse(msg);
+               var contents=JSON.parse(message.response.content);
+               if(contents.length>0){
+               for(var i=0;i<contents.length;i++){
+                    contents[i].selected=false;
+                    me.courseList.push(contents[i]);
+                }  
+              } 
+            }catch(ex){
+                
+                alert(ex);
+            }
+        }); 
+   } ;
   me.onRegister=function(){
    //alert(JSON.stringify(me.ListSelectedCourses()));  
      var data=JSON.stringify(me.ListSelectedCourses());
@@ -52,7 +70,7 @@ OTS.ViewModels.StudentAllCourses=function(){
                 
                   if(message.response.status==="ok"){
                      
-                   
+                     me.LoadAllCourse();
               
                     me.form.headingVisisble(false);
                     me.form.responseDialog(me.form.dialogType.SUCCESS);
