@@ -79,7 +79,7 @@ OTS.TestItemOptions=function(){
            items.push(summarize);
         //Clasify
         var clasify=new OTS.TestItemOption(4,"Clasify"); 
-       // clasify.ItemTypes.push({Id:2,Name:"MultipleChoice-SingleAnswer"});
+        clasify.ItemTypes.push({Id:2,Name:"MultipleChoice-SingleAnswer"});
         clasify.ItemTypes.push({Id:3,Name:"MultipleChoice-MultipleAnwsers"});
         clasify.NatureOfItemTypes.push({Id:1,Name:"Correct"});
          items.push(clasify);

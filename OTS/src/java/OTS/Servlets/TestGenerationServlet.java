@@ -18,6 +18,7 @@ import OTS.ObjectModels.QuestionManagement.Questions;
 import OTS.ObjectModels.QuestionManagement.TestMarking;
 import OTS.ObjectModels.Response;
 import OTS.ObjectModels.TestAlgorithms.ClassifyMultipleChoiceAlgorithm;
+import OTS.ObjectModels.TestAlgorithms.ClassifyMultipleChoiceSingleAnswerAlgorithm;
 import OTS.ObjectModels.TestAlgorithms.DescribeMultipleAnswerMultipleChoiceAlgorithm;
 import OTS.ObjectModels.TestAlgorithms.DescribeSingleAnswerMultipleChoiceAlgorithm;
 import OTS.ObjectModels.TestAlgorithms.DescribeTrueFalseCorrectAlgorithm;
@@ -150,7 +151,10 @@ public class TestGenerationServlet extends  Servlet {
         DescribeTrueFalseNegativeIncorrectAlgorithm describeTrueFalseNegativeIncorrectAlgorithm= new DescribeTrueFalseNegativeIncorrectAlgorithm(db,"DescribeTrueOrFalseNegativeIncorrect");
         algorithems.add(describeTrueFalseNegativeIncorrectAlgorithm);
         
-       
+        //Add Classify 
+        //Multiple Choice - Single Answer
+        ClassifyMultipleChoiceSingleAnswerAlgorithm classifyMultipleChoiceSingleAnswerAlgorithm= new ClassifyMultipleChoiceSingleAnswerAlgorithm(db,"ClassifyMultipleChoice-SingleAnswerCorrect");
+        algorithems.add(classifyMultipleChoiceSingleAnswerAlgorithm);
         return algorithems;
     }
     
