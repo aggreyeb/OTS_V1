@@ -71,7 +71,8 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
         sb.append(children);
         sb.append(" . ");
         sb.append("The living thing is most likely to be " + node.Name);
-        output.Text=sb.toString();
+       // output.Text=sb.toString();
+        output.LineItems.add(sb.toString());
       
         return output;
     }

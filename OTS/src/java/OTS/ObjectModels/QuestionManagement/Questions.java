@@ -167,23 +167,27 @@ public class Questions {
                 q1.setAcademiccourse(academicCourse);
                 q1.setTest(test);
                 
-                this.dataSource.Save(q1);  
+                if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test, q1.getText(),input.CourseId))
+                 {
+                //this.dataSource.Commit();
+                  this.dataSource.Save(q1);  
+                
                 Questionlineitem item= new Questionlineitem();
                  item.setQuestion(q1);
                  item.setText("True");
-                this.dataSource.Save(item);
+              //  this.dataSource.Save(item);
                  item= new Questionlineitem();
                  item.setQuestion(q1);
                  item.setText("False");
                   
                  this.dataSource.Save(item);
-                  QuestionId=q1.getQuestionId();
-                 }
+                 QuestionId=q1.getQuestionId();
+                }
+               
+                 
+               }
              }
-            if(this.CanSaveTestQuestion(cognitiveType, questionNature, questiontype, test, q1.getText(),input.CourseId))
-             {
-                //this.dataSource.Commit();
-             }
+           
              break;
            
            case 3: //MultipleChoice-MultipleAnswers
