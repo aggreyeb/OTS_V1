@@ -697,7 +697,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                    $("#cboQuestionType option:selected").text().trim() +
                    $("#cboQuestionNature option:selected").text().trim()
        };
-       
+          $("#div-outputheader").html("<p></p>");
        $.post("TestGenerationServlet",{action:"GenerateTestItem", data:JSON.stringify(input)},function(msg){
         
            try{
@@ -710,7 +710,9 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                 else{
                   
                      //alert("Error occurs will generating test item") ;
-                     alert(message.response.error);
+                     var content=JSON.parse(message.response.content); 
+                    // alert(message.response.error);
+                     $("#div-outputheader").html("<br><b>" + content.Error + "</b>");
                 }
           
            }
@@ -727,19 +729,16 @@ OTS.ViewModels.TestGenerationViewModel=function(){
       // console.log(contents);
       var text="";
       for(var i=0;i<contents.length;i++){
-           // if(contents[i].Text !==""){
-              // text+= "<p>" +  contents[i].Text +"</p>"
-          //  }
+          
           for(j=0;j<contents[i].LineItems.length;j++){
-           // if(me.KnowledgeMapSelected.NodeName()=== contents[i].LineItems[j])
-               // continue;
+           
              text+="<p>" +  contents[i].LineItems[j] +"</p>"
           }
            
       }
-      $("#div-outputheader").empty();
-     // $("#div-outputheader").html("<b>" + me.KnowledgeMapSelected.NodeName()+ "</b>");
-    // console.log($("#cboQuestionType").val());
+     // $("#div-outputheader").empty();
+   
+   
      if($("#cboQuestionType").val()==="1"){
         $("#div-outputheader").html("<br><b>" + "True or False "+ "</b>");
      }
@@ -751,7 +750,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
       $("#div-output-body").html(text);
       if(text.trim().length===0){
            $("#div-outputheader").html("<p></p>");
-      }
+    }
    };
    
    

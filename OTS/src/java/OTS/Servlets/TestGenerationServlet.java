@@ -33,6 +33,7 @@ import OTS.ObjectModels.TestAlgorithms.ListTrueFalseNegativeAlgorithm;
 import OTS.ObjectModels.TestAlgorithms.ListTrueFalseNegativeInCorrectAlgorithm;
 import OTS.ObjectModels.TestAlgorithms.SummarizeMultipleChoiceAlgorithm;
 import OTS.ObjectModels.TestGenerationInput;
+import OTS.ObjectModels.TestGenerationResponse;
 import OTS.ObjectModels.TestItemGenerationOutput;
 import OTS.ObjectModels.TestQuestionLineItem;
 import OTS.ObjectModels.UserProfile;
@@ -271,11 +272,24 @@ public class TestGenerationServlet extends  Servlet {
                      List<TestItemGenerationOutput> result= gen.Generate(input);
                      
                      Questions questions= new Questions(db,response);
-                     questions.SaveQTestItems(input, result);
-                     
-                     String content=new Gson().toJson(result);
+                     if(!input.InvalidOutput){
+                       questions.SaveQTestItems(input, result);
+                       String content=new Gson().toJson(result);
                      response.ChangeContent(content);
                      response.ChangeStatus("ok");
+                     }
+                     else{
+                     TestGenerationResponse genResponse=new  TestGenerationResponse();
+                     genResponse.Error=input.InvalidOutputText;
+                     genResponse.HasErrors=true;
+                     genResponse.Items=result;
+                    String content=new Gson().toJson(genResponse);
+                     response.ChangeContent(content);
+                     response.ChangeContent(content);
+                     response.ChangeStatus("fail");
+                     }
+                     
+                     
                      break;
                   
                  case "ListTestQuestions":

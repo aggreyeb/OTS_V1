@@ -19,7 +19,7 @@ import java.util.List;
  * @author aggreeb
  */
 public class ClassifyMultipleChoiceAlgorithm extends Algorithm{
-
+  String invalidText="Concept schema is not valid. Test item generated will not be saved";
     public ClassifyMultipleChoiceAlgorithm(DataSource dataSource, String name) {
         super(dataSource, name);
         this.Name=name;
@@ -31,13 +31,19 @@ public class ClassifyMultipleChoiceAlgorithm extends Algorithm{
          
           List<TestItemGenerationOutput> questions=new ArrayList();
          TestItemGenerationOutput output = new TestItemGenerationOutput();
+          String  text= this.ConstructQuestion(node);
+          if(text.trim().length()>0){
           output.Text=this.ConstructQuestion(node);
            List<String> answers=this.ListAnswers(node);
            for(String p:answers){
                 output.LineItems.add(p);
            }
           output.LineItems.add("None of the above");
-        
+          }
+          else{
+              input.InvalidOutput=true;
+              input.InvalidOutputText=invalidText;
+          }
            return output;
     }
 
@@ -66,6 +72,9 @@ public class ClassifyMultipleChoiceAlgorithm extends Algorithm{
     protected TestItemGenerationOutput BuildOuput(Node node, TestGenerationInput input) {
         TestItemGenerationOutput output = new TestItemGenerationOutput();
        output.Text=node.Name;
+       input.InvalidOutput=true;
+       input.InvalidOutputText="This item generation is not applicable for the selected options";
+     
        return output;
     }
     

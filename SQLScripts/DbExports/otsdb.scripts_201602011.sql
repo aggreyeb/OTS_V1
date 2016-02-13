@@ -30,7 +30,7 @@ REPLACE INTO `academiccourse` (`CourseTypeId`, `Number`, `Name`, `Description`) 
 -- Dumping structure for table otsdb.answer
 CREATE TABLE IF NOT EXISTS `answer` (
   `AnswerId` int(11) NOT NULL AUTO_INCREMENT,
-  `Text` varchar(255) DEFAULT NULL,
+  `Text` varchar(800) DEFAULT NULL,
   `Question_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`AnswerId`),
   KEY `Question_id` (`Question_id`),

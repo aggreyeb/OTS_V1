@@ -159,7 +159,8 @@ public class Questions {
                 for(String s:o.LineItems){ 
                
                 q1 = new Question();
-                q1.setText(s);
+                //q1.setText(s);???
+                q1.setText(o.Text);
                // q1.setTest(test);
                 q1.setCognitiveleveltype(cognitiveType);
                 q1.setQuestiontype(questiontype);
@@ -171,17 +172,17 @@ public class Questions {
                  {
                 //this.dataSource.Commit();
                   this.dataSource.Save(q1);  
-                
+                 QuestionId=q1.getQuestionId();
                 Questionlineitem item= new Questionlineitem();
                  item.setQuestion(q1);
                  item.setText("True");
-              //  this.dataSource.Save(item);
+                 this.dataSource.Save(item);
                  item= new Questionlineitem();
                  item.setQuestion(q1);
                  item.setText("False");
                   
                  this.dataSource.Save(item);
-                 QuestionId=q1.getQuestionId();
+                 
                 }
                
                  

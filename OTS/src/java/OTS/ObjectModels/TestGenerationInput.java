@@ -20,4 +20,6 @@ public class TestGenerationInput {
     public int ItemType;
     public int NatureOfItem;
     public  String UniqueId;
+    public Boolean InvalidOutput=false;
+    public String InvalidOutputText="";
 }

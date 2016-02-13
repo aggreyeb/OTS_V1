@@ -16,6 +16,7 @@ public class TestItemGenerationOutput {
     public String Text;
     public  List<String> LineItems;
     public Boolean IsCollection=false;
+    public Boolean HasErrors=false;
 
     public TestItemGenerationOutput() {
         this.LineItems= new ArrayList();

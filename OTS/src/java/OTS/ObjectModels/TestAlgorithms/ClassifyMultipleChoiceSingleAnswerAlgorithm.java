@@ -20,7 +20,8 @@ import java.util.List;
  * @author Eb
  */
 public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
-
+    String invalidText="Concept schema is not valid. Test item generated will not be saved";
+    Boolean HasErrors=false;
     public ClassifyMultipleChoiceSingleAnswerAlgorithm(DataSource dataSource, String name) {
         super(dataSource, name);
         this.Name=name;
@@ -29,13 +30,23 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
     protected TestItemGenerationOutput BuildOuput(NodeItem node, TestGenerationInput input) {
          List<TestItemGenerationOutput> questions=new ArrayList();
          TestItemGenerationOutput output = new TestItemGenerationOutput();
+         
           output.Text=this.ConstructQuestion(node);
+          if(!this.HasErrors){
+              
            List<String> answers=this.ListAnswers(node);
            for(String p:answers){
                 output.LineItems.add(p);
            }
           output.LineItems.add("None of the above");
-        
+         }
+         else{
+             output.HasErrors=true;
+             output.Text=invalidText;
+             input.InvalidOutput=true;
+             input.InvalidOutputText=invalidText;
+         }
+          this.HasErrors=false;
            return output;
     }
 
@@ -44,17 +55,17 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
         TestItemGenerationOutput output = new TestItemGenerationOutput();
         input.ItemType=1; //Force True/False 
         StringBuilder  sb= new StringBuilder();
-        sb.append("A student observed that a living thing has ");
+        sb.append("A student observed that an object has ");
         String children="";
         int count=node.ListChildren().size();
         int counter=0;
         Collection<NodeItem>  nodeItems= node.ListChildren();
         for(NodeItem a:nodeItems){
              if(counter==count-1){
-                 children+= " and " +  a.Name ;
+                 children+= "and " +  a.Name.toLowerCase() ;
              }
              else{
-                children+=a.Name + ","; 
+                children+=a.Name.toLowerCase() + ","; 
              }
             
             counter+=1;
@@ -66,29 +77,58 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
         
         if(children.equals("")){
             children="[Parent Node has no child nodes !!  Invalid sentence]";
+            this.HasErrors=true;
+            input.InvalidOutput=true;
+            input.InvalidOutputText=invalidText;
         }
         
         sb.append(children);
         sb.append(" . ");
-        sb.append("The living thing is most likely to be " + node.Name);
+        sb.append("The object is most likely to be " + node.Name.toLowerCase());
+        sb.append(".");
        // output.Text=sb.toString();
-        output.LineItems.add(sb.toString());
-      
+        output.LineItems.add("True  or False");
+        output.Text=sb.toString();
+        if(this.HasErrors){
+          
+            output.Text=invalidText;
+            input.InvalidOutput=true;
+            input.InvalidOutputText=invalidText;
+        }
+        this.HasErrors=false;
         return output;
     }
     
     
       protected String ConstructQuestion(NodeItem nodeItem){
-      
+       
        List<ConceptSchema> ConceptSchemas=   nodeItem.ListConceptSchemas();
         StringBuilder  sb= new StringBuilder();
-        sb.append("A living thing ");
-        sb.append(this.ContactIsRalationName(ConceptSchemas));
+        sb.append("An object ");
+        String text=this.ContactIsRalationName(ConceptSchemas);
+        if(!text.equals("Invalid concept schema")){
+          sb.append(text);
+         }
+        else{
+           this.HasErrors=true; 
+        }
         sb.append(" which " );
-        sb.append(this.ConcatCanRalationName(ConceptSchemas));
+        text=this.ConcatCanRalationName(ConceptSchemas);
+        if(!text.equals("Invalid concept schema")){
+          sb.append(text);
+         }
+        else{
+           this.HasErrors=true; 
+        }
         sb.append(". ");
-        sb.append("The living thing is likely to be");
-       return sb.toString();
+        sb.append("What is likely to be the object?");
+        if(!this.HasErrors){
+            return sb.toString();
+        }
+        else{
+            return invalidText;
+        }
+       
     }
       
      
@@ -112,18 +152,24 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
                  items.add(s);
              }
          }
+         
           StringBuilder  sb= new StringBuilder();
-       
+         if(items.size()>0){
          for(ConceptSchema s:items){
              if(s.Description().relationName.equals("")){
                  s.Description().relationName="[RelationName !! is empty **** Invalid sentence]";
+                 this.HasErrors=true;
              }
               if(s.Description().conceptName.equals("") ){
                 s.Description().conceptName ="[ConceptName !! is empty **** Invalid sentence]";
+                 this.HasErrors=true;
              }
              sb.append(s.Description().relationName + " a " + s.Description().conceptName  + ",");
          }
-         
+         }
+         else{
+             sb.append("Invalid concept schema");
+         }
          if(sb.toString().endsWith(",")){
                 return sb.toString().substring(0,sb.toString().length()-1);
          }
@@ -138,6 +184,7 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
              }
          }
           StringBuilder  sb= new StringBuilder();
+          if(items.size()>0){
           sb.append(" can ");
          for(ConceptSchema s:items){
              if(s.Description().conceptAction.equals("") ){
@@ -148,6 +195,10 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
              }
              sb.append(s.Description().conceptAction + " " + s.Description().conceptName +",");
          }
+          }
+          else{
+             sb.append("Invalid concept schema");
+          }
          if(sb.toString().endsWith(",")){
                 return sb.toString().substring(0,sb.toString().length()-1);
          }

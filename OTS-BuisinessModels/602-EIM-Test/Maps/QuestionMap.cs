@@ -13,7 +13,7 @@ namespace _602_EIM_Test.Maps
         {
             Table("Question");
             Id(x => x.Id).GeneratedBy.Identity().Column("QuestionId");
-            Map(x => x.Text).Length(100);
+            Map(x => x.Text).Length(800);
             References(x => x.QuestionType).Column("QuestionTypeId");
             References(x => x.QuestionNatureType);
             References(x => x.CognitiveLevelType);
