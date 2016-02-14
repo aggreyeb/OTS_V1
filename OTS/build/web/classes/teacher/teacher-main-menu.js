@@ -13,7 +13,7 @@ OTS.Views.TeacherMainMenu=function(){
       
         $(".list-group-item").click(function(e){
            var currentItem="";
-           if(e.currentTarget ===undefined || e.currentTarget===null ){
+           if(e.currentTarget.innerText ===undefined || e.currentTarget.innerText===null ){
                currentItem=e.target.text;
              }
              else{
