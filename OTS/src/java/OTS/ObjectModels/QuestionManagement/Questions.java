@@ -159,9 +159,8 @@ public class Questions {
                 for(String s:o.LineItems){ 
                
                 q1 = new Question();
-                //q1.setText(s);???
-                q1.setText(o.Text);
-               // q1.setTest(test);
+                q1.setText(s);
+                //q1.setText(o.Text);
                 q1.setCognitiveleveltype(cognitiveType);
                 q1.setQuestiontype(questiontype);
                 q1.setQuestionnaturetype(questionNature);

@@ -12,8 +12,13 @@ OTS.Views.TeacherMainMenu=function(){
     $(function(){
       
         $(".list-group-item").click(function(e){
-          
-            var currentItem =e.currentTarget.innerText;
+           var currentItem="";
+           if(e.currentTarget ===undefined || e.currentTarget===null ){
+               currentItem=e.target.text;
+             }
+             else{
+                  currentItem =e.currentTarget.innerText;
+             }
             if(currentItem.trim()==="Home"){
                  me.changeHeading("Welcome");
             }
