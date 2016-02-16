@@ -55,7 +55,7 @@ OTS.TestItemOptions=function(){
        // list.ItemTypes.push({Id:2,Name:"MultipleChoice-SingleAnswer"});
         list.ItemTypes.push({Id:3,Name:"MultipleChoice-MultipleAnwsers"});
         list.NatureOfItemTypes.push({Id:1,Name:"Correct"});
-        list.NatureOfItemTypes.push({Id:2,Name:"Negative"});
+       // list.NatureOfItemTypes.push({Id:2,Name:"Negative"});
         //list.NatureOfItemTypes.push({Id:3,Name:"Incorrect"});
         //list.NatureOfItemTypes.push({Id:4,Name:"Negative-Incorrect"});
       
@@ -379,7 +379,14 @@ OTS.ViewModels.TestGenerationViewModel=function(){
       me.QuestionTypeList([]);
       if(item!==null &&  item.ItemTypes!==null){
       for(var i=0;i<item.ItemTypes.length;i++){
-          me.QuestionTypeList.push(item.ItemTypes[i]);
+         if(item !==undefined && item.Name==="Clasify"){
+             if(item.ItemTypes[i].Id!==3){
+                 me.QuestionTypeList.push(item.ItemTypes[i]);
+             }
+         }
+         else{
+              me.QuestionTypeList.push(item.ItemTypes[i]); 
+         }
         }
      }
        me.QuestionNatureTypeList([]);

@@ -20,7 +20,7 @@ import java.util.List;
  * @author Eb
  */
 public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
-    String invalidText="Concept schema is not valid. Test item generated will not be saved";
+    String invalidText="<p style=\"color:Red;\">Concept schema is not valid.Please complete all the concept schema and try again. Test item generated will not be saved</p>";
     Boolean HasErrors=false;
     public ClassifyMultipleChoiceSingleAnswerAlgorithm(DataSource dataSource, String name) {
         super(dataSource, name);
@@ -31,8 +31,9 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
          List<TestItemGenerationOutput> questions=new ArrayList();
          TestItemGenerationOutput output = new TestItemGenerationOutput();
          
-          output.Text=this.ConstructQuestion(node);
-          if(!this.HasErrors){
+         // output.Text=this.ConstructQuestion(node);
+           output.Text=this.BuildTestQuestion(node);
+          if(!this.HasErrors &  output.Text.length()>0){
               
            List<String> answers=this.ListAnswers(node);
            for(String p:answers){
@@ -97,6 +98,182 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
         }
         this.HasErrors=false;
         return output;
+    }
+    
+    protected String BuildTestQuestion(NodeItem nodeItem){
+        List<ConceptSchema> ConceptSchemas=   nodeItem.ListConceptSchemas();
+        String questionText="";
+    if(ConceptSchemas.size()>0)
+    {
+            
+        StringBuilder  sb= new StringBuilder();
+        List<ConceptSchema> isRelationList=new ArrayList();
+        List<ConceptSchema> hasRelationList=new ArrayList();
+        List<ConceptSchema> canRelationList=new ArrayList();
+        List<ConceptSchema> unknownRelationList=new ArrayList();
+         for(ConceptSchema s:ConceptSchemas){
+            if(s.Description().relationName.equals("is")){
+                isRelationList.add(s);
+            }
+            else if(s.Description().relationName.equals("has")){
+                   hasRelationList.add(s);
+            }
+            else if(s.Description().relationName.equals("can")){
+           
+               canRelationList.add(s);
+            }
+            else{
+                unknownRelationList.add(s);
+            }
+        }
+        
+        if(isRelationList.size()>0 & hasRelationList.size()>0 & canRelationList.size()>0){
+             this.HasErrors=true;
+             questionText ="";
+        }
+        else if(isRelationList.size()>0 & canRelationList.size()>0 ){
+          
+         String isText=this.BuildIsRelationText(isRelationList);
+        // String hasText=this.BuildHasRelationText(hasRelationList);
+         String canText=this.BuildCanRelationText(canRelationList);
+         
+         sb.append("An object ");
+         sb.append(isText);
+         if(!canText.equals("")){
+             sb.append(" and ");
+             sb.append(canText);
+         }
+            sb.append(".");
+            sb.append("What is likely to be the object?");
+            questionText=sb.toString();
+            return questionText;
+         }
+        else if(isRelationList.size()==0 &  canRelationList.size()==0 & hasRelationList.size()>0 ){
+           
+            sb= new StringBuilder();
+            questionText =BuildHasRelationText(hasRelationList);
+            sb.append("An object ");
+            sb.append(questionText);
+            sb.append(".");
+            sb.append("What is likely to be the object?");
+          questionText=sb.toString();
+        }
+        else{
+            //defualt
+            this.HasErrors=true;
+        }
+         
+     }
+     else{
+             questionText="";
+             this.HasErrors=true;
+      }//End Concept Schema >0
+        return questionText; 
+    }
+    
+    protected String BuildIsRelationText(List<ConceptSchema> conceptSchemas){
+         //Concat is Relation
+        StringBuilder isConcat=new  StringBuilder();
+        String isConcatText="";
+         int isCounter=0;
+          for(ConceptSchema s:conceptSchemas){
+               
+             if(s.Description().relationName.equals("")){
+               
+                 this.HasErrors=true;
+             }
+              if(s.Description().conceptName.equals("") ){
+               
+                 this.HasErrors=true;
+             }
+             if(isCounter>0){
+                 isConcat.append(s.Description().conceptName  + ",") ;
+             }
+             else{
+              isConcat.append(s.Description().relationName + " a " + s.Description().conceptName  + ",");
+             }
+           
+             isCounter+=1;
+         }  
+         if(isConcat.toString().endsWith(",")){
+                isConcatText= isConcat.toString().substring(0,isConcat.toString().length()-1);
+         }
+         else{
+               isConcatText= isConcat.toString();
+         }
+       
+         return  isConcatText;
+    }
+    
+    protected String BuildHasRelationText(List<ConceptSchema> conceptSchemas){
+         StringBuilder hasConcat=new  StringBuilder();
+         String isConcatText="";
+          int hasCounter=0;
+          for(ConceptSchema a:conceptSchemas){
+              if(a.Description().attributeValue.equals("")){
+                  this.HasErrors=true;
+              }
+              if(a.Description().attributeValue.equals(""))
+              {
+                   this.HasErrors=true;
+              }
+              if(hasCounter>0){
+                  if(hasCounter==conceptSchemas.size()-1){
+                     
+                      hasConcat.append(" and " + a.Description().attributeValue.toLowerCase() + "  " + a.Description().attributeName.toLowerCase()  ); 
+                  }
+                  else{
+                    hasConcat.append(a.Description().attributeValue.toLowerCase() + " " + a.Description().attributeName.toLowerCase() + ","); 
+                  }
+                  
+              
+              }
+              else{
+                hasConcat.append(a.Description().relationName + " " + a.Description().attributeValue + " " + a.Description().attributeName + ",");  
+
+              }
+                hasCounter+=1;          
+          }
+           if(hasConcat.toString().endsWith(",")){
+                isConcatText= hasConcat.toString().substring(0,hasConcat.toString().length()-1);
+           }
+           else{
+                isConcatText= hasConcat.toString();
+           }
+        
+         return  isConcatText;
+    }
+    
+       protected String BuildCanRelationText(List<ConceptSchema> conceptSchemas){
+         StringBuilder hasConcat=new  StringBuilder();
+         String canConcatText="";
+          int canCounter=0;
+          for(ConceptSchema a:conceptSchemas){
+              if(a.Description().relationName.equals("")){
+                  this.HasErrors=true;
+              }
+              if(a.Description().conceptName.equals(""))
+              {
+                   this.HasErrors=true;
+              }
+              if(a.Description().conceptAction.equals(""))
+              {
+                   this.HasErrors=true;
+              }
+              if(canCounter>0){
+                   hasConcat.append(a.Description().conceptAction + " " + a.Description().conceptName );  
+              }
+              else{
+                hasConcat.append(a.Description().relationName + " " + a.Description().conceptAction+ " " + a.Description().conceptName );  
+
+              }
+                          
+          }
+           if(hasConcat.toString().endsWith(",")){
+                canConcatText= hasConcat.toString().substring(0,hasConcat.toString().length()-1);
+         }
+         canConcatText= hasConcat.toString();
+         return  canConcatText;
     }
     
     
