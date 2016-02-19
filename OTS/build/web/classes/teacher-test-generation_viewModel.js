@@ -561,7 +561,8 @@ OTS.ViewModels.TestGenerationViewModel=function(){
               //alert(node.parent.name);
               selectedKnowledgeMap=node;
                me.KnowledgeMapSelected.update(node);
-               me.CheckParentDescribeCognitiveSelected($("#cboCognitive").val(),selectedKnowledgeMap)
+               me.CheckParentDescribeCognitiveSelected($("#cboCognitive").val(),selectedKnowledgeMap);
+               $("#div-outputheader").empty();
              }
            );
          

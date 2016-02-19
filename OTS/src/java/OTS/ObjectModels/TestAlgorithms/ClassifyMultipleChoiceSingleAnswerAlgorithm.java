@@ -128,8 +128,22 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
         }
         
         if(isRelationList.size()>0 & hasRelationList.size()>0 & canRelationList.size()>0){
-             this.HasErrors=true;
-             questionText ="";
+            
+         String isText=this.BuildIsRelationText(isRelationList);
+         String hasText=this.BuildHasRelationText(hasRelationList);
+         String canText=this.BuildCanRelationText(canRelationList);
+         
+         sb.append("An object ");
+         sb.append(isText);
+         sb.append(" which ");
+         sb.append(hasText);
+         sb.append(" and ");
+         sb.append(canText);
+         sb.append(".");
+         sb.append("What is likely to be the object?");
+         questionText =sb.toString();
+          return questionText;
+             
         }
         else if(isRelationList.size()>0 & canRelationList.size()>0 ){
           
@@ -141,6 +155,7 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
          sb.append(isText);
          if(!canText.equals("")){
              sb.append(" and ");
+              sb.append(" ");
              sb.append(canText);
          }
             sb.append(".");
@@ -220,7 +235,7 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
               if(hasCounter>0){
                   if(hasCounter==conceptSchemas.size()-1){
                      
-                      hasConcat.append(" and " + a.Description().attributeValue.toLowerCase() + "  " + a.Description().attributeName.toLowerCase()  ); 
+                      hasConcat.append(" and " +  a.Description().attributeValue.toLowerCase() + "  " + a.Description().attributeName.toLowerCase()  ); 
                   }
                   else{
                     hasConcat.append(a.Description().attributeValue.toLowerCase() + " " + a.Description().attributeName.toLowerCase() + ","); 
@@ -261,13 +276,18 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
                    this.HasErrors=true;
               }
               if(canCounter>0){
-                   hasConcat.append(a.Description().conceptAction + " " + a.Description().conceptName );  
+                    if(canCounter==conceptSchemas.size()-1){
+                      hasConcat.append(" and " + a.Description().conceptAction + " " + a.Description().conceptName ); 
+                    } 
+                    else{
+                        hasConcat.append(a.Description().conceptAction + " " + a.Description().conceptName + " " ); 
+                    }
               }
               else{
                 hasConcat.append(a.Description().relationName + " " + a.Description().conceptAction+ " " + a.Description().conceptName );  
 
               }
-                          
+              canCounter+=1;            
           }
            if(hasConcat.toString().endsWith(",")){
                 canConcatText= hasConcat.toString().substring(0,hasConcat.toString().length()-1);
