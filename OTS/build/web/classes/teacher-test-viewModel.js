@@ -544,11 +544,11 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
        };
        
        me.onMarkTest=function(item,event){
-           if(!item.IsAllMarked){
+           if(item.IsAllMarked===false){
            me.selectedTest=item;
            $.post("TestGenerationServlet",{action:"MarkTest",TestId:item.TestId},function(msg){
                  if(msg != ""){
-                      me.onCourseChanged(); //Refresh list
+                      
                 me.form.responseDialog("Success!");
                 me.form.responseMessageText("Test Marked");
                 me.form.responseBoxStyle("alert alert-success");
@@ -569,6 +569,7 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 me.form.responseMessageVisible(true);  
              event.preventDefault();
          }
+         me.onCourseChanged(); //Refresh list
        };
        
        me.form={
