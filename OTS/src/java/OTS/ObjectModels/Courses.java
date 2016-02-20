@@ -491,7 +491,7 @@ public class Courses {
                     + "		 ac.Name as CourseName,\n"
                     + "		 t.TestId,\n"
                     + "		 t.Name as TestName,\n"
-                    + "		 t.StartDate,t.IsActivated\n"
+                    + "		 t.StartDate,t.StartTime,t.EndTime,t.IsActivated\n"
                     + " from studentcourseregistration sr \n"
                     + "inner join academiccourse ac on sr.CourseId=ac.CourseTypeId \n"
                     + "inner join teachercoursetest ct on ct.CourseId=ac.CourseTypeId\n"

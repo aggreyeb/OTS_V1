@@ -19,6 +19,8 @@ public class StudentRegistedCourseItem {
     public int TestId;
     public String TestName;
     public Date StartDate;
+    public String StartTime;
+    public String EndTime;
     public String Professor;
     public Boolean IsActivated;
     public Boolean IsTestTeken;

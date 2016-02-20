@@ -39,7 +39,7 @@ public class ClassifyMultipleChoiceSingleAnswerAlgorithm extends Algorithm{
            for(String p:answers){
                 output.LineItems.add(p);
            }
-          output.LineItems.add("None of the above");
+          output.LineItems.add("None");
          }
          else{
              output.HasErrors=true;

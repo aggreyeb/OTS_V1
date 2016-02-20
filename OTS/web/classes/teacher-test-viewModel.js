@@ -544,7 +544,9 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
        };
        
        me.onMarkTest=function(item,event){
-           if(item.IsAllMarked===false){
+          
+          if(item.IsActivated){
+              if(item.IsAllMarked===false){
            me.selectedTest=item;
            $.post("TestGenerationServlet",{action:"MarkTest",TestId:item.TestId},function(msg){
                  if(msg != ""){
@@ -569,7 +571,16 @@ OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
                 me.form.responseMessageVisible(true);  
              event.preventDefault();
          }
-         me.onCourseChanged(); //Refresh list
+         me.onCourseChanged(); //Refresh list 
+              
+          }
+          else{
+                me.form.responseDialog("Mark Test");
+                me.form.responseMessageText("Please  activate test before marking");
+                me.form.responseBoxStyle("alert alert-danger");
+                me.form.responseMessageVisible(true);       
+          }
+          
        };
        
        me.form={

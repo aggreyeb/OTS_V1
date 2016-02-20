@@ -159,8 +159,14 @@ public class Questions {
                 for(String s:o.LineItems){ 
                
                 q1 = new Question();
-                q1.setText(s);
-                //q1.setText(o.Text);
+                if(input.CognitiveType==4){ // Classify
+                   q1.setText(o.Text);
+                }
+                else{
+                     q1.setText(s);
+                }
+               
+                
                 q1.setCognitiveleveltype(cognitiveType);
                 q1.setQuestiontype(questiontype);
                 q1.setQuestionnaturetype(questionNature);
@@ -228,7 +234,9 @@ public class Questions {
                   }
                }
               this.dataSource.Save(q);
-              
+              if(duplicateCheckList.size()<4){
+                  duplicateCheckList.add("None of the above");
+              }
               for(String z:duplicateCheckList){
                
                     Questionlineitem item= new Questionlineitem();

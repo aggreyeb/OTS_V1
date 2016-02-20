@@ -18,8 +18,8 @@ OTS.ViewModels.StudentMyTestViewModel=function(){
       selectedTest=item;
       me.TestName(item.TestName);
       me.StartDate(item.StartDate);
-      me.StartDate("");
-      me.EndTime("");
+      me.StartTime(item.StartTime);
+      me.EndTime(item.EndTime);
        try{
          $.post("TestQuestionBankServlet",{action:"RecordStudentTestStartDateTime",testid:selectedTest.TestId},function(msg){
             
