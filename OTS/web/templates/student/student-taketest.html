@@ -40,7 +40,7 @@
                 <tbody   data-bind="foreach:TestSheetItems">
                     <tr>
                         <td  data-bind="text:ItemNumber" style="width:10px"></td>
-                        <td style="width:50px" data-bind="text:ItemText" ></td>
+                        <td style="width: 500px" data-bind="text:ItemText" ></td>
                    
                         <td>
                             <!--True or false-->
@@ -48,16 +48,16 @@
                             <div data-bind="foreach:AnswerOptions">
                                 <div data-bind="if:$parent.IsTrueFalse">
                                    <!--  <input   data-bind="attr:{name:UniqueId,value:CheckedText}, checked:CheckedText, event:{click:function(item,event){MyTrueFalse(item,event);return true}} "  type="radio"/><span data-bind="text:AnswerOptionText"></span>-->
-                                   <div style="width:50px" class="btn-group">
+                                   <div  class="btn-group">
                                        <button style="margin-bottom: 1px" data-bind="text:AnswerOptionValue,style:{color:CheckedStyle}, event:{click:function(item,event){MyTrueFalse(item, event);return true}}" class="btn btn-default"></button>
                                       <!-- <button class="btn btn-default">False</button>-->
                                    </div>
                                 </div> 
-                                <div style="width:50px" data-bind="if:$parent.IsMultipleChoiceMultipleAnswers">
+                                <div  data-bind="if:$parent.IsMultipleChoiceMultipleAnswers">
                                     <button style="margin-bottom: 1px" class="btn btn-default" data-bind="text:LabelText,style:{color:CheckedStyle}, event:{click:function(item,event){MyMultipleChoiceMultipleAnswersCheckbox(item,event) ;return true}}"> Check </button><span style="white-space: nowrap" data-bind="text:AnswerOptionText"></span>
                                 </div> 
                                 
-                                 <div style="width:50px" data-bind="if:$parent.IsMultipleChoiceSingleAnswer">
+                                 <div  data-bind="if:$parent.IsMultipleChoiceSingleAnswer">
                                     
                                     <!-- <span style="margin-right: 20px" data-bind="text:LabelText"></span><input   data-bind="value:AnswerOptionValue,checked:AnswerOptionValue,event:{click:function(item,event){MyMultipleChoiceSingleAnswer(item,event);return true}},  attr:{name:UniqueId,value: false}"  type="radio"/><span data-bind="text:AnswerOptionText"></span>-->
                                     <button data-bind="text:LabelText,style:{color:CheckedStyle}, event:{click:function(item,event){MyMultipleChoiceSingleAnswer(item,event);return true}}" style="margin-bottom: 1px" class="btn btn-default" type="button"> Check </button><span data-bind="text:AnswerOptionText"></span>
