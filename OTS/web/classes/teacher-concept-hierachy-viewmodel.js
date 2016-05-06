@@ -1,5 +1,9 @@
 var OTS=OTS||{};
 OTS.ViewModels=OTS.ViewModels||{};
+var Item=function(key,value){
+    this.key=ko.observable(key);
+    this.value=ko.observable(value);
+};
 OTS.ViewModels.ConceptHierarchy=function(){
     var me=this;
      me.actionType={Add:"addconceptnode",UPDATE:"renameconceptnode",DELETE:"deleteconceptnode"};
@@ -361,6 +365,53 @@ OTS.ViewModels.ConceptHierarchy=function(){
          return me.ConceptSchemas.length>0;
      };
     
+    //*************************** Changing relationship type to dropdown
+     me.SelectedConceptSchemaRelationTypes=ko.observable(new Item("have"));
+     
+     me.EnableConceptName=ko.observable(false);
+     me.EnableConceptAction=ko.observable(false);
+     me.EnableAttributeName=ko.observable(false);
+     me.EnableConceptValue=ko.observable(false);
+     
+     me.SelectedConceptSchemaRelationTypeChnaged=function(){
+          var selected=  $("#cn-sel-relationType").val();
+         if(selected===undefined){
+               me.EnableConceptName(false);
+              me.EnableConceptAction(false);
+              me.EnableAttributeName(false);
+              me.EnableConceptValue(false);
+          }
+          if(selected==="is"){
+              me.EnableConceptName(true);
+              me.EnableConceptAction(false);
+              me.EnableAttributeName(false);
+              me.EnableConceptValue(false);
+          }
+         if (selected==="can"){
+              me.EnableConceptName(true);
+              me.EnableConceptAction(true);
+              me.EnableAttributeName(false);
+              me.EnableConceptValue(false);
+         }
+         if(selected==="has" || 
+              selected==="contain" || 
+              selected==="have"){
+              me.EnableConceptName(false);
+              me.EnableConceptAction(false);
+              me.EnableAttributeName(true);
+              me.EnableConceptValue(true);
+         }
+       
+     }
+   
+    
+    me.ConceptSchemaRelationTypes=ko.observableArray([
+                                                     new Item("can","can"),
+                                                     new Item("contain","contain"),
+                                                     new Item("has","has"),
+                                                     new Item("have","have"),
+                                                     new Item("is","is")]);
+    
      me.ConceptSchemaForm={
          relationname:ko.observable(""),
          conceptname:ko.observable(""),
@@ -377,7 +428,9 @@ OTS.ViewModels.ConceptHierarchy=function(){
          me.ConceptSchemaForm.attributevalue("");
      };
      me.fillConceptSchemaForm=function(item){
+        //item.relationname
          me.ConceptSchemaForm.relationname(item.relationname);
+         $("#cn-sel-relationType").val(item.relationname).change();
          me.ConceptSchemaForm.conceptname(item.conceptname);
          me.ConceptSchemaForm.conceptaction(item.conceptaction);
          me.ConceptSchemaForm.attributename(item.attributename);
