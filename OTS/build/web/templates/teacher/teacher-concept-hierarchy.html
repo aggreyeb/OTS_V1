@@ -134,7 +134,7 @@
                    <label  class="control-label col-xs-2">Relation Name</label>
                    <div class="col-xs-10">
                        <!--input  required data-bind="value:ConceptSchemaForm.relationname" type="text" class="form-control" id="inputEmail" placeholder="Relation Name"-->
-                       <Select  id="cn-sel-relationType" class="form-control" data-bind="options:ConceptSchemaRelationTypes,optionsText:'value', value:SelectedConceptSchemaRelationTypes,optionsCaption: 'Choose...',event:{ change: SelectedConceptSchemaRelationTypeChnaged}">
+                       <Select  id="cn-sel-relationType" class="form-control" data-bind="options:ConceptSchemaRelationTypes,optionsText:'value', optionsValue:'key',optionsCaption: 'Choose...',event:{ change: SelectedConceptSchemaRelationTypeChnaged},enable:EnableRelationName">
                                                   
                    </Select>
                   </div>
@@ -142,26 +142,26 @@
              <div class="form-group">
                <label class="control-label col-xs-2">Concept Name</label>
                <div class="col-xs-10">
-                   <input data-bind="value:ConceptSchemaForm.conceptname,enable:EnableConceptName" type="text" class="form-control"  placeholder="Concept Name">
+                   <input data-bind="value:ConceptSchemaForm.conceptname,enable:EnableConceptName" type="text" class="form-control"  placeholder="e.g. (water)">
               </div>
            </div>
           <div class="form-group">
             <label class="control-label col-xs-2">Concept Action</label>
             <div class="col-xs-10">
-                <input data-bind="value:ConceptSchemaForm.conceptaction,enable:EnableConceptAction" type="text" class="form-control"  placeholder="Concept Action">
+                <input data-bind="value:ConceptSchemaForm.conceptaction,enable:EnableConceptAction" type="text" class="form-control"  placeholder="e.g. (absorb)">
             </div>
         </div>
         
           <div class="form-group">
             <label class="control-label col-xs-2">Attribute Name</label>
             <div class="col-xs-10">
-                <input data-bind="value:ConceptSchemaForm.attributename,enable:EnableAttributeName" type="text" class="form-control"  placeholder="Attribute Name">
+                <input data-bind="value:ConceptSchemaForm.attributename,enable:EnableAttributeName" type="text" class="form-control"  placeholder="e.g. (Shape)">
             </div>
         </div>
           <div class="form-group">
             <label class="control-label col-xs-2">Attribute Value</label>
             <div class="col-xs-10">
-                <input data-bind="value:ConceptSchemaForm.attributevalue,enable:EnableConceptValue" type="text" class="form-control"  placeholder="Attribute Value">
+                <input data-bind="value:ConceptSchemaForm.attributevalue,enable:EnableConceptValue" type="text" class="form-control"  placeholder="e.g. (Aristate)">
             </div>
         </div>
           <div class="form-group">

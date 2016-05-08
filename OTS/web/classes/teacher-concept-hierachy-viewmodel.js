@@ -366,15 +366,17 @@ OTS.ViewModels.ConceptHierarchy=function(){
      };
     
     //*************************** Changing relationship type to dropdown
-     me.SelectedConceptSchemaRelationTypes=ko.observable(new Item("have"));
+     me.SelectedConceptSchemaRelationTypes=ko.observable();
      
      me.EnableConceptName=ko.observable(false);
      me.EnableConceptAction=ko.observable(false);
      me.EnableAttributeName=ko.observable(false);
      me.EnableConceptValue=ko.observable(false);
+     me.EnableRelationName=ko.observable(false);
      
      me.SelectedConceptSchemaRelationTypeChnaged=function(){
           var selected=  $("#cn-sel-relationType").val();
+        var mySelected=  me.SelectedConceptSchemaRelationTypes;
          if(selected===undefined){
                me.EnableConceptName(false);
               me.EnableConceptAction(false);
@@ -396,7 +398,7 @@ OTS.ViewModels.ConceptHierarchy=function(){
          if(selected==="has" || 
               selected==="contain" || 
               selected==="have"){
-              me.EnableConceptName(false);
+              me.EnableConceptName(true);
               me.EnableConceptAction(false);
               me.EnableAttributeName(true);
               me.EnableConceptValue(true);
@@ -407,9 +409,9 @@ OTS.ViewModels.ConceptHierarchy=function(){
     
     me.ConceptSchemaRelationTypes=ko.observableArray([
                                                      new Item("can","can"),
-                                                     new Item("contain","contain"),
+                                                     //new Item("contain","contain"),
                                                      new Item("has","has"),
-                                                     new Item("have","have"),
+                                                    // new Item("have","have"),
                                                      new Item("is","is")]);
     
      me.ConceptSchemaForm={
@@ -429,8 +431,9 @@ OTS.ViewModels.ConceptHierarchy=function(){
      };
      me.fillConceptSchemaForm=function(item){
         //item.relationname
+          $("#cn-sel-relationType").val(item.relationname).change();
+         var selected=  $("#cn-sel-relationType").val()
          me.ConceptSchemaForm.relationname(item.relationname);
-         $("#cn-sel-relationType").val(item.relationname).change();
          me.ConceptSchemaForm.conceptname(item.conceptname);
          me.ConceptSchemaForm.conceptaction(item.conceptaction);
          me.ConceptSchemaForm.attributename(item.attributename);
@@ -452,6 +455,12 @@ OTS.ViewModels.ConceptHierarchy=function(){
      };
      me.onNewConceptSchema=function(){
          me.conceptSchemaFormHeading("Create New");
+         $("#cn-sel-relationType").val("").change();
+         me.EnableRelationName(true);
+         me.EnableConceptName(false);
+         me.EnableConceptAction(false);
+         me.EnableAttributeName(false);
+         me.EnableConceptValue(false);
          me.conceptSchemaFormVisible(true);
          me.newConceptSchemaActionsVisible(true);
          me.editConceptSchemaActionsVisible(false);
@@ -473,7 +482,7 @@ OTS.ViewModels.ConceptHierarchy=function(){
      }; 
       
       me.isConceptSchemaRelationNameValid=function(){
-        return  me.ConceptSchemaForm.relationname()!="";
+        return $("#cn-sel-relationType").val()!=="";
       };
       
       
@@ -489,7 +498,7 @@ OTS.ViewModels.ConceptHierarchy=function(){
                id:item.parentid,
                rootid:item.rootid,
                parentidentity:item.identity,
-               relationname: me.ConceptSchemaForm.relationname(),
+               relationname: $("#cn-sel-relationType").val(),
                conceptname:me.ConceptSchemaForm.conceptname(),
                conceptaction:me.ConceptSchemaForm.conceptaction(),
                attributename:me.ConceptSchemaForm.attributename(),
@@ -535,7 +544,8 @@ OTS.ViewModels.ConceptHierarchy=function(){
           
           
       me.onEditConceptSchema=function(item,event){
-       
+        //$("#cn-sel-relationType").val("have");
+          me.EnableRelationName=ko.observable(false);
           me.conceptSchemaFormHeading("Edit");
           me.selectedConceptSchema=item;
           me.fillConceptSchemaForm(item);
