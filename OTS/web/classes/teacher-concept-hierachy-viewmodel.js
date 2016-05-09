@@ -428,12 +428,20 @@ OTS.ViewModels.ConceptHierarchy=function(){
          me.ConceptSchemaForm.conceptaction("");
          me.ConceptSchemaForm.attributename("");
          me.ConceptSchemaForm.attributevalue("");
+        $("#cn-sel-relationType").val("").change();
      };
      me.fillConceptSchemaForm=function(item){
         //item.relationname
           $("#cn-sel-relationType").val(item.relationname).change();
          var selected=  $("#cn-sel-relationType").val()
-         me.ConceptSchemaForm.relationname(item.relationname);
+         if(  me.conceptSchemaFormHeading()==="Edit"){
+               me.EnableRelationName(false);
+               $("#cn-sel-relationType").prop('disabled', 'disabled');
+         }
+         else{
+           me.ConceptSchemaForm.relationname(item.relationname);  
+         }
+         
          me.ConceptSchemaForm.conceptname(item.conceptname);
          me.ConceptSchemaForm.conceptaction(item.conceptaction);
          me.ConceptSchemaForm.attributename(item.attributename);
@@ -532,6 +540,8 @@ OTS.ViewModels.ConceptHierarchy=function(){
            me.conceptScheamResponseBoxStyle(me.conceptSchemaAlertColorType.SUCCESS);
            me.clearConceptSchemaForm();
            me.conceptSchemaFormVisible(false);
+           $("#cn-sel-relationType").val("").change();
+           me.EnableRelationName(false);
           
         }
         catch(ex){
@@ -545,11 +555,14 @@ OTS.ViewModels.ConceptHierarchy=function(){
           
       me.onEditConceptSchema=function(item,event){
         //$("#cn-sel-relationType").val("have");
-          me.EnableRelationName=ko.observable(false);
+ 
+         
           me.conceptSchemaFormHeading("Edit");
           me.selectedConceptSchema=item;
           me.fillConceptSchemaForm(item);
           me.conceptSchemaResponseMessageVisible(true);
+         me.EnableRelationName(false);
+          $("#cn-sel-relationType").prop('disabled', 'disabled');
          
       };
       
