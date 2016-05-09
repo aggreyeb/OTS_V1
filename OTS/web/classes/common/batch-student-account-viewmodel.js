@@ -191,7 +191,7 @@ OTS.ViewModels.BatchStudentAccounts=function(){
                 else{
                     me.form.responseDialog("Fail");
                     me.form.responseMessageText(message.response.error);
-                    me.form.responseBoxStyle("alert alert-info");
+                    me.form.responseBoxStyle("alert alert-danger");
                     me.form.responseMessageVisible(true); 
                 }
              

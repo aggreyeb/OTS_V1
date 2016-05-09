@@ -17,6 +17,9 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/otsdb?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">appdbuser</property>
     <property name="hibernate.connection.password">appdbuser</property>
+    <property name="hibernate.connection.CharSet">utf8</property>
+    <property name="hibernate.connection.characterEncoding">utf8</property>
+    <property name="hibernate.connection.useUnicode">true</property>
     <mapping resource="OTS/DataModels/Knowledgemap.hbm.xml"/>
     <mapping resource="OTS/DataModels/Studentcourseregistration.hbm.xml"/>
     <mapping resource="OTS/DataModels/Cognitiveleveltype.hbm.xml"/>

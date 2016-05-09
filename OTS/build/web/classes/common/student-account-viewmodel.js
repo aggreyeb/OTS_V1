@@ -39,6 +39,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
         return re.test(email);
     }
     
+   
     me.student={Id:ko.observable(0),
                    FirstName:ko.observable(""),
                    LastName:ko.observable(""),
@@ -46,7 +47,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                    Email:ko.observable(""),
                    Password:ko.observable(""),
                    Message:[],
-                   HasErrors:false,
+                   HasErrors:false,enableStudentEmail:ko.observable(true),
                    ClearMessage:function(){
                        me.student.Message=[];
                    },
@@ -56,6 +57,8 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                        me.student.Phone(item.Phone);
                        me.student.Email(item.Email);
                        me.student.Password(item.Password);
+                       me.student.enableStudentEmail(false);
+                      $("#txt-student-Email").attr("disabled","disabled");
                    },
                    Reset:function(){
                        me.student.FirstName("");
@@ -219,6 +222,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
        me.ShowFormHeading();
        me.student.Reset();
        me.student.ClearMessage();
+       me.student.enableStudentEmail(true);
    };
    
    me.ShowFormHeading=function(){
@@ -319,9 +323,6 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                 var message =JSON.parse(msg);
                 
                   if(message.response.status==="ok"){
-                     
-                    
-                     
                      if(me.SelectedAction==="new"){
                     var item=JSON.parse(message.response.content);
                        user.Id=message.response.id;
@@ -343,8 +344,8 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                 }
                 else{
                     me.form.responseDialog("Fail");
-                    me.form.responseMessageText(message.response.error);
-                    me.form.responseBoxStyle("alert alert-info");
+                    me.form.responseMessageText(message.response.status);
+                    me.form.responseBoxStyle("alert alert-danger");
                     me.form.responseMessageVisible(true); 
                 }
              
@@ -353,7 +354,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                     
                     me.form.responseDialog("Fail");
                     me.form.responseMessageText(error);
-                    me.form.responseBoxStyle("alert alert-info");
+                    me.form.responseBoxStyle("alert alert-danger");
                     me.form.responseMessageVisible(true); 
                 }
                
@@ -404,6 +405,8 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
        me.ShowFormHeading();
        me.student.Update(item);
        me.ClearError();
+      // me.student.enableStudentEmail(false);
+      $("#txt-student-Email").attr("disabled","disabled");
    };
    
    me.onResetPassword=function(item,event){

@@ -73,6 +73,8 @@ public class Users {
       }
     }
     
+   
+    
      public void ResetPassword(int userId){
         
         try{
@@ -127,9 +129,42 @@ public class Users {
         }
     }
     
+     public Boolean HasEmail(UserAccountItem userAccount){
+         Boolean hasEmail=false;
+          try{
+        String sql="Select * from useraccount where UserName=" + "'" + userAccount.Email + "'";
+       
+        List<OTS.DataModels.User> users= new ArrayList();
+       
+        this.dataSource.ExecuteDataSet(sql, users);
+        if(users.size()==0){
+            hasEmail=false;
+        }
+        else{
+             hasEmail=true;
+        }
+       
+      }
+      catch(Throwable ex){
+        
+      }
+      finally{
+      //  this.dataSource.Close();
+      }
+         return hasEmail;
+     }
+    
     public void Save(UserAccountItem userAccount){
-          if(userAccount.Id<=0){
-              this.CreateUser(userAccount);
+         
+    
+           if(userAccount.Id<=0){
+              if(!this.HasEmail(userAccount)){
+               this.CreateUser(userAccount);
+              }
+              else{
+                response.ChangeContent("");
+                response.ChangeStatus(":Email already exist");
+              }
           }
           else{
               this.UpdateUser(userAccount);
