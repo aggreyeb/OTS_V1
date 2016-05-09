@@ -110,6 +110,8 @@ OTS.ViewModels.TeacherKnowledgeMapList=function(conceptHirarchyViewModel){
         me.resetForm();
         me.hideform();
         me.hideMessageBox();
+        me.form.name("");
+        me.form.description("");
     };
     
   me.onSubmitNew=function(){
@@ -145,7 +147,8 @@ OTS.ViewModels.TeacherKnowledgeMapList=function(conceptHirarchyViewModel){
                  me.form.responseMessageVisible(true);
                  me.updatelist("exception",contents);
             }
-           
+            me.form.name("");
+            me.form.description("");
         });
  
     };
@@ -233,13 +236,24 @@ OTS.ViewModels.TeacherKnowledgeMapList=function(conceptHirarchyViewModel){
     
    
     me.onDeplicate=function(item,event){
-        item.label=item.label + " " + "Copy";
-        item.description=item.description + " " +"Copy";
+       
+       me.form.name("");
+       me.form.description("");
+       
+        var label=item.label ;
+        label+= " " + "Copy";
+        
+        var description=item.description;
+        description+=" " +"Copy";
+       // item.label=item.label + " " + "Copy";
+       // item.description=item.description + " " +"Copy";
         me.selectedItem=item;
         me.currentAction=me.actionType.DUPLICATE;
         me.changeFormHeading(me.formHeadingType.Duplicate);
         me.hideMessageBox();
-        me.fillForm(item);
+       // me.fillForm(item);
+       me.form.name(label);
+       me.form.description(description);
         me.showform();
     };
     
