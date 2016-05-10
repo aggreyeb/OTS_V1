@@ -2,7 +2,7 @@ var OTS=OTS||{};
 OTS.ViewModels=OTS.ViewModels||{};
 OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
     var me= this;
-  
+             
      //ViewModels
     var  caViewModel= courseAssignmentViewModel||new OTS.ViewModels.TeacherCourseAssigment();
     
@@ -39,7 +39,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
         return re.test(email);
     }
     
-   
+    
     me.student={Id:ko.observable(0),
                    FirstName:ko.observable(""),
                    LastName:ko.observable(""),
@@ -99,7 +99,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                           me.student.HasErrors=true;
                           me.student.Message.push("LastName required");
                       }
-                     
+                    
                    },
                    BuildErrorMessage:function(){
                        var html="<ul>";
@@ -415,9 +415,8 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
       $.post("UserManagementServlet",{action:"ResetPassword",userId:item.Id},function(msg){
              try{ 
                 var message =JSON.parse(msg);
-                
                   if(message.response.status==="ok"){
-                  
+                    me.loadUsers();
                     me.form.formVisible(false);
                     me.form.headingVisisble(false);
                     me.form.responseDialog(me.form.dialogType.SUCCESS);
@@ -442,6 +441,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                 }
                
         });
+       
         me.selectedUser=null;
    };
    

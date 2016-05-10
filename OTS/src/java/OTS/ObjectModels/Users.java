@@ -78,27 +78,23 @@ public class Users {
      public void ResetPassword(int userId){
         
         try{
-           //this.dataSource.Open();
-           //this.dataSource.BeginTransaction();
-           OTS.DataModels.User user= (OTS.DataModels.User)dataSource.Find(OTS.DataModels.User.class, new Integer(userId));
+        
            String password=randomString(CHARSET_AZ_09,5);
-          Useraccount ua=  user.getUseraccount();
+           Useraccount ua= (OTS.DataModels.Useraccount)dataSource.Find(OTS.DataModels.Useraccount.class, new Integer(userId));;
            ua.setPassword(password);
            this.dataSource.Update(ua);
-          // this.dataSource.Commit();
            response.UpdateID(userId);
            response.ChangeContent("");
            response.ChangeStatus("ok");
         }
         catch(Throwable ex){
-           // this.dataSource.Rollback();
             response.UpdateID(0);
             response.ChangeContent("");
             response.ChangeStatus("exception");
             response.UpdateError(ex.toString());
         }
         finally{
-           //this.dataSource.Close();
+          
         }
     }
     
