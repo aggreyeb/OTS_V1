@@ -32,6 +32,8 @@ OTS.DateTime=function(){
 
 OTS.ViewModels.TestViewModel=function(testGenerationViewModel){
     var me=this;
+    
+  
     me.testGenerationViewModel=testGenerationViewModel|| new OTS.ViewModels.TestGenerationViewModel();
     me.reviewTestQuestionViewModel= new OTS.ViewModels.ReviewTestQuestionsViewModel();
     me.myTitle=ko.observable("Node Information");
@@ -657,11 +659,16 @@ var  isValidtimeRange=function(t,st,et){
        t = t.split(/:/);
        st = st.split(/:/);
        et = et.split(/:/);
-       return (t[0] < st[0] 
+       var result= (t[0] < st[0] 
             || t[0] > et[0] 
             || (t[0] == st[0] && t[1] < st[1])
             || (t[0] == et[0] && t[1] > et[1]));
+    
+       return !result;
     };
+  
+  
+  
   
    me.validate=function(){
       var hasError= false;
@@ -683,7 +690,7 @@ var  isValidtimeRange=function(t,st,et){
       
       if(me.form.startTime()===""){
            hasError=true;
-            error+="<li>Start Time is required: format nn:mm</li>"
+            error+="<li>Start Time is required: format nn:mm</li>";
       }
       /*
       if(!isValidTime(me.form.startTime())){
@@ -697,6 +704,20 @@ var  isValidtimeRange=function(t,st,et){
             error+="<li>End Time is required: format nn:mm</li>"
       }
       
+      var startTime=me.form.startTime().replace("AM","").replace("PM","").trim();
+      var endTime=me.form.endTime().replace("AM","").replace("PM","").trim();
+     var d = new Date();	
+	var curr_hour = d.getHours();
+	var curr_min = d.getMinutes();
+	if (curr_min < 10){
+	curr_min = "0" + curr_min
+	}
+	var currtime = curr_hour + ":" + curr_min;
+       //return true if date is out of range
+       if(isValidtimeRange(currtime,startTime,endTime)){
+           hasError=true;
+            error+="<li>Start time can not be greater than end time</li>";
+      }
       /* 
        if(!isValidTime(me.form.endTime())){
            hasError=true;
