@@ -128,6 +128,9 @@ OTS.ViewModels.TestGenerationViewModel=function(){
    me.Message1=ko.observable("Hello World");
    me.EnableSubmit=ko.observable(true);
    me.EnableQuestionNature=ko.observable(true);
+   
+   me.CheckAllQuestionBank=ko.observable(false);
+   me.CheckAllTestSheet=ko.observable(false);
   
   // Start teacher test management
    //Test Question Bank
@@ -138,7 +141,39 @@ OTS.ViewModels.TestGenerationViewModel=function(){
       alert(e);
   };
   
+  me.CheckAllQuestionBankItems=function(){
+     
+    var state=  me.CheckAllQuestionBank();
+     me.ToogleQuestionBankItemsSelection(state);  
+  };
   
+  me.CheckAllTestSheetItems=function(){
+    var state=  me.CheckAllTestSheet();
+     me.ToogleTestSheetItemsSelection(state);  
+  };
+  
+  
+  me.ToogleQuestionBankItemsSelection=function(state){
+     var items= ko.toJS(me.TestQuestionBank());
+     for(var i=0;i<items.length;i++){
+          items[i].Selected=state
+     }
+     me.TestQuestionBank([]);
+      for(var i=0;i<items.length;i++){
+          me.TestQuestionBank.push(items[i]);
+     }
+  };
+  
+   me.ToogleTestSheetItemsSelection=function(state){
+     var items= ko.toJS(me.TestSheetItems());
+     for(var i=0;i<items.length;i++){
+          items[i].Selected=state
+     }
+     me.TestSheetItems([]);
+      for(var i=0;i<items.length;i++){
+          me.TestSheetItems.push(items[i]);
+     }
+  };
   
   me.AddTestSheetItems=function(){
       var s =ko.toJSON(me.TestQuestionBank);
@@ -149,6 +184,8 @@ OTS.ViewModels.TestGenerationViewModel=function(){
          if (!qbItems[i].Selected) continue;
           selectedItems.push(qbItems[i]);
       }
+      
+      if(selectedItems.length>0){
       var data=JSON.stringify(selectedItems);
       $.post("TestQuestionBankServlet",{action:"AddTestSheetItems",CourseId:selectedCourse.Id,testid:selectedTest.TestId,itemJsons:data},function(msg){
           
@@ -159,16 +196,21 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                    
                      me.LoadTestSheetItems();
                      me.LoadTestQuestionBank();
-                    msgBox.DisplaySuccess("<p>Test sheet item(s) added </p>");
+                     msgBox.DisplaySuccess("<p>Test sheet item(s) added </p>");
+                      me.CheckAllQuestionBank(false);
                   }
                   else{
-                      msgBox.DisplayError("<p>Test sheet item(s) added </p>");
+                      msgBox.DisplayError("<p>Failed to add items to test sheet </p>");
                   }
                 }
                 catch(error){
                    alert(error);
                 }
       });
+      }
+      else{
+           msgBox.DisplayError("<p>Select items to be added to test sheet </p>");
+      }
   };
   
   me.UpdateTestSheet=function(){
@@ -214,6 +256,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
            items.push(qbItems[i]);
          }
       }
+      if(items.length>0){
       var jdata=JSON.stringify(items);
      // $.post("TestQuestionBankServlet",{action:"RemoveTestSheetItems",CourseId:selectedCourse.Id,testid:selectedTest.TestId, data:jdata},function(msg){
           $.post("TestQuestionBankServlet",{action:"RemoveSelectedTestSheetItems",CourseId:selectedCourse.Id,testid:selectedTest.TestId, data:jdata},function(msg){
@@ -225,15 +268,20 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                     me.LoadTestSheetItems();
                     me.LoadTestQuestionBank();
                      msgBox.DisplaySuccess("<p>Test sheet item(s) removed </p>");
+                     me.CheckAllTestSheet(false);
                   }
                   else{
-                     msgBox.DisplayError()("<p>Unable to remove test items </p>"); 
+                     msgBox.DisplayError("<p>Unable to remove test items </p>"); 
                   }
                 }
                 catch(error){
                    alert(error);
                 }
      });
+    }
+    else{
+         msgBox.DisplayError("<p>Select item(s) to be removed and try again </p>"); 
+    }
   };
   
   me.LoadTestSheetItems=function(){
@@ -478,7 +526,9 @@ OTS.ViewModels.TestGenerationViewModel=function(){
           $('#tv-courseknowledgemaps').tree({
                data:  me.data, autoOpen: true
           });
-          
+          $("#chk-all-testsheet").change(function(){
+              alert("Hi");
+          });
      });
      
       me.updateTreeView=function(items){
