@@ -3,7 +3,7 @@
     <div class="panel-heading"> </div>
     <div  class="panel-body">
         <div>
-      <select class="form-control" data-bind="options:userTypeList,optionsText:'Name', optionsValue:'Id', value:userDropDownSelected,optionsCaption: 'Choose...',event: {change: UserTypeChanged}">
+            <span>User Type</span><select id="cbo-userTpe" class="form-control" data-bind="options:userTypeList,optionsText:'Name', optionsValue:'Id', value:userDropDownSelected,optionsCaption: 'Choose...',event: {change: UserTypeChanged}">
            
       </select><br>
         <button id="sel-user" data-bind="click:OnCreateNew" type="button" class="btn btn-info">New</button>
@@ -91,7 +91,7 @@
       <div class="form-group">
         <label class="control-label col-xs-2">Email</label>
          <div class="col-xs-10">
-         <input data-bind="value:student.Email" type="text" class="form-control"  placeholder="Email- Required Field">
+         <input id="txt-userType-Email" data-bind="value:student.Email,enable:student.enableStudentEmail" type="text" class="form-control"  placeholder="Email- Required Field">
          </div>
        </div>  
       

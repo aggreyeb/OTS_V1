@@ -99,7 +99,13 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                           me.student.HasErrors=true;
                           me.student.Message.push("LastName required");
                       }
-                    
+                    var userType=  $("#txt-tecaher-hidden").val();
+                    if(userType===undefined || userType!=="teacher"){
+                          if(me.userDropDownSelected()===undefined ||me.userDropDownSelected()===null){
+                           me.student.HasErrors=true;
+                           me.student.Message.push("Select User Type");
+                         }
+                     }
                    },
                    BuildErrorMessage:function(){
                        var html="<ul>";
@@ -134,6 +140,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
                          }
                          me.userList.push(users[i]);
                      }
+              
                       
                   }else{
                      me.form.responseDialog("Fail");
@@ -158,7 +165,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
     $(function(){
        me.HideFormHeading();
        me.SelectedUserType= me.UserType.Student;
-       me.loadUsers();
+     //  me.loadUsers();
     });
     
   
@@ -186,6 +193,13 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
    me.UserTypeChanged=function(){
       
           var selected=  me.userDropDownSelected();
+          if(selected===undefined || selected===null){ 
+            me.userList([]);
+             return;
+          
+           }
+          
+          
           if(selected===1){
               me.SelectedUserType=me.UserType.Administrator;
               me.IsTeacherSelected(false);
@@ -201,6 +215,9 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
           }
           me.loadUsers();
           me.form.responseMessageVisible(false);
+          me.student.Reset();
+          //me.form.formVisible(false);
+          me.ClearError();
    
    };
   
@@ -406,6 +423,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
        me.student.Update(item);
        me.ClearError();
       // me.student.enableStudentEmail(false);
+      $("#txt-userType-Email").attr("disabled","disabled");
       $("#txt-student-Email").attr("disabled","disabled");
    };
    

@@ -8,16 +8,12 @@ package OTS.Servlets;
 import OTS.DataModels.DataSource;
 import OTS.DataModels.MySqlDataSource;
 import OTS.ISerializable;
-import OTS.Message;
 import OTS.ObjectModels.Response;
 import OTS.ObjectModels.UserAccountItem;
-import OTS.ObjectModels.UserProfile;
-import OTS.ObjectModels.Users;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

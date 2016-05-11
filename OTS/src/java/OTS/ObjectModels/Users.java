@@ -102,19 +102,15 @@ public class Users {
     public void Delete(int userId){
         
         try{
-          // this.dataSource.Open();
-          // this.dataSource.BeginTransaction();
            OTS.DataModels.User user= (OTS.DataModels.User)dataSource.Find(OTS.DataModels.User.class, new Integer(userId));
            this.dataSource.Delete(user);
-           this.dataSource.Delete(user.getUseraccount());
-           //this.dataSource.Commit();
+           OTS.DataModels.Useraccount userAccount= (OTS.DataModels.Useraccount)dataSource.Find(OTS.DataModels.Useraccount.class, new Integer(userId));
+           this.dataSource.Delete(userAccount);
            response.UpdateID(userId);
            response.ChangeContent("");
            response.ChangeStatus("ok");
-           
         }
         catch(Throwable ex){
-           // this.dataSource.Rollback();
             response.UpdateID(0);
             response.ChangeContent("");
             response.ChangeStatus("exception");
