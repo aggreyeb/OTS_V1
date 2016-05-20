@@ -610,20 +610,45 @@ public class Courses {
     }
 
     
+    public Boolean CanUnRegister(int studentCourseId){
+         Boolean canRegister=true;
+        
+        /*
+       
+        int courseId;
+        int studentId;
+         Studentcourseregistration item=  (Studentcourseregistration)this.dataSource.Find(Studentcourseregistration.class, new Integer(studentCourseId));
+         courseId= item.getAcademiccourse().getCourseTypeId();
+          studentId=item.getUser().getUserId();
+        
+        String sql="select ac.CourseTypeId,\n" +
+"                     ac.Number,\n" +
+"                    ac.Name as CourseName,\n" +
+"                    t.TestId,\n" +
+"                    t.Name as TestName,\n" +
+"                    t.StartDate,t.StartTime,t.EndTime,t.IsActivated\n" +
+"                     from studentcourseregistration sr \n" +
+"                     inner join academiccourse ac on sr.CourseId=ac.CourseTypeId\n" +
+"                    inner join teachercoursetest ct on ct.CourseId=ac.CourseTypeId\n" +
+"                    inner join test t on t.TestId=ct.TestId where sr.StudentId=" + studentId + " and t.IsActivated=1;";
+        
+                List<StudentRegistedCourseItem> StudentCourseTests = new ArrayList();
+               this.dataSource.ExecuteCustomDataSet(sql, StudentCourseTests, StudentRegistedCourseItem.class);
+                */
+        return canRegister;
+    }
+    
      public  void UnRegisterCourse(int studentCourseId,Message message){
          
          try {
-          //this.dataSource.Open();
-         //  this.dataSource.BeginTransaction();
+         
           Studentcourseregistration item=  (Studentcourseregistration)this.dataSource.Find(Studentcourseregistration.class, new Integer(studentCourseId));
            if(item!=null){
               this.dataSource.Delete(item);
            }
-            //this.dataSource.Commit();
             Gson g = new Gson();
             message.ChangeStatus("ok");
-        } catch (Throwable ex) {
-            //this.dataSource.Rollback();
+        } catch (Throwable ex) {            //this.dataSource.Rollback();
             message.ChangeContent("");
             message.ChangeStatus("exception");
             message.UpdateError(ex.toString());
