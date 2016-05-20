@@ -14,6 +14,7 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
     ]);
     me.userDropDownSelected=ko.observable();
     me.IsTeacherSelected=ko.observable(false);
+    me.TeacherHiddenField=ko.observable("Teacher");
     me.selectedUser=null;
     me.UserType={
          
@@ -120,9 +121,9 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
     
     me.loadUsers=function(){
          me.userList([]);
-         if(me.SelectedUserType===me.UserType.Teacher){
-             me.IsTeacherSelected(true);
-         }
+        // if(me.SelectedUserType===me.UserType.Teacher){
+           //  me.IsTeacherSelected(true);
+       //  }
          
          $.post("UserManagementServlet",{action:"ListUsers",userTypeId: me.SelectedUserType},function(msg){
            try{
@@ -165,7 +166,10 @@ OTS.ViewModels.StudentAccounts=function(courseAssignmentViewModel){
     $(function(){
        me.HideFormHeading();
        me.SelectedUserType= me.UserType.Student;
-     //  me.loadUsers();
+       var userType=  $("#txt-tecaher-hidden").val();
+        if(userType !==undefined || userType==="teacher"){
+            me.loadUsers(); 
+        }
     });
     
   
