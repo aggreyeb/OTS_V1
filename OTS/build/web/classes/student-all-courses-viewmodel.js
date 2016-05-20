@@ -3,6 +3,7 @@ OTS.ViewModels=OTS.ViewModels||{};
 OTS.ViewModels.StudentAllCourses=function(){
     var me=this;
     me.courseList=ko.observableArray([]);
+    me.CheckAll=ko.observable(false);
     
     me.CanEnableRegister=ko.computed(function(){
         return  me.courseList().length>0;
@@ -41,6 +42,23 @@ OTS.ViewModels.StudentAllCourses=function(){
             }
         });
     });
+    
+      me.CheckAllItems=function(){
+      
+        var state=me.CheckAll();
+        me.ToogleQuestionBankItemsSelection(state);
+    };
+    
+     me.ToogleQuestionBankItemsSelection=function(state){
+     var items= ko.toJS(me.courseList());
+     for(var i=0;i<items.length;i++){
+          items[i].selected=state
+     }
+     me.courseList([]);
+      for(var i=0;i<items.length;i++){
+          me.courseList.push(items[i]);
+     }
+  };
     
    me.LoadAllCourse=function(){
         $.post("CourseServlet",{action:"ListAllCourses"},function(msg){
