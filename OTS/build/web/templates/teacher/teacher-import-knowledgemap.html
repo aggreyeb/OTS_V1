@@ -5,7 +5,7 @@
                  <th>Id</th>
                  <th>Name</th>
                   <th>Description</th>
-                  <th></th>                   
+                  <th><input  data-bind="checked:CheckAll,event: { change: $root.CheckAllItems }"  type="checkbox"/><span>Select All</span></th>                   
                 </tr>
       </thead>
       <tbody data-bind="foreach:knowledgemapList" >

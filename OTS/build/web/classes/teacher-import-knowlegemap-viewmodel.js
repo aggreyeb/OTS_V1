@@ -16,7 +16,8 @@ OTS.ViewModels.ImportKnowlegeMapView=function(){
      me.responseMessageVisible=ko.observable(false);
      me.responseBoxStyle=ko.observable("alert alert-success");
      me.responseDialog=ko.observable("Success!");
-     me.responseMessageText=ko.observable("Selected items has been imported to your knowledgemaps")
+     me.responseMessageText=ko.observable("Selected items has been imported to your knowledgemaps");
+     me.CheckAll=ko.observable(false);
      me.closeMessageBox=function(event){
          me.responseMessageVisible(false);
      };
@@ -44,6 +45,22 @@ OTS.ViewModels.ImportKnowlegeMapView=function(){
        
     });
 
+    me.CheckAllItems=function(){
+      
+        var state=me.CheckAll();
+        me.ToogleQuestionBankItemsSelection(state);
+    };
+    
+     me.ToogleQuestionBankItemsSelection=function(state){
+     var items= ko.toJS(me.knowledgemapList());
+     for(var i=0;i<items.length;i++){
+          items[i].selected=state
+     }
+     me.knowledgemapList([]);
+      for(var i=0;i<items.length;i++){
+          me.knowledgemapList.push(items[i]);
+     }
+  };
     
     me.onImport=function(){
        
