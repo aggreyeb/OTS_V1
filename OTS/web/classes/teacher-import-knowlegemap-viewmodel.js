@@ -66,8 +66,8 @@ OTS.ViewModels.ImportKnowlegeMapView=function(){
        
          var selectedKnowledgeMaps=[];
         for(var i=0;i<me.knowledgemapList().length;i++){
-            if(me.knowledgemapList()[i].selected()==1){
-                selectedKnowledgeMaps.push(me.knowledgemapList()[i].id());
+            if(me.knowledgemapList()[i].selected===true){
+                selectedKnowledgeMaps.push(me.knowledgemapList()[i].id);
             }
         }
        var ids=  selectedKnowledgeMaps.join(",");
@@ -88,6 +88,8 @@ OTS.ViewModels.ImportKnowlegeMapView=function(){
                       me.responseMessageVisible(true);
                       me.responseBoxStyle("alert alert-success");
                       me.responseDialog=("Success!");
+                       me.CheckAll(false);
+                       me.ToogleQuestionBankItemsSelection(false);
                   }
                   else{
                      me.responseMessageVisible(true);
