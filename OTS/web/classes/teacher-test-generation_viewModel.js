@@ -294,7 +294,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                     var contents=JSON.parse(message.response.content);
                     me.TestSheetItems([]);
                     for(var i=0;i<contents.length;i++){
-                          contents[i].Mark=(contents[i].Mark).toFixed(1);
+                          contents[i].Mark=(contents[i].Mark).toFixed(2);
                           var item=ko.mapping.fromJS(contents[i]);
                         // me.TestSheetItems.push(contents[i]);
                          me.TestSheetItems.push(item);
@@ -307,7 +307,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                          }
                     }
                        var els= $(".input-mask");
-                     $(".input-mask").mask("9.9");
+                     $(".input-mask").mask("99.9");
                   }
                   else{
                       
