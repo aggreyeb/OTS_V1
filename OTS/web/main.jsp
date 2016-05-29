@@ -33,8 +33,16 @@
         <script src="scripts/bootstrap-select.js" type="text/javascript"></script>
         <script src="scripts/knockout-2.2.0.js" type="text/javascript"></script>
         <script src="scripts/jqTreeContextMenu.js" type="text/javascript"></script>
-        <script src="scripts/jquery.maskedinput.js" type="text/javascript"></script>
-        <script src="scripts/mask.js" type="text/javascript"></script>
+        <!--script src="scripts/jquery.maskedinput.js" type="text/javascript"></script-->
+        <!--script src="scripts/mask.js" type="text/javascript"></script-->
+        
+        <script src="scripts/inputmask.dependencyLib.jquery.js" type="text/javascript"></script>
+        <script src="scripts/inputmask.js" type="text/javascript"></script>
+        <script src="scripts/inputmask.extensions.js" type="text/javascript"></script>
+        <script src="scripts/jquery.inputmask.js" type="text/javascript"></script>
+        <script src="scripts/inputmask.regex.extensions.js" type="text/javascript"></script>
+        <script src="scripts/inputmask.numeric.extensions.js" type="text/javascript"></script>
+        
        <!-- <script src="classes/Page.js" type="text/javascript"></script>-->
        <!-- <script src="classes/teacher/TeacherKnowledgeMapPage.js" type="text/javascript"></script>-->
         <script src="classes/teacher/KnowledgeMapsView.js" type="text/javascript"></script>

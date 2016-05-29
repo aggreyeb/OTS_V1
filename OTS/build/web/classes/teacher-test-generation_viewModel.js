@@ -285,7 +285,9 @@ OTS.ViewModels.TestGenerationViewModel=function(){
   };
   
   me.LoadTestSheetItems=function(){
-          $.post("TestQuestionBankServlet",{action:"ListTestSheet",testid:selectedTest.TestId},function(msg){
+          
+      
+      $.post("TestQuestionBankServlet",{action:"ListTestSheet",testid:selectedTest.TestId},function(msg){
                // console.log(msg);
                 try{
                  var message =JSON.parse(msg);
@@ -294,6 +296,7 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                     var contents=JSON.parse(message.response.content);
                     me.TestSheetItems([]);
                     for(var i=0;i<contents.length;i++){
+                          //contents[i].Mark=(contents[i].Mark).toFixed(2);
                           contents[i].Mark=(contents[i].Mark).toFixed(2);
                           var item=ko.mapping.fromJS(contents[i]);
                         // me.TestSheetItems.push(contents[i]);
@@ -306,8 +309,11 @@ OTS.ViewModels.TestGenerationViewModel=function(){
                              me.TestSheetItems()[j].AnswerOptions()[x].Parent=me.TestSheetItems;
                          }
                     }
+                    
+                      $(":input").inputmask();
                        var els= $(".input-mask");
-                     $(".input-mask").mask("99.9");
+                      // $(".input-mask").mask("99.99");
+                      $(".input-mask").inputmask('decimal',{min:1, max:100});
                   }
                   else{
                       
